@@ -1,0 +1,13 @@
+@media screen and (max-width: 768px) {
+  .container-pro {
+    margin-top: 100px!important;
+  }
+
+  .container-info {
+    margin-right: 30px!important;
+  }
+}
+
+.container-info {
+  margin-right: 30px!important;
+}
