@@ -1,0 +1,22 @@
+.header_dark{
+    background-color: rgb(45, 43, 43) !important;
+    color: aliceblue !important;
+}
+
+.paddin_table{
+    padding: 15px !important;
+}
+.padding_td{
+    padding: 10px !important;
+}
+.contentwithoutsidebar{
+    padding: 8% 0 0 20% !important;
+}
+.pagination-move{
+    padding: 0 0 0 50% !important;
+}
+.options{
+    width: 105px !important;
+    display: flex;
+    justify-content: space-around;
+}

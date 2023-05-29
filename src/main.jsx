@@ -6,7 +6,7 @@ import 'animate.css';
 import { App } from '@/App';
 
 import '@/index.css';
-
+import '@/static/styles/sidebar.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
