@@ -4,15 +4,45 @@ import { Link } from 'react-router-dom';
 import { InputForm } from '../InputForm';
 import { Button } from '../Button';
 
-const initForm = {
-  email: '',
-  password: '',
-};
+import { showBasicAlert } from '@/helpers/sweetAlert';
+import { cleanText, validateEmail } from '@/helpers/utils';
+import { initFormLogin } from '@/helpers/constants';
 
 export const FormLogin = () => {
-  const [formValues, setFormValues] = useState(initForm);
+  const [formValues, setFormValues] = useState(initFormLogin);
 
-  const login = async () => {};
+  const login = async () => {
+    if (validateLoginForm(formValues)) {
+      console.log('login en APi', formValues);
+    }
+  };
+
+  const validateLoginForm = (data) => {
+    const icon = 'warning';
+
+    for (let key in data) {
+      if (data.hasOwnProperty(key)) {
+        data[key] = cleanText(data[key]);
+      }
+    }
+
+    if (data?.email === '') {
+      showBasicAlert('Llene su email', icon);
+      return false;
+    }
+
+    if (!validateEmail(data?.email)) {
+      showBasicAlert('Email Inválido', icon);
+      return false;
+    }
+
+    if (data?.password === '') {
+      showBasicAlert('Llene su contraseña', icon);
+      return false;
+    }
+
+    return true;
+  };
 
   return (
     <div className='row d-flex justify-content-center pt-5 animate__animated animate__fadeInUp animate__slow'>
