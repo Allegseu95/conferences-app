@@ -36,11 +36,7 @@
   background-color: #090909; /* Cambia el color a tu preferencia */
 }
 
-.register-qr {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
+
 
 .content {
   background: linear-gradient(180deg, #525252, #262525);
@@ -66,7 +62,7 @@
     transition: left 0.3s ease;
     height: 100%;
   }
-
+  
   #side_nav.active {
     left: 0;
   }
@@ -77,7 +73,7 @@
     grid-gap: 20px;
   }
 
-  .navegacion-sidebar { 
+  .navegacion-sidebar {
     display: flex;
   }
 

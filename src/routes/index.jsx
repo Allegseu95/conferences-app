@@ -5,7 +5,7 @@ import { AdminRoutes } from './admin';
 import { UserRoutes } from './user';
 
 export const RouterManager = () => {
-  const initRoute = 'admin'; // public | admin | user
+  const initRoute = 'user'; // public | admin | user
   return (
     <BrowserRouter>
       {initRoute === 'public' ? (
