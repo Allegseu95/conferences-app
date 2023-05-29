@@ -2,9 +2,9 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: rgb(54, 54, 107);
-    width: 5%;
-    height: 100%;
+    background-color: rgb(81, 81, 81);
+    width: 15%;
+    height: 100vh;
     transition: 0.5s;
     padding: 20px;
     overflow: hidden;
@@ -32,10 +32,10 @@ a{
     padding: 15px 10px 0 10px !important;
     text-align: center;
 }
-.sidebar:hover{
+/* .sidebar:hover{
     transition: 0.5s;
     width: 20%;
-}
+} */
 .headersidebar{
     height: 20%;
     text-align: center;
