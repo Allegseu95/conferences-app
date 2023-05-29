@@ -3,8 +3,8 @@ import './profilemovil.css'
 export const Profile = () => {
   return (
     <div className='container-pro'>
-      <h4 className='text-center mt-2 text-white'>
-        <b>Perfil de Usuario Autenticado</b>
+      <h4 className='text-center text-white mt-4'>
+        <b>Perfil de Usuario</b>
       </h4>
       <div className='container-info alert alert-info mt-4 p-2' role='alert'>
         Hola te damos la bienvenida Usuario

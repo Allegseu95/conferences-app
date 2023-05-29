@@ -10,7 +10,6 @@ export const Register = () => {
       </h4>
       <div className='contenedor-register-movil d-flex'>
         <div className='qr-code m-3 text-center'>
-          <h5>Registrate escaneando este QR</h5>
           <QRCode
             className='m-2'
             value={textToEncode}

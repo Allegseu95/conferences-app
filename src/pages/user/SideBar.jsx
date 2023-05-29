@@ -45,26 +45,29 @@ export const SideBar = () => {
             </button>
           </div>
           <ul className='list-unstyled px-2'>
-            <li className='items-router text-decoration-none bg-white rounded'>
+            <li className='text-decoration-none bg-white rounded'>
               <Link
                 to='/'
-                style={{ color: selectedItem === 0 ? '#ff0000' : '#090909' }}
+                className='d-flex align-items-center m-2'
+                style={{ color: selectedItem === 0 ? '#00fa32' : '#090909', height: '40px' }}
                 onClick={() => handleItemClick(0)}>
                 <CgProfile className='item-icons' /> Perfil
               </Link>
             </li>
-            <li className='items-router text-decoration-none bg-white rounded mt-3'>
+            <li className='text-decoration-none bg-white rounded mt-3'>
               <Link
+                className='d-flex align-items-center m-2'
                 to='/certificados'
-                style={{ color: selectedItem === 1 ? '#ff0000' : '#090909' }}
+                style={{ color: selectedItem === 1 ? '#00fa32' : '#090909', height: '40px' }}
                 onClick={() => handleItemClick(1)}>
                 <TbCertificate className='item-icons' /> Certificados
               </Link>
             </li>
-            <li className='items-router text-decoration-none bg-white rounded mt-3'>
+            <li className='text-decoration-none bg-white rounded mt-3'>
               <Link
+                className='d-flex align-items-center m-2'
                 to='/registros'
-                style={{ color: selectedItem === 2 ? '#ff0000' : '#090909' }}
+                style={{ color: selectedItem === 2 ? '#00fa32' : '#090909', height: '40px' }}
                 onClick={() => handleItemClick(2)}>
                 <FaRegCheckSquare className='item-icons' /> Registros
               </Link>
