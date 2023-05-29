@@ -98,7 +98,7 @@ export const FormRegister = ({ data = [] }) => {
 
           <InputForm
             value={formValues.organization}
-            placeholder='Empresa'
+            placeholder='Empresa/Institución'
             onChangeText={(text) => setFormValues({ ...formValues, organization: text })}
           />
 

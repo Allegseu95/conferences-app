@@ -1,12 +1,3 @@
 import { RouterManager } from '@/routes';
-import { Sidebar } from '@/components/sidebar';
 
-
-export const App = () => {
-  return (
-    <div>
-      <Sidebar/>
-      <RouterManager />;
-    </div>
-  )
-};
+export const App = () => <RouterManager />;

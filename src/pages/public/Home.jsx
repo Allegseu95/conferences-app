@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer';
 
 import { coursesFake } from '@/mock/course';
 
-import { orderCoursesByType } from '@/utils/helpers';
+import { orderCoursesByType } from '@/helpers/utils';
 
 export const HomePage = () => {
   const [courses, setCourses] = useState([]);
