@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { SideBar } from './SideBar';
-import { Profile } from './Profile';
-import { Certificate } from './Certificate';
-import { Register } from './Register';
-import './sidebar.css'
+import { Profile } from '@/components/user/Profile';
+import { Certificate } from '@/components/user/Certificate';
+import { Register } from '@/components/user/Register';
+import '@/static/styles/layout.css';
 
 export const Layout = () => {
   return (

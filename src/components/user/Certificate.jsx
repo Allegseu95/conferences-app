@@ -1,5 +1,3 @@
-import './sidebar.css';
-
 export const Certificate = () => {
   return (
     <div className='container-certificado mt-4'>

@@ -50,7 +50,7 @@ export const SideBar = () => {
                 to='/'
                 className='d-flex align-items-center m-2'
                 style={{ color: selectedItem === 0 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={() => handleItemClick(0)}>
+                onClick={(() => { handleItemClick(0), hideSidebar() })}>
                 <CgProfile className='item-icons' /> Perfil
               </Link>
             </li>
@@ -59,7 +59,7 @@ export const SideBar = () => {
                 className='d-flex align-items-center m-2'
                 to='/certificados'
                 style={{ color: selectedItem === 1 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={() => handleItemClick(1)}>
+                onClick={(() => { handleItemClick(1), hideSidebar() })}>
                 <TbCertificate className='item-icons' /> Certificados
               </Link>
             </li>
@@ -68,7 +68,7 @@ export const SideBar = () => {
                 className='d-flex align-items-center m-2'
                 to='/registros'
                 style={{ color: selectedItem === 2 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={() => handleItemClick(2)}>
+                onClick={(() => {handleItemClick(2), hideSidebar()})}>
                 <FaRegCheckSquare className='item-icons' /> Registros
               </Link>
             </li>
