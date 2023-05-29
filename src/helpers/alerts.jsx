@@ -11,31 +11,21 @@ export class MethodsAlert{
 
     static async question(){
         swal({
-            title: "Estas seguro que desea rechazar el registro?",
-            text: "Una vez rechazado, no existirá vuelta atras!",
+            title: "Estas seguro de eliminar el registro?",
+            text: "Una vez eliminado, no existira vuelta atras!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
           })
           .then((willDelete) => {
             if (willDelete) {
-              swal("Tu registro fue rechazado exitosamente!", {
+              swal("Tu registro fue eliminado exitosamente!", {
                 icon: "success",
               });
             } else {
               swal("Acción cancelada");
             }
           });
-    }
-
-    static async showvoucher(){
-      await swal({
-        title: 'Ver Registro de voucher',
-        imageUrl: 'https://www.ejemplode.com/images/uploads/voucher.jpg',
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: 'Custom image',
-      })
     }
 
 }  

@@ -1,11 +1,6 @@
-html{
-  background: linear-gradient(180deg, #e6e5e5, #787980);
-}
 #root {
   font-family: 'Oxygen', sans-serif;
   background: linear-gradient(180deg, #e6e5e5, #787980);
-  border: none;
-  min-height: 100vh;
 }
 
 #root * {

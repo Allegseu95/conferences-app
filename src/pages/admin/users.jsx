@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import '@/static/base/base.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { Sidebar } from '@/pages/admin/sidebar';
-
 
 export const Users = ({ data, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,26 +57,21 @@ export const Users = ({ data, itemsPerPage }) => {
         </li>
       );
     }
-    return <div className="pagination pagination-move mt-2 mb-3">
-        <button className='btn btn-primary p-2' onClick={handlePreviousPage} disabled={currentPage === 1}>
-          <span className='p-1'>
-             {'<'} anterior
-            </span>
+    return <div className="pagination pagination-move mt-1">
+        <button className='btn btn-primary' onClick={handlePreviousPage} disabled={currentPage === 1}>
+          {'< anterior'}
         </button>
-        <ul className='m-3'>
+        <ul>
           <li className="current-page">{currentPage}</li>
         </ul>
-        <button className='btn btn-success p-1' onClick={handleNextPage} disabled={currentPage === totalPages}>
-          <span className='p-1'>
-            siguiente {'>'}
-          </span>
+        <button className='btn btn-success' onClick={handleNextPage} disabled={currentPage === totalPages}>
+          {'siguiente >'}
         </button>
       </div>
   };
 
   return (
     <div className='content_base'>
-        <Sidebar></Sidebar>
       <div className="container contentwithoutsidebar">
         <h1 className='mb-2'>Usuarios Registrados <FontAwesomeIcon icon={faUsers} /></h1>
         <table className='table table-striped'>
@@ -89,7 +82,7 @@ export const Users = ({ data, itemsPerPage }) => {
             <th className='paddin_table' scope='col'>Correo</th>
             <th className='paddin_table' scope='col'>Teléfono</th>
             <th className='paddin_table' scope='col'>Cédula</th>
-            <th className='paddin_table' scope='col'>Dirección</th>
+            <th className='paddin_table' scope='col'>Direccion</th>
             <th className='paddin_table' scope='col'>Empresa</th>
           </tr>
         </thead>
