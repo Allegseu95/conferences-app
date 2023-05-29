@@ -1,7 +1,6 @@
 #root {
   font-family: 'Oxygen', sans-serif;
-  height: 100vh;
-  background: linear-gradient(180deg, #ffffff, #fefefe);
+  background: linear-gradient(180deg, #e6e5e5, #787980);
 }
 
 #root * {
@@ -16,3 +15,4 @@ li {
   list-style: none;
   color: black;
 }
+
