@@ -1,12 +1,15 @@
 #root {
   font-family: 'Oxygen', sans-serif;
   background: linear-gradient(180deg, #e6e5e5, #787980);
+  min-height: 100vh;
+
 }
 
 #root * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 #root a,
