@@ -1,6 +1,7 @@
+import { mostrarCertificado } from '@/helpers/user/sweetAlert'
 export const Certificate = () => {
   return (
-    <div className='container-certificado mt-4'>
+    <div className='justificar-contenedor-certificado mt-4'>
       <h4 className='text-center mt-2 text-white'>
         <b>Certificados</b>
       </h4>
@@ -22,7 +23,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>
@@ -44,7 +47,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>
@@ -66,7 +71,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>
@@ -88,7 +95,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>
@@ -110,7 +119,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>
@@ -132,7 +143,9 @@ export const Certificate = () => {
                 </h5>
               </div>
               <div className='d-block m-1'>
-                <button className='btn btn-info m-1 p-1'>Ver Certificado</button>
+                <button onClick={mostrarCertificado} className='btn btn-info m-1 p-1'>
+                  Ver Certificado
+                </button>
                 <button className='btn btn-success m-1 p-1'>Descargar Certificado</button>
               </div>
             </div>

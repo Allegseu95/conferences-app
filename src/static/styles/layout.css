@@ -3,53 +3,20 @@
   height: 100vh;
 }
 
-.boton-movil {
-  font-size: 40px;
-  display: block;
-  position: absolute;
-}
-
-.items-router {
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
-
-.item-icons {
-  font-size: 25px;
-  margin-top: -3px;
-}
-
 .container-padre {
   display: grid;
   grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
-  grid-gap: 20px;
   background: linear-gradient(180deg, #525252, #262525);
 }
-.certificado {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  place-items: center;
-}
+
 .active {
   background-color: #090909; /* Cambia el color a tu preferencia */
 }
-
-
 
 .content {
   background: linear-gradient(180deg, #525252, #262525);
 }
 
-.clase-boton {
-  display: flex;
-  position: absolute;
-}
-
-.botonclick {
-  font-size: 30px;
-}
 @media screen and (max-width: 767px) {
   #side_nav {
     position: fixed;
@@ -62,6 +29,22 @@
     transition: left 0.3s ease;
     height: 100%;
   }
+
+  .justificar-contenedor-certificado{
+    margin-left: -25px!important;
+  }
+
+  .alerta {
+    margin-left: -25px!important;
+  }
+
+  .list-group {
+    text-align: justify;
+  }
+
+  .centrar-qr{
+    text-align: center;
+  }
   
   #side_nav.active {
     left: 0;
@@ -70,7 +53,6 @@
   .container-padre {
     display: flex;
     grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
-    grid-gap: 20px;
   }
 
   .navegacion-sidebar {
