@@ -45,31 +45,45 @@ export const SideBar = () => {
             </button>
           </div>
           <ul className='list-unstyled px-2'>
-            <li className='text-decoration-none bg-white rounded'>
+            <li
+              onClick={() => handleItemClick(0)}
+              style={{ backgroundColor: selectedItem === 0 ? '#00fa32' : '#fff' }}
+              className='text-decoration-none rounded'>
               <Link
                 to='/'
-                className='d-flex align-items-center m-2'
-                style={{ color: selectedItem === 0 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={(() => { handleItemClick(0), hideSidebar() })}>
-                <CgProfile className='item-icons' /> Perfil
+                className='d-flex text-dark align-items-center m-2'
+                onClick={() => {
+                  hideSidebar();
+                }}>
+                <CgProfile className='fs-4 m-2' /> Perfil
               </Link>
             </li>
-            <li className='text-decoration-none bg-white rounded mt-3'>
+            <li
+              onClick={() => handleItemClick(1)}
+              style={{ backgroundColor: selectedItem === 1 ? '#00fa32' : '#fff' }}
+              className='text-decoration-none rounded mt-3'>
               <Link
-                className='d-flex align-items-center m-2'
+                className='d-flex text-dark align-items-center m-2'
                 to='/certificados'
                 style={{ color: selectedItem === 1 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={(() => { handleItemClick(1), hideSidebar() })}>
-                <TbCertificate className='item-icons' /> Certificados
+                onClick={() => {
+                  hideSidebar();
+                }}>
+                <TbCertificate className='fs-4 m-2' /> Certificados
               </Link>
             </li>
-            <li className='text-decoration-none bg-white rounded mt-3'>
+            <li
+              onClick={() => handleItemClick(2)}
+              style={{ backgroundColor: selectedItem === 2 ? '#00fa32' : '#fff' }}
+              className='text-decoration-none rounded mt-3'>
               <Link
-                className='d-flex align-items-center m-2'
+                className='d-flex text-dark align-items-center m-2'
                 to='/registros'
                 style={{ color: selectedItem === 2 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={(() => {handleItemClick(2), hideSidebar()})}>
-                <FaRegCheckSquare className='item-icons' /> Registros
+                onClick={() => {
+                  hideSidebar();
+                }}>
+                <FaRegCheckSquare className='fs-4 m-2' /> Registros
               </Link>
             </li>
           </ul>
