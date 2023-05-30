@@ -3,6 +3,9 @@ import '@/static/base/base.css';
 import { faUser, faScrewdriver, faBullseye, faXmark, faEye, faCheck, faChainBroken, faFolder } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MethodsAlert } from '@/helpers/alerts';
+import { showBasicAlert,question, see } from '@/helpers/sweetAlert';
+import { Sidebar } from '@/pages/admin/sidebar';
+
 
 export const Regitsers = ({ data, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,13 +15,29 @@ export const Regitsers = ({ data, itemsPerPage }) => {
     setCurrentPage(pageNumber);
   };
 
+  const confirmar =()=>{
+
+    showBasicAlert('Acción confimada con exito', 'success', 'Registro confirmado')
+
+  }
+  const ver =()=>{
+
+    see('Verificación de voucher')
+
+  }
+  const eliminar =()=>{
+
+    question('Esta seguro de rechazar el registro', 'warning', 'esta acción no puede ser rebertida')
+
+  }
+
   const renderTableData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentData = data.slice(startIndex, endIndex);
 
     return currentData.map((row, index) => {
-      const { tipopago, fecha_registro, inscripciones, usuario, total, voucher } = row;
+      const { tipopago, fecha_registro, inscripciones, usuario, total, estado } = row;
       return (
         <tr key={index}>
           <td className='padding_td' >{tipopago}</td>
@@ -26,13 +45,16 @@ export const Regitsers = ({ data, itemsPerPage }) => {
           <td className='padding_td' >{inscripciones}</td>
           <td className='padding_td' >{usuario}</td>
           <td className='padding_td' >{total}</td>
-          <td className='padding_td' >{voucher}</td>
+          <td className='padding_td' >{estado}</td>
           <td className='padding_td options' >
-            <button onClick={MethodsAlert.confirmemethod} className='btn btn-success p-1'>
+            <button onClick={confirmar} className='btn btn-success p-1'>
             <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
             </button>
-            <button onClick={MethodsAlert.question} className='btn btn-danger p-1'>
+            <button onClick={eliminar} className='btn btn-danger p-1'>
             <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
+            </button>
+            <button  onClick={ver} className='btn btn-primary p-1' data-toggle="modal" data-target="exampleModal">
+            <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
             </button>
           </td>
         </tr>
@@ -66,22 +88,27 @@ export const Regitsers = ({ data, itemsPerPage }) => {
       );
     }
     return <div className="pagination pagination-move mt-1">
-        <button className='btn btn-primary' onClick={handlePreviousPage} disabled={currentPage === 1}>
-          {'< anterior'}
+       <button className='btn btn-primary p-2' onClick={handlePreviousPage} disabled={currentPage === 1}>
+          <span className='p-1'>
+             {'<'} anterior
+            </span>
         </button>
-        <ul>
+        <ul className='m-3'>
           <li className="current-page">{currentPage}</li>
         </ul>
-        <button className='btn btn-success' onClick={handleNextPage} disabled={currentPage === totalPages}>
-          {'siguiente>'}
+        <button className='btn btn-success p-1' onClick={handleNextPage} disabled={currentPage === totalPages}>
+          <span className='p-1'>
+            siguiente {'>'}
+          </span>
         </button>
       </div>
   };
 
   return (
     <div className='content_base'>
+        <Sidebar></Sidebar>
       <div className="container contentwithoutsidebar">
-        <h1 className='mb-1'>Registros de Usuarios <FontAwesomeIcon icon={faFolder} /> </h1>
+        <h1 className='mb-1'>Registros <FontAwesomeIcon icon={faFolder} /> </h1>
         <table className='table table-striped'>
         <thead className='header_dark'>
           <tr>
@@ -90,7 +117,7 @@ export const Regitsers = ({ data, itemsPerPage }) => {
             <th className='paddin_table' scope='col'>Inscripciones</th>
             <th className='paddin_table' scope='col'>Usuario</th>
             <th className='paddin_table' scope='col'>Total</th>
-            <th className='paddin_table' scope='col'>Voucher</th>
+            <th className='paddin_table' scope='col'>Estado</th>
             <th className='paddin_table' scope='col'>Opciones</th>
           </tr>
         </thead>
