@@ -3,7 +3,7 @@ import { SideBar } from '../../components/user/SideBar';
 import { Profile } from '@/pages/user/Profile';
 import { Register } from '@/pages/user/Register';
 import '@/static/styles/layout.css';
-import '@/static/styles/layout.css'
+import '@/static/styles/layout.css';
 import { Certificate } from './Certificate';
 
 export const Layout = () => {

@@ -31,6 +31,8 @@ export const showBasicAlert = (title, icon, text = '') =>
   new Swal({
     title:title,
     imageUrl,
+    width: width,
+    height: height,
     imageWidth: width,
     imageHeight: height,
     imageAlt: 'Custom image',

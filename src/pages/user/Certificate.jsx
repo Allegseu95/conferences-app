@@ -2,10 +2,12 @@ import { see } from '@/helpers/sweetAlert';
 export const Certificate = () => {
   const mostrarCertificado = () => {
     see(
-      'Certificado',
+      '',
       'https://www.ejemplode.com/images/uploads/voucher.jpg',
-      '400px',
-      '400px'
+      '100em',
+      '40em',
+      '100px',
+      '100px'
     );
   };
   return (
