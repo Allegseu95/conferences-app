@@ -22,7 +22,7 @@ export const Regitsers = ({ data, itemsPerPage }) => {
   }
   const ver =()=>{
 
-    see('Verificación de voucher')
+    see('Verificación de voucher', 'https://www.ejemplode.com/images/uploads/voucher.jpg', '200px', '200px' )
 
   }
   const eliminar =()=>{
