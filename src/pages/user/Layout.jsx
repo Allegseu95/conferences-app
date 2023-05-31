@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import { SideBar } from '../../components/user/SideBar';
 import { Profile } from '@/pages/user/Profile';
-import { Certificate } from '@/pages/user/Certificate';
 import { Register } from '@/pages/user/Register';
 import '@/static/styles/layout.css';
 import '@/static/styles/layout.css'
+import { Certificate } from './Certificate';
 
 export const Layout = () => {
   return (

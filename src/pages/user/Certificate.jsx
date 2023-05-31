@@ -1,5 +1,13 @@
-import { mostrarCertificado } from '@/helpers/user/sweetAlert'
+import { see } from '@/helpers/sweetAlert';
 export const Certificate = () => {
+  const mostrarCertificado = () => {
+    see(
+      'Certificado',
+      'https://www.ejemplode.com/images/uploads/voucher.jpg',
+      '400px',
+      '400px'
+    );
+  };
   return (
     <div className='justificar-contenedor-certificado mt-4'>
       <h4 className='text-center mt-2 text-white'>
