@@ -1,4 +1,4 @@
-.sidebar{
+.sidebar-admin{
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -23,16 +23,16 @@
     background-color: aliceblue;
     border-radius: 10px !important;  
 }
-li:hover a{
+.lisidebar:hover a{
     color: black !important;
 }
-a{
+.asidebar{
     color: aliceblue !important;
     text-decoration: none !important;
     padding: 15px 10px 0 10px !important;
     text-align: center;
 }
-/* .sidebar:hover{
+/* .sidebar-admin:hover{
     transition: 0.5s;
     width: 20%;
 } */
@@ -51,7 +51,7 @@ a{
     margin-left: 20px !important;
 }
 
-ul{
+.ulsidebar{
     margin: 1000px;
 }
 
@@ -67,12 +67,12 @@ ul{
 }
 
 @media screen and (max-width: 600px) {
-    .sidebar{
+    .sidebar-admin{
         transition: 0.5s;
         width: 100%;
         height: 10%;
     }
-    .sidebar:hover{
+    .sidebar-admin:hover{
         transition: 0.5s;
         width: 100%;
         height: 100%;

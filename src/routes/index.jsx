@@ -8,6 +8,7 @@ import { AdminRoutes } from './admin';
 import { UserRoutes } from './user';
 
 export const RouterManager = () => {
+
   const { role } = useAuth();
 
   const [routeRole, setRouteRole] = useState('');

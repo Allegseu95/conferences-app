@@ -7,32 +7,32 @@ import '@/static/base/base.css';
 export const Sidebar =()=>{
 
     return <div>
-        <div className="sidebar">
+        <div className="sidebar-admin">
             
             <div className="headersidebar mt-3 mb-3">
                 <img className='img_icon' src="/src/assets/icon.png" alt="" srcSet="" />
             </div>
 
             <nav className="listsidebar">
-                <ul>
-                <li>
-                    <a  href="/usuarios"> 
+                <ul className="ulsidebar">
+                <li className="lisidebar">
+                    <a className="asidebar"  href="/usuarios"> 
                     <FontAwesomeIcon icon={faUser} ></FontAwesomeIcon>
                        <span className='hoverbutton'>
                             Usuarios
                         </span> 
                     </a>
                 </li>
-                <li >
-                    <a href="/registros">
+                <li className="lisidebar" >
+                    <a className="asidebar" href="/registros">
                     <FontAwesomeIcon icon={faScrewdriver} />
                        <span className='hoverbutton hoverbutton2'>
                         Registros
                        </span>
                     </a>
                 </li>
-                <li >
-                    <a href="/asistencias">
+                <li className="lisidebar" >
+                    <a className="asidebar" href="/asistencias">
                     <FontAwesomeIcon icon={faScrewdriver} />
                        <span className='hoverbutton'>
                         Asistencias

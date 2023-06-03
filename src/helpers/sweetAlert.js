@@ -15,22 +15,25 @@ export const showBasicAlert = (title, icon, text = '') =>
         text:text,
         icon:icon,
         buttons: true,
-        dangerMode: true,
+        showCancelButton: true,
+        confirmButtonText: 'confirmar',
       }).then((willDelete) => {
-        if (willDelete) {
+        if (willDelete.isConfirmed          ) {
           new Swal('Tu registro fue eliminado exitosamente!', {
             icon: 'success',
           });
         } else {
-          new Swal('Acción cancelada');
+          new Swal('Acción cancelada', {icon:'warning'});
         }
       });
-  export const see = (title) =>
+  export const see = (title, imageUrl, width, height) =>
 
   new Swal({
     title:title,
-    imageUrl: 'https://www.ejemplode.com/images/uploads/voucher.jpg',
-    imageWidth: 400,
-    imageHeight: 200,
+    imageUrl,
+    width: width,
+    height: height,
+    imageWidth: width,
+    imageHeight: height,
     imageAlt: 'Custom image',
   })
