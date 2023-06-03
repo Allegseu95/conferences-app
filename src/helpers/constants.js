@@ -24,11 +24,14 @@ export const initFormRegister = {
   password: '',
   inscriptions: [],
   typePayment: '',
-  voucher: '',
-  role: 'participant',
+  voucherBase64: '',
 };
 
 export const initFormLogin = {
   email: '',
   password: '',
 };
+
+export const auth_token = 'auth_token';
+export const auth_user = 'auth_user';
+export const auth_role = 'auth_role';
