@@ -12,14 +12,10 @@ export const InputForm = ({
   secure = false,
   required = false,
 }) => {
-  const [field, setField] = useState(value);
   const [typeInput, setTypeInput] = useState(type);
   const [secureText, setSecureText] = useState(true);
 
-  const handleText = (text) => {
-    setField(text);
-    onChangeText(text);
-  };
+  const handleText = (text) => onChangeText(text);
 
   const handleSecure = () => {
     secureText ? setTypeInput('text') : setTypeInput('password');
@@ -33,7 +29,7 @@ export const InputForm = ({
         readOnly={readonly}
         disabled={disabled}
         required={required}
-        value={field}
+        value={value}
         type={typeInput}
         className='form-control p-2 px-3'
         placeholder={placeholder}

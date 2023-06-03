@@ -1,20 +1,31 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+
+import { useAuth } from '@/contexts/AuthContext';
 
 import { PublicRoutes } from './public';
 import { AdminRoutes } from './admin';
 import { UserRoutes } from './user';
 
 export const RouterManager = () => {
-  const initRoute = 'user'; // public | admin | user
+
+  const { role } = useAuth();
+
+  const [routeRole, setRouteRole] = useState('');
+
+  useEffect(() => {
+    setRouteRole(role);
+  }, [role]);
+
   return (
     <BrowserRouter>
-      {initRoute === 'public' ? (
-        <PublicRoutes />
-      ) : initRoute === 'admin' ? (
+      {routeRole === 'administrator' ? (
         <AdminRoutes />
-      ) : initRoute === 'user' ? (
+      ) : routeRole === 'participant' ? (
         <UserRoutes />
-      ) : null}
+      ) : (
+        <PublicRoutes />
+      )}
     </BrowserRouter>
   );
 };
