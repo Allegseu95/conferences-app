@@ -13,7 +13,7 @@ import { Button } from '../Button';
 import { paymentOptions, initFormRegister } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
 import {
-  cleanText,
+  cleanText,  
   validateCedula,
   validateEmail,
   validatePassword,

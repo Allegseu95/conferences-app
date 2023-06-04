@@ -4,10 +4,9 @@ export const Certificate = () => {
     see(
       '',
       'https://www.ejemplode.com/images/uploads/voucher.jpg',
-      '100em',
-      '40em',
-      '100px',
-      '100px'
+      '90%',
+      '500px',
+      '900px'
     );
   };
   return (

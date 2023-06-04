@@ -3,7 +3,7 @@ import { MdLocationPin } from 'react-icons/md';
 import { BsPhoneFill } from 'react-icons/bs';
 import { HiOutlineIdentification } from 'react-icons/hi';
 import { MdEmail } from 'react-icons/md';
-import { updateProfile } from '@/helpers/constants';
+import { updateProfile } from '@/mock/profileUser';
 import { InfoProfile } from '@/components/user/InfoProfile';
 import '@/static/styles/layout.css';
 
@@ -25,7 +25,7 @@ export const Profile = () => {
                   </b>
                   <input
                     type='text'
-                    value={updateProfile[0].name}
+                    value={updateProfile.name + ' ' + updateProfile.lastname}
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'
                     aria-describedby='inputGroup-sizing-sm'
@@ -40,7 +40,7 @@ export const Profile = () => {
                   </b>
                   <input
                     type='text'
-                    value={updateProfile[0].adress}
+                    value={updateProfile.adress}
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'
                     aria-describedby='inputGroup-sizing-sm'
@@ -55,7 +55,7 @@ export const Profile = () => {
                   </b>
                   <input
                     type='text'
-                    value={updateProfile[0].company}
+                    value={updateProfile.company}
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'
                     aria-describedby='inputGroup-sizing-sm'
@@ -70,7 +70,7 @@ export const Profile = () => {
                   </b>
                   <input
                     type='text'
-                    value={updateProfile[0].phone}
+                    value={updateProfile.phone}
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'
                     aria-describedby='inputGroup-sizing-sm'
@@ -85,7 +85,7 @@ export const Profile = () => {
                   </b>
                   <input
                     type='text'
-                    value={updateProfile[0].cedula}
+                    value={updateProfile.cedula}
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'
                     aria-describedby='inputGroup-sizing-sm'
@@ -101,7 +101,7 @@ export const Profile = () => {
                   </b>
                   <input
                     placeholder='ejemplo@gmail.com'
-                    value={updateProfile[0].email}
+                    value={updateProfile.email}
                     type='text'
                     className='form-control p-1 fs-5'
                     aria-label='Sizing example input'

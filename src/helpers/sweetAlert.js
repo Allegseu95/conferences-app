@@ -26,14 +26,12 @@ export const showBasicAlert = (title, icon, text = '') =>
           new Swal('Acción cancelada', {icon:'warning'});
         }
       });
-  export const see = (title, imageUrl, width, height) =>
-
-  new Swal({
-    title:title,
-    imageUrl,
-    width: width,
-    height: height,
-    imageWidth: width,
-    imageHeight: height,
-    imageAlt: 'Custom image',
-  })
+  export const see = (title, imageUrl, width = 500, height = 300, modalWidth = '30%') =>
+    new Swal({
+      title: title,
+      imageUrl,
+      width: modalWidth,
+      imageWidth: width,
+      imageHeight: height,
+      imageAlt: 'Custom image',
+    });
