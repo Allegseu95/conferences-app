@@ -33,15 +33,24 @@ export const initFormLogin = {
   password: '',
 };
 
-export const updateProfile = [
-  {
-    id: '1',
-    name: 'rommel santiago',
-    lastname: 'palma plua',
-    email: 'ejemplo@gmail.com',
-    phone: '0967764587',
-    cedula: '230053614',
-    adress: 'manta-ecuador',
-    company: 'universidad laica elou alfaro de manabi'
-  }
-];
+export const updateProfile = {
+  id: '1',
+  name: 'rommel santiago',
+  lastname: 'palma plua',
+  email: 'ejemplo@gmail.com',
+  phone: '0967764587',
+  cedula: '230053614',
+  adress: 'manta-ecuador',
+  company: 'universidad laica elou alfaro de manabi',
+};
+
+export const createCourse = {
+  title: '',
+  description: '',
+  photoUrl: '',
+  price: '',
+  type: '',
+  startDate: new Date().toISOString().split('T')[0],
+  endDate: new Date().toISOString().split('T')[0],
+  certificateTemplateURL: '',
+};

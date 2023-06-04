@@ -20,3 +20,14 @@
     display: flex;
     justify-content: space-around;
 }
+
+.contentwithoutsidebar2 {
+    padding: 2% 0% 2% 16% !important;
+    margin-right: 20px!important;
+}
+
+@media screen and (max-width: 767px) {
+    .contenedorLista {
+        margin-top: 100px!important;
+    }
+}
