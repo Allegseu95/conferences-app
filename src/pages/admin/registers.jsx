@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '@/static/base/base.css';
 import { faUser, faScrewdriver, faBullseye, faXmark, faEye, faCheck, faChainBroken, faFolder } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MethodsAlert } from '@/helpers/alerts';
 import { showBasicAlert,question, see } from '@/helpers/sweetAlert';
 import { Sidebar } from '@/pages/admin/sidebar';
 
@@ -10,7 +9,7 @@ import { Sidebar } from '@/pages/admin/sidebar';
 export const Regitsers = ({ data, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
-  
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
