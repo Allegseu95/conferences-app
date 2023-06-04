@@ -6,9 +6,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { PublicRoutes } from './public';
 import { AdminRoutes } from './admin';
 import { UserRoutes } from './user';
+import { VerifierRoutes } from './verifier';
 
 export const RouterManager = () => {
-
   const { role } = useAuth();
 
   const [routeRole, setRouteRole] = useState('');
@@ -23,6 +23,8 @@ export const RouterManager = () => {
         <AdminRoutes />
       ) : routeRole === 'participant' ? (
         <UserRoutes />
+      ) : routeRole === 'verifier' ? (
+        <VerifierRoutes />
       ) : (
         <PublicRoutes />
       )}
