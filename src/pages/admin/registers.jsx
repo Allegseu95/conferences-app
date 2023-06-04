@@ -11,8 +11,9 @@ import {
   faFolder,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MethodsAlert } from '@/helpers/alerts';
-import { showBasicAlert, question, see } from '@/helpers/sweetAlert';
+
+import { showBasicAlert,question, see } from '@/helpers/sweetAlert';
+
 import { Sidebar } from '@/pages/admin/sidebar';
 
 export const Regitsers = ({ data, itemsPerPage }) => {

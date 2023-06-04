@@ -1,19 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 import { InputForm } from '../InputForm';
 import { Button } from '../Button';
 
 import { showBasicAlert } from '@/helpers/sweetAlert';
-import { cleanText, validateEmail } from '@/helpers/utils';
+import { cleanText, validateEmail, validatePassword } from '@/helpers/utils';
 import { initFormLogin } from '@/helpers/constants';
 
 export const FormLogin = () => {
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
+  const { authLogin } = useAuth();
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState(initFormLogin);
 
   const login = async () => {
     if (validateLoginForm(formValues)) {
-      console.log('login en APi', formValues);
+      showLoader();
+      try {
+        const result = await server.login(formValues);
+        authLogin(result?.user, result?.token);
+        showBasicAlert('Inicio de sesión Exitoso!', 'success');
+        setFormValues(initFormLogin);
+        navigate('/');
+      } catch (error) {
+        console.log(error?.response?.data?.mensaje);
+        showBasicAlert(
+          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+          'error'
+        );
+      } finally {
+        hideLoader();
+      }
     }
   };
 
@@ -38,6 +62,15 @@ export const FormLogin = () => {
 
     if (data?.password === '') {
       showBasicAlert('Llene su contraseña', icon);
+      return false;
+    }
+
+    if (!validatePassword(data?.password)) {
+      showBasicAlert(
+        'Ingrese una contraseña segura',
+        icon,
+        'La contraseña debe tener al menos 8 caracteres, una letra minúscula, una letra mayúscula, un número y un carácter especial'
+      );
       return false;
     }
 

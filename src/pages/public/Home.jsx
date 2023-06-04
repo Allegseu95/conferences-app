@@ -1,20 +1,37 @@
 import { Fragment, useEffect, useState } from 'react';
 
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
+
 import { Header } from '@/components/Header';
 import { CardImageHome } from '@/components/public/CardImageHome';
 import { FormRegister } from '@/components/public/FormRegister';
 import { Footer } from '@/components/Footer';
 
-import { coursesFake } from '@/mock/course';
-
 import { orderCoursesByType } from '@/helpers/utils';
 
 export const HomePage = () => {
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
+
   const [courses, setCourses] = useState([]);
 
+  const getCourses = async () => {
+    showLoader();
+    try {
+      const data = await server.getCourses();
+      const _courses = orderCoursesByType(data);
+      setCourses(_courses);
+    } catch (error) {
+      console.log(error);
+      setCourses([]);
+    } finally {
+      hideLoader();
+    }
+  };
+
   useEffect(() => {
-    const _courses = orderCoursesByType(coursesFake);
-    setCourses(_courses);
+    getCourses();
   }, []);
 
   return (

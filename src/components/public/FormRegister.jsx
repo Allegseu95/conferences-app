@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
+
 import { InputForm } from '../InputForm';
 import { SelectForm } from '../SelectForm';
 import { InputFileForm } from '../InputFileForm';
@@ -18,14 +21,32 @@ import {
 } from '@/helpers/utils';
 
 export const FormRegister = ({ data = [] }) => {
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
+
   const [formValues, setFormValues] = useState(initFormRegister);
   const [courses, setCourses] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const register = async () => {
     formValues.inscriptions = courses.filter((item) => item?.select).map((item) => item._id);
 
     if (validRegisterForm(formValues)) {
-      console.log('registro en APi', formValues);
+      showLoader();
+      try {
+        await server.registerParticipant(formValues);
+        showBasicAlert('Registro Exitoso!', 'success');
+        setFormValues(initFormRegister);
+        initCourses();
+      } catch (error) {
+        console.log(error?.response?.data?.mensaje);
+        showBasicAlert(
+          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+          'error'
+        );
+      } finally {
+        hideLoader();
+      }
     }
   };
 
@@ -114,7 +135,7 @@ export const FormRegister = ({ data = [] }) => {
       return false;
     }
 
-    if (data?.typePayment === 'transfer' && data?.voucher === '') {
+    if (data?.typePayment === 'transfer' && data?.voucherBase64 === '') {
       showBasicAlert('Suba su comprobante de pago', icon);
       return false;
     }
@@ -134,14 +155,29 @@ export const FormRegister = ({ data = [] }) => {
     setCourses(_courses);
   };
 
-  useEffect(() => {
+  const initCourses = () => {
     const _courses = data?.map((item) => ({
       ...item,
       select: false,
     }));
 
     setCourses(_courses);
+  };
+
+  useEffect(() => {
+    initCourses();
   }, []);
+
+  useEffect(() => {
+    const total = courses.reduce((accumulator, current) => {
+      if (current.select) {
+        return accumulator + current?.price;
+      }
+      return accumulator;
+    }, 0);
+
+    setTotal(total);
+  }, [courses]);
 
   return (
     <div className='w-100  mb-5'>
@@ -226,7 +262,7 @@ export const FormRegister = ({ data = [] }) => {
           />
 
           {courses.length > 0 && (
-            <div className='px-2 mb-3'>
+            <div className='px-2'>
               {courses?.map((item, index) => (
                 <CheckBox
                   key={index}
@@ -239,6 +275,10 @@ export const FormRegister = ({ data = [] }) => {
             </div>
           )}
 
+          <div className='w-100 my-2 text-light px-3'>
+            <span>Total: {total} $</span>
+          </div>
+
           <SelectForm
             options={paymentOptions}
             value={formValues.typePayment}
@@ -249,7 +289,7 @@ export const FormRegister = ({ data = [] }) => {
           {formValues.typePayment === 'transfer' && (
             <InputFileForm
               acceptFile='image/*'
-              onChangeText={(text) => setFormValues({ ...formValues, voucher: text })}
+              onChangeText={(text) => setFormValues({ ...formValues, voucherBase64: text })}
             />
           )}
 

@@ -24,24 +24,12 @@ export const initFormRegister = {
   password: '',
   inscriptions: [],
   typePayment: '',
-  voucher: '',
-  role: 'participant',
+  voucherBase64: '',
 };
 
 export const initFormLogin = {
   email: '',
   password: '',
-};
-
-export const updateProfile = {
-  id: '1',
-  name: 'rommel santiago',
-  lastname: 'palma plua',
-  email: 'ejemplo@gmail.com',
-  phone: '0967764587',
-  cedula: '230053614',
-  adress: 'manta-ecuador',
-  company: 'universidad laica elou alfaro de manabi',
 };
 
 export const createCourse = {
@@ -54,3 +42,8 @@ export const createCourse = {
   endDate: new Date().toISOString().split('T')[0],
   certificateTemplateURL: '',
 };
+
+export const auth_token = 'auth_token';
+export const auth_user = 'auth_user';
+export const auth_role = 'auth_role';
+
