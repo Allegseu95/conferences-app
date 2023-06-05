@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-
 import { Users } from '@/pages/admin/users';
 import { usersfake } from '@/mock/users';
 import { Regitsers } from '@/pages/admin/registers';
@@ -9,7 +8,7 @@ import { registersfake } from '@/mock/registers';
 import { ListaCertificado } from '@/pages/admin/ListaCertificado';
 import { CrearCurso } from '@/pages/admin/CrearCurso';
 
-const itemsPerPage = 10;
+const itemsPerPage = 6;
 export const AdminRoutes = () => (
   <Routes>
     <Route
@@ -21,5 +20,5 @@ export const AdminRoutes = () => (
     <Route path='/crear-curso' element={<CrearCurso />} />
     <Route path='/lista-certificados' element={<ListaCertificado data={coursesFake} itemsPerPage={itemsPerPage} />} />
     <Route path='*' element={<Navigate to='/registros' />} />
-  </Routes>
+  </Routes>
 );

@@ -9,6 +9,9 @@
 .padding_td{
     padding: 10px !important;
 }
+.content_base{
+    min-height: 100vh;
+}
 .contentwithoutsidebar{
     padding: 2% 0 0 25% !important;
 }
