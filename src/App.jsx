@@ -1,7 +1,6 @@
 import { LoaderProvider } from '@/contexts/LoaderContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ServerProvider } from '@/contexts/ServerContext';
-import { AdminProvider } from '@/contexts/GetRegisters';
 
 import { RouterManager } from '@/routes';
 
@@ -9,9 +8,7 @@ export const App = () => (
   <LoaderProvider>
     <AuthProvider>
       <ServerProvider>
-        <AdminProvider>
-          <RouterManager />
-        </AdminProvider>
+        <RouterManager />
       </ServerProvider>
     </AuthProvider>
   </LoaderProvider>

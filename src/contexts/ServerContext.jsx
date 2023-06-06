@@ -67,6 +67,22 @@ class ServerApi {
         .catch((err) => reject(err));
     });
   };
+
+  getRegisters = () => {
+    return new Promise((resolve, reject) => {
+      getAxios(`${this.baseUrl}/api/user/get-all-registers`, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
+  UpdateStatus = (data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/user/update-status-register`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
 }
 
 export const ServerProvider = ({ children }) => (

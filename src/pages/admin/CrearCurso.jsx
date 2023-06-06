@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Sidebar } from './sidebar';
 import { createCourse } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
@@ -7,7 +7,7 @@ import { useLoader } from '@/contexts/LoaderContext';
 import { useServer } from '@/contexts/ServerContext';
 import { useNavigate } from 'react-router-dom';
 
-export const CrearCurso = ({ data = [] }) => {
+export const CrearCurso = () => {
   const [form, setForm] = useState(createCourse);
   const { showLoader, hideLoader } = useLoader();
   const server = useServer();

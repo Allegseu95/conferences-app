@@ -5,7 +5,6 @@ import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
-import { Link } from 'react-router-dom';
 
 export const Sidebar = () => {
   return (
@@ -36,8 +35,8 @@ export const Sidebar = () => {
               </Link>
             </li>
             <li className='lisidebar'>
-              <Link className='asidebar' to='/lista-certificados' >
-                <BiTask className='fs-6'/>
+              <Link className='asidebar' to='/lista-certificados'>
+                <BiTask className='fs-6' />
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
@@ -48,6 +47,6 @@ export const Sidebar = () => {
           <span className='hoverbutton'>&copy; 2023 Conferencias App</span>
         </div>
       </div>
-    </div>
-  );
+    </div>
+  );
 };
