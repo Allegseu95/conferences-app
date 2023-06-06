@@ -9,8 +9,13 @@
 .padding_td {
   padding: 10px !important;
 }
-.contentwithoutsidebar {
-  padding: 2% 0 0 25% !important;
+
+.content_base{
+    min-height: 100vh;
+}
+
+.contentwithoutsidebar{
+    padding: 2% 0 0 25% !important;
 }
 .pagination-move {
   padding: 0 0 0 50% !important;

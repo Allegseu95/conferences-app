@@ -2,6 +2,7 @@
 import { faUser, faScrewdriver } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
 import { Link } from 'react-router-dom';
@@ -11,32 +12,32 @@ export const Sidebar = () => {
     <div>
       <div className='sidebar-admin'>
         <div className='headersidebar mt-3 mb-3'>
-          <img className='img_icon' src='/src/assets/icon.png' alt='' srcSet='' />
+          <img className='img_icon' src='/src/assets/icons/icon.png' alt='' srcSet='' />
         </div>
 
         <nav className='listsidebar'>
           <ul className='ulsidebar'>
             <li className='lisidebar'>
-              <a className='asidebar' href='/usuarios'>
+              <Link to='/usuarios' className='asidebar'>
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                 <span className='hoverbutton'>Usuarios</span>
-              </a>
+              </Link>
             </li>
             <li className='lisidebar'>
-              <a className='asidebar' href='/registros'>
+              <Link to='/registros' className='asidebar'>
                 <FontAwesomeIcon icon={faScrewdriver} />
                 <span className='hoverbutton hoverbutton2'>Registros</span>
-              </a>
+              </Link>
             </li>
             <li className='lisidebar'>
-              <a className='asidebar' href='/asistencias'>
+              <Link to='/asistencias' className='asidebar'>
                 <FontAwesomeIcon icon={faScrewdriver} />
                 <span className='hoverbutton'>Asistencias</span>
-              </a>
+              </Link>
             </li>
             <li className='lisidebar'>
-              <Link className='asidebar' to='/lista-certificados'>
-                <BiTask className='fs-6' />
+              <Link className='asidebar' to='/lista-certificados' >
+                <BiTask className='fs-6'/>
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
@@ -47,6 +48,6 @@ export const Sidebar = () => {
           <span className='hoverbutton'>&copy; 2023 Conferencias App</span>
         </div>
       </div>
-    </div>
-  );
+    </div>
+  );
 };
