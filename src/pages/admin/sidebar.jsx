@@ -5,6 +5,7 @@ import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
+import { Link } from 'react-router-dom';
 
 export const Sidebar = () => {
   return (

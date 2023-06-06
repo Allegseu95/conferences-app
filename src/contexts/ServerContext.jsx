@@ -43,6 +43,30 @@ class ServerApi {
         .catch((err) => reject(err));
     });
   };
+
+  createCourse = (data) => {
+    return new Promise((resolve, reject) => {
+      postAxios(`${this.baseUrl}/api/course/create-course`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
+  getCourseById = (id) => {
+    return new Promise((resolve, reject) => {
+      getAxios(`${this.baseUrl}/api/course/get-course/${id}`)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
+  updateCourse = (id, data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/course/update-course/${id}`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
 }
 
 export const ServerProvider = ({ children }) => (

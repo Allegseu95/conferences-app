@@ -1,36 +1,58 @@
-.header_dark{
-    background-color: rgb(45, 43, 43) !important;
-    color: aliceblue !important;
+.header_dark {
+  background-color: rgb(45, 43, 43) !important;
+  color: aliceblue !important;
 }
 
-.paddin_table{
-    padding: 15px !important;
+.paddin_table {
+  padding: 15px !important;
 }
-.padding_td{
-    padding: 10px !important;
+.padding_td {
+  padding: 10px !important;
 }
+
 .content_base{
     min-height: 100vh;
 }
+
 .contentwithoutsidebar{
     padding: 2% 0 0 25% !important;
 }
-.pagination-move{
-    padding: 0 0 0 50% !important;
+.pagination-move {
+  padding: 0 0 0 50% !important;
 }
-.options{
-    width: 105px !important;
-    display: flex;
-    justify-content: space-around;
+.options {
+  width: 105px !important;
+  display: flex;
+  justify-content: space-around;
 }
 
 .contentwithoutsidebar2 {
-    padding: 2% 0% 2% 16% !important;
-    margin-right: 20px!important;
+  padding: 2% 0% 2% 16% !important;
+  margin-right: 20px !important;
+}
+.contentwithoutsidebar3 {
+  padding: 2% 0% 2% 16% !important;
+  margin-right: 20px !important;
 }
 
 @media screen and (max-width: 767px) {
-    .contenedorLista {
-        margin-top: 100px!important;
-    }
+  .contenedorLista {
+    margin-top: 100px !important;
+    
+  }
+  .contentwithoutsidebar3 {
+  padding: 2% 0% 0% 2% !important;
+  .items-movil {
+    margin-top: 110px!important;
+  }
+}
+}
+
+.scrollable-div {
+  max-height: 500px !important;
+  overflow-y: scroll !important;
+}
+
+.scrollable-div::-webkit-scrollbar {
+  display: none !important;
 }

@@ -6,10 +6,12 @@ import { BiExit } from 'react-icons/bi';
 import { Link, Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import { ButtomMobil } from '@/components/user/ButtomMobil';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const SideBar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const { authLogout } = useAuth();
 
   const handleItemClick = (index) => {
     setSelectedItem(index);
@@ -26,7 +28,7 @@ export const SideBar = () => {
   return (
     <div>
       <ButtomMobil showSidebar={showSidebar} />
-      <div className='bg-dark d-grid' style={{ height: '100vh' }}>
+      <div className='d-grid' style={{ height: '100vh' }}>
         <div className={`bg-dark ${sidebarVisible ? 'active' : ''}`} id='side_nav'>
           <div className='bg-dark px-2 pt-3 pb-4'>
             <h1 className='fs-4 text-center'>
@@ -89,7 +91,7 @@ export const SideBar = () => {
               <Link
                 className='d-flex text-dark align-items-center m-2'
                 onClick={() => {
-                  hideSidebar();
+                  hideSidebar(); authLogout();
                 }}>
                 <BiExit className='fs-4 m-2' /> Cerrar Sesion
               </Link>
