@@ -11,6 +11,8 @@ import { updateCourse } from '@/helpers/constants';
 // Admin9276#
 export const UpdateCourse = () => {
   const [updateForm, setUpdateForm] = useState(updateCourse);
+  const [currentData, setCurrentData] = useState({ photo: null, certificate: null });
+
   const server = useServer();
   const { curseId } = useParams(); // Obtienes el ID del curso de los parámetros de la URL
   const navigate = useNavigate();
@@ -19,13 +21,39 @@ export const UpdateCourse = () => {
   const updateCurse = async () => {
     showLoader();
     try {
-      const updatedData = { ...updateForm };
+      /*const updatedData = { ...updateForm };
       delete updatedData._id;
-      delete updatedData.photoURL;
-      delete updatedData.certificateTemplateURL;
+      
       delete updatedData.__v;
 
-      await server.updateCourse(curseId, updatedData);
+      updatedData.photoBase64 = updatedData.photoURL;
+      delete updatedData.photoURL;
+      updatedData.certificateTemplateBase64 = updatedData.certificateTemplateURL;
+      delete updatedData.certificateTemplateURL;
+      console.log(updatedData)*/
+
+      const data = {
+        title: updateForm.title,
+        description: updateForm.description,
+        //photoBase64: updateForm.photoURL,
+        price: updateForm.price,
+        type: updateForm.type,
+        startDate: updateForm.startDate,
+        endDate: updateForm.endDate,
+        //certificateTemplateBase64: updateForm.certificateTemplateURL,
+      };
+      if (updateForm.photoURL !== currentData.photo) {
+        data.photoBase64 = updateForm.photoURL;
+      }
+
+      if (updateForm.certificateTemplateURL !== currentData.certificate) {
+        data.certificateTemplateBase64 = updateForm.certificateTemplateURL;
+      }
+
+      console.log(data);
+
+      const result = await server.updateCourse(curseId, data);
+      console.log(result)
       showBasicAlert('Actializacion Exitosa!', 'success');
       navigate('/lista-certificados');
     } catch (error) {
@@ -43,7 +71,8 @@ export const UpdateCourse = () => {
     const fetchCourseById = async () => {
       try {
         const curso = await server.getCourseById(curseId); // Obtén el curso por su ID
-        console.log(curso);
+        //console.log(curso);
+        setCurrentData({ photo: curso.photoURL, certificate: curso.certificateTemplateURL });
         setUpdateForm(curso);
       } catch (error) {
         console.log(error);
@@ -79,7 +108,7 @@ export const UpdateCourse = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Fecha Inicio</label>
+                <label className='form-label'>Fecha de inicio</label>
                 <input
                   type='date'
                   value={
@@ -95,7 +124,7 @@ export const UpdateCourse = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Fecha fin</label>
+                <label className='form-label'>Fecha de fin</label>
                 <input
                   value={
                     updateForm.endDate
@@ -123,9 +152,8 @@ export const UpdateCourse = () => {
                 </select>
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Certificado</label>
+                <label className='form-label'>Imagen</label>
                 <InputFileForm
-                  value={updateForm.photoURL}
                   acceptFile='image/*'
                   onChangeText={(base64String) =>
                     setUpdateForm({ ...updateForm, photoURL: base64String })
@@ -133,9 +161,8 @@ export const UpdateCourse = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Certificado 2</label>
+                <label className='form-label'>Plantilla de Certificado</label>
                 <InputFileForm
-                  value={updateForm.certificateTemplateURL}
                   acceptFile='image/*'
                   onChangeText={(base64String) =>
                     setUpdateForm({ ...updateForm, certificateTemplateURL: base64String })
@@ -154,7 +181,7 @@ export const UpdateCourse = () => {
                 />
               </div>
               <div className='col-12 mt-2 p-2'>
-                <label className='form-label'>Descripcion</label>
+                <label className='form-label'>Descripción</label>
                 <textarea
                   value={updateForm.description}
                   onChange={(e) => {

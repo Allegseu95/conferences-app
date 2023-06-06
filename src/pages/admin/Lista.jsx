@@ -120,17 +120,6 @@ export const Lista = () => {
         fontSize: '15px',
       },
     },
-    
-  };
-
-  const pagination = {
-    pagination: {
-      marginTop: '20px',
-      color: 'red',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
   };
 
   return (
@@ -146,18 +135,17 @@ export const Lista = () => {
             <MdAddToPhotos className='fs-4' /> Crear Curso
           </Link>
           <div className='mt-2'>
-            <div className='text-dark'></div>
             {courses.length > 0 && (
               <DataTable
                 columns={columns}
                 striped
                 highlightOnHover
+                selectableRowsComponent={() => <div></div>}
                 fixedHeader
-                selectableRows
                 data={getCurrentCourses()}
                 customStyles={customStyles}
+                selectableRows
                 pagination
-                
               />
             )}
           </div>
