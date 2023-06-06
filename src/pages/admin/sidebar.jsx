@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
+import { Link } from 'react-router-dom';
 
 export const Sidebar = () => {
   return (
@@ -34,10 +35,10 @@ export const Sidebar = () => {
               </a>
             </li>
             <li className='lisidebar'>
-              <a className='asidebar' href='/lista-certificados'>
-                <BiTask className='fs-6'/>
+              <Link className='asidebar' to='/lista-certificados'>
+                <BiTask className='fs-6' />
                 <span className='hoverbutton'>Cursos</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

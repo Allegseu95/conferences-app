@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { SideBar } from '../../components/user/SideBar';
 import { Profile } from '@/pages/user/Profile';
 import { Register } from '@/pages/user/Register';
@@ -9,7 +9,7 @@ import { Certificate } from './Certificate';
 export const Layout = () => {
   return (
     <div className='container-padre'>
-      <div className='bg-dark'>
+      <div className=''>
         <SideBar />
       </div>
       <div className='content'>
@@ -17,6 +17,7 @@ export const Layout = () => {
           <Route path='/' element={<Profile />} />
           <Route path='/certificados' element={<Certificate />} />
           <Route path='/registros' element={<Register />} />
+          <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </div>
     </div>

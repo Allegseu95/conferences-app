@@ -3,76 +3,88 @@ import { Sidebar } from './sidebar';
 import { createCourse } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
 import { InputFileForm } from '@/components/InputFileForm';
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
+import { useNavigate } from 'react-router-dom';
 
 export const CrearCurso = ({ data = [] }) => {
   const [form, setForm] = useState(createCourse);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
+  const navigate = useNavigate();
+
+  const crearCurso = async () => {
+    if (validarCurso(form)) {
+      showLoader();
+      try {
+        await server.createCourse(form);
+        showBasicAlert('Registro Exitoso!', 'success');
+        setForm(createCourse);
+        navigate('/lista-certificados');
+      } catch (error) {
+        console.log(error?.response?.data?.mensaje);
+        showBasicAlert(
+          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+          'error'
+        );
+      } finally {
+        hideLoader();
+      }
+    }
+  };
 
   const validarCurso = (data) => {
     const icon = 'warning';
 
-    if (data?.title === '') {
+    if (!data?.title) {
       showBasicAlert('Llene el titulo', icon);
       return false;
     }
 
-    if (data?.description === '') {
-      showBasicAlert('Llene la descripcion', icon);
-      return false;
-    }
-
-    if (data?.price === '') {
+    if (!data?.price) {
       showBasicAlert('Ubique un precio', icon);
       return false;
     }
 
-    if (data?.type === '') {
+    if (!data?.type) {
       showBasicAlert('Ubique un tipo', icon);
       return false;
     }
 
-    if (data?.startDate === '') {
+    if (!data?.startDate) {
       showBasicAlert('Ubique un tipo', icon);
       return false;
     }
 
-    if (data?.endDate === '') {
+    if (!data?.endDate) {
       showBasicAlert('Ubique un tipo', icon);
       return false;
     }
 
-    if (data?.certificateTemplateURL === '' || !data?.certificateTemplateURL) {
+    if (!data?.certificateTemplateBase64) {
       showBasicAlert('Suba una imagen', icon);
       return false;
     }
 
-    if (data?.photoUrl === '' || !data?.photoUrl) {
+    if (!data?.photoBase64) {
       showBasicAlert('Suba una imagen', icon);
       return false;
     }
-
     return true;
   };
 
   const handleSubmit = async (e) => {
-    const icon2 = 'success';
     e.preventDefault();
-    setFormSubmitted(true);
-    const isValid = validarCurso(form);
-    console.log(form);
-    if (isValid) {
-      showBasicAlert('Curso Creado', icon2);
-    }
   };
 
   return (
-    <div className='content_base'>
+    <div className='content_base' style={{ height: '100vh' }}>
       <Sidebar />
       <div className='contentwithoutsidebar2'>
         <div className='contenedorLista'>
           <div className='mt-3'>
             <form onSubmit={handleSubmit} className='row g-3'>
-              <div className='col-md-12'>
+              <div className='col-md-12 p-2'>
                 <label className='form-label'>Titulo</label>
                 <input
                   value={form.title}
@@ -84,7 +96,7 @@ export const CrearCurso = ({ data = [] }) => {
                   }}
                 />
               </div>
-              <div className='col-md-4 mt-2'>
+              <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Fecha Inicio</label>
                 <input
                   type='date'
@@ -96,7 +108,7 @@ export const CrearCurso = ({ data = [] }) => {
                   id='inputAddress2'
                 />
               </div>
-              <div className='col-md-4 mt-2'>
+              <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Fecha fin</label>
                 <input
                   value={form.endDate}
@@ -108,39 +120,37 @@ export const CrearCurso = ({ data = [] }) => {
                   id='inputAddress2'
                 />
               </div>
-              <div className='col-md-4 mt-2'>
+              <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Tipo</label>
-                <input
-                  value={form.type}
+                <select
+                  className='p-2 form-select'
                   onChange={(e) => {
                     setForm({ ...form, type: e.target.value });
                   }}
-                  type='text'
-                  className='form-control p-2'
-                  id='inputAddress2'
-                  placeholder='Tipo'
-                />
+                  value={form.type}>
+                  <option value='congress'>Congreso</option>
+                  <option value='workshop'>Taller</option>
+                </select>
               </div>
-              <div className='col-md-4 mt-2'>
+              <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Certificado</label>
                 <InputFileForm
-                  value={form.photoUrl}
-                  acceptFile='image/*'  
-                  onChangeText={(e) => setForm({ ...form, photoUrl: e.target.value })}
+                  value={form.photoBase64}
+                  acceptFile='image/*'
+                  onChangeText={(base64String) => setForm({ ...form, photoBase64: base64String })}
                 />
               </div>
-              <div className='col-md-4 mt-2'>
-                <label className='form-label'>Certificado</label>
-                <input
-                  value={form.certificateTemplateURL}
-                  onChange={(e) => {
-                    setForm({ ...form, certificateTemplateURL: e.target.value });
-                  }}
-                  type='file'
-                  className='form-control p-2'
+              <div className='col-md-4 mt-2 p-2'>
+                <label className='form-label'>Certificado 2</label>
+                <InputFileForm
+                  value={form.certificateTemplateBase64}
+                  acceptFile='image/*'
+                  onChangeText={(base64String) =>
+                    setForm({ ...form, certificateTemplateBase64: base64String })
+                  }
                 />
               </div>
-              <div className='col-md-4 mt-2'>
+              <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Precio</label>
                 <input
                   value={form.price}
@@ -151,7 +161,7 @@ export const CrearCurso = ({ data = [] }) => {
                   className='form-control p-2'
                 />
               </div>
-              <div className='col-12 mt-2'>
+              <div className='col-12 mt-2 p-2'>
                 <label className='form-label'>Descripcion</label>
                 <textarea
                   value={form.description}
@@ -164,9 +174,12 @@ export const CrearCurso = ({ data = [] }) => {
                   placeholder='Descripcion'
                 />
               </div>
-                <button type='submit' className='btn btn-success p-2 col-2 mt-4'>
-                  Crear
-                </button>
+              <button
+                type='submit'
+                onClick={() => crearCurso()}
+                className='btn btn-success p-2 col-2 mt-4'>
+                Crear
+              </button>
             </form>
           </div>
         </div>

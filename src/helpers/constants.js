@@ -35,15 +35,26 @@ export const initFormLogin = {
 export const createCourse = {
   title: '',
   description: '',
-  photoUrl: '',
+  photoBase64: '',
   price: '',
   type: '',
   startDate: new Date().toISOString().split('T')[0],
   endDate: new Date().toISOString().split('T')[0],
-  certificateTemplateURL: '',
+  certificateTemplateBase64: '',
 };
 
 export const auth_token = 'auth_token';
 export const auth_user = 'auth_user';
 export const auth_role = 'auth_role';
 
+
+export const updateCourse = {
+  title: '',
+  description: '',
+  photoURL: '',
+  price: '',
+  type: '',
+  startDate: new Date().toISOString().split('T')[0],
+  endDate: new Date().toISOString().split('T')[0],
+  certificateTemplateURL: '',
+};

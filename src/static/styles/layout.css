@@ -21,22 +21,22 @@
     height: 100%;
   }
 
-  .justificar-contenedor-certificado{
-    margin-left: -25px!important;
+  .justificar-contenedor-certificado {
+    margin-left: -25px !important;
   }
 
   .alerta {
-    margin-left: -25px!important;
+    margin-left: -25px !important;
   }
 
   .list-group {
     text-align: justify;
   }
 
-  .centrar-qr{
+  .centrar-qr {
     text-align: center;
   }
-  
+
   #side_nav.active {
     left: 0;
   }
@@ -53,4 +53,13 @@
   .content-sidebar {
     margin-top: 20px;
   }
+}
+
+.scrollable-div {
+  max-height: 700px;
+  overflow-y: scroll;
+}
+
+.scrollable-div::-webkit-scrollbar {
+  display: none;
 }
