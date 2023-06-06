@@ -1,84 +1,62 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from './sidebar';
-import { createCourse } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
 import { InputFileForm } from '@/components/InputFileForm';
-import { useLoader } from '@/contexts/LoaderContext';
 import { useServer } from '@/contexts/ServerContext';
+import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { useLoader } from '@/contexts/LoaderContext';
+import { updateCourse } from '@/helpers/constants';
 // admin@conferencesapp.com
 // Admin9276#
-export const CrearCurso = ({ data = [] }) => {
-  const [form, setForm] = useState(createCourse);
-  const { showLoader, hideLoader } = useLoader();
+export const UpdateCourse = () => {
+  const [updateForm, setUpdateForm] = useState(updateCourse);
   const server = useServer();
+  const { curseId } = useParams(); // Obtienes el ID del curso de los parámetros de la URL
   const navigate = useNavigate();
+  const { showLoader, hideLoader } = useLoader();
 
-  
+  const updateCurse = async () => {
+    showLoader();
+    try {
+      const updatedData = { ...updateForm };
+      delete updatedData._id;
+      delete updatedData.photoURL;
+      delete updatedData.certificateTemplateURL;
+      delete updatedData.__v;
 
-  const crearCurso = async () => {
-    if (validarCurso(form)) {
-      showLoader();
+      await server.updateCourse(curseId, updatedData);
+      showBasicAlert('Actializacion Exitosa!', 'success');
+      navigate('/lista-certificados');
+    } catch (error) {
+      console.log(error);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+    }
+  };
+
+  useEffect(() => {
+    const fetchCourseById = async () => {
       try {
-        await server.createCourse(form);
-        showBasicAlert('Registro Exitoso!', 'success');
-        setForm(createCourse);
-        navigate('/lista-certificados');
+        const curso = await server.getCourseById(curseId); // Obtén el curso por su ID
+        console.log(curso);
+        setUpdateForm(curso);
       } catch (error) {
-        console.log(error?.response?.data?.mensaje);
-        showBasicAlert(
-          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
-          'error'
-        );
-      } finally {
-        hideLoader();
+        console.log(error);
+        showBasicAlert(error ?? 'Ocurrió un problema! Inténtelo más tarde', 'error');
       }
-    }
-  };
+    };
 
-  const validarCurso = (data) => {
-    const icon = 'warning';
-
-    if (!data?.title) {
-      showBasicAlert('Llene el titulo', icon);
-      return false;
-    }
-
-    if (!data?.price) {
-      showBasicAlert('Ubique un precio', icon);
-      return false;
-    }
-
-    if (!data?.type) {
-      showBasicAlert('Ubique un tipo', icon);
-      return false;
-    }
-
-    if (!data?.startDate) {
-      showBasicAlert('Ubique un tipo', icon);
-      return false;
-    }
-
-    if (!data?.endDate) {
-      showBasicAlert('Ubique un tipo', icon);
-      return false;
-    }
-
-    if (!data?.certificateTemplateBase64) {
-      showBasicAlert('Suba una imagen', icon);
-      return false;
-    }
-
-    if (!data?.photoBase64) {
-      showBasicAlert('Suba una imagen', icon);
-      return false;
-    }
-    return true;
-  };
+    fetchCourseById();
+  }, [curseId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    updateCurse();
   };
 
   return (
@@ -91,12 +69,12 @@ export const CrearCurso = ({ data = [] }) => {
               <div className='col-md-12 p-2'>
                 <label className='form-label'>Titulo</label>
                 <input
-                  value={form.title}
+                  value={updateForm.title}
                   type='text'
                   placeholder='Escriba un titulo'
                   className='form-control p-2'
                   onChange={(e) => {
-                    setForm({ ...form, title: e.target.value });
+                    setUpdateForm({ ...updateForm, title: e.target.value });
                   }}
                 />
               </div>
@@ -104,9 +82,13 @@ export const CrearCurso = ({ data = [] }) => {
                 <label className='form-label'>Fecha Inicio</label>
                 <input
                   type='date'
-                  value={form.startDate}
+                  value={
+                    updateForm.startDate
+                      ? new Date(updateForm.startDate).toISOString().split('T')[0]
+                      : ''
+                  }
                   onChange={(e) => {
-                    setForm({ ...form, startDate: e.target.value });
+                    setUpdateForm({ ...updateForm, startDate: e.target.value });
                   }}
                   className='form-control p-2'
                   id='inputAddress2'
@@ -115,9 +97,13 @@ export const CrearCurso = ({ data = [] }) => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Fecha fin</label>
                 <input
-                  value={form.endDate}
+                  value={
+                    updateForm.endDate
+                      ? new Date(updateForm.endDate).toISOString().split('T')[0]
+                      : ''
+                  }
                   onChange={(e) => {
-                    setForm({ ...form, endDate: e.target.value });
+                    setUpdateForm({ ...updateForm, endDate: e.target.value });
                   }}
                   type='date'
                   className='form-control p-2'
@@ -129,9 +115,9 @@ export const CrearCurso = ({ data = [] }) => {
                 <select
                   className='p-2 form-select'
                   onChange={(e) => {
-                    setForm({ ...form, type: e.target.value });
+                    setUpdateForm({ ...updateForm, type: e.target.value });
                   }}
-                  value={form.type}>
+                  value={updateForm.type}>
                   <option value='congress'>Congreso</option>
                   <option value='workshop'>Taller</option>
                 </select>
@@ -139,27 +125,29 @@ export const CrearCurso = ({ data = [] }) => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Certificado</label>
                 <InputFileForm
-                  value={form.photoBase64}
+                  value={updateForm.photoURL}
                   acceptFile='image/*'
-                  onChangeText={(base64String) => setForm({ ...form, photoBase64: base64String })}
+                  onChangeText={(base64String) =>
+                    setUpdateForm({ ...updateForm, photoURL: base64String })
+                  }
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Certificado 2</label>
                 <InputFileForm
-                  value={form.certificateTemplateBase64}
+                  value={updateForm.certificateTemplateURL}
                   acceptFile='image/*'
                   onChangeText={(base64String) =>
-                    setForm({ ...form, certificateTemplateBase64: base64String })
+                    setUpdateForm({ ...updateForm, certificateTemplateURL: base64String })
                   }
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Precio</label>
                 <input
-                  value={form.price}
+                  value={updateForm.price}
                   onChange={(e) => {
-                    setForm({ ...form, price: e.target.value });
+                    setUpdateForm({ ...updateForm, price: e.target.value });
                   }}
                   type='number'
                   className='form-control p-2'
@@ -168,9 +156,9 @@ export const CrearCurso = ({ data = [] }) => {
               <div className='col-12 mt-2 p-2'>
                 <label className='form-label'>Descripcion</label>
                 <textarea
-                  value={form.description}
+                  value={updateForm.description}
                   onChange={(e) => {
-                    setForm({ ...form, description: e.target.value });
+                    setUpdateForm({ ...updateForm, description: e.target.value });
                   }}
                   type='text'
                   className='form-control p-3'
@@ -178,11 +166,8 @@ export const CrearCurso = ({ data = [] }) => {
                   placeholder='Descripcion'
                 />
               </div>
-              <button
-                type='submit'
-                onClick={() => crearCurso()}
-                className='btn btn-success p-2 col-2 mt-4'>
-                Crear
+              <button type='submit' className='btn btn-success p-2 col-2 mt-4'>
+                Actualizar
               </button>
             </form>
           </div>

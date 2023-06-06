@@ -1,6 +1,9 @@
 export const storage = {
   get(key, type = 'string') {
     const value = localStorage.getItem(key);
+    if (value === undefined) {
+      return ''
+    }
     return type === 'string' ? value : JSON.parse(value) || null;
   },
   set(key, value, type = 'string') {

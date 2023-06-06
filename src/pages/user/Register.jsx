@@ -8,7 +8,8 @@ export const Register = () => {
       <h4 className='text-center mt-4 text-white'>
         <b>Registros</b>
       </h4>
-      <div className='row row-cols-1 row-cols-lg-2 m-3'>
+      <div
+        className='row row-cols-1 row-cols-lg-2 m-3 scrollable-div'>
         <div className='row justify-content-center p-3'>
           <div className='col-sm-5 bg-light'>
             <div className='card-body'>
