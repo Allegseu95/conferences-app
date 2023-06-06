@@ -8,8 +8,6 @@ import { useState } from 'react';
 import { ButtomMobil } from '@/components/user/ButtomMobil';
 import { useAuth } from '@/contexts/AuthContext';
 
-// alex@dev.com: emailuser
-// Asdf1234@: passworduser
 export const SideBar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);

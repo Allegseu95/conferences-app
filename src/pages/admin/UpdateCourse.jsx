@@ -7,8 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useLoader } from '@/contexts/LoaderContext';
 import { updateCourse } from '@/helpers/constants';
-// admin@conferencesapp.com
-// Admin9276#
+
 export const UpdateCourse = () => {
   const [updateForm, setUpdateForm] = useState(updateCourse);
   const [currentData, setCurrentData] = useState({ photo: null, certificate: null });
@@ -21,26 +20,13 @@ export const UpdateCourse = () => {
   const updateCurse = async () => {
     showLoader();
     try {
-      /*const updatedData = { ...updateForm };
-      delete updatedData._id;
-      
-      delete updatedData.__v;
-
-      updatedData.photoBase64 = updatedData.photoURL;
-      delete updatedData.photoURL;
-      updatedData.certificateTemplateBase64 = updatedData.certificateTemplateURL;
-      delete updatedData.certificateTemplateURL;
-      console.log(updatedData)*/
-
       const data = {
         title: updateForm.title,
         description: updateForm.description,
-        //photoBase64: updateForm.photoURL,
         price: updateForm.price,
         type: updateForm.type,
         startDate: updateForm.startDate,
         endDate: updateForm.endDate,
-        //certificateTemplateBase64: updateForm.certificateTemplateURL,
       };
       if (updateForm.photoURL !== currentData.photo) {
         data.photoBase64 = updateForm.photoURL;
@@ -53,11 +39,10 @@ export const UpdateCourse = () => {
       console.log(data);
 
       const result = await server.updateCourse(curseId, data);
-      console.log(result)
+      console.log(result);
       showBasicAlert('Actializacion Exitosa!', 'success');
       navigate('/lista-certificados');
     } catch (error) {
-      console.log(error);
       showBasicAlert(
         error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
         'error'
@@ -71,11 +56,9 @@ export const UpdateCourse = () => {
     const fetchCourseById = async () => {
       try {
         const curso = await server.getCourseById(curseId); // Obtén el curso por su ID
-        //console.log(curso);
         setCurrentData({ photo: curso.photoURL, certificate: curso.certificateTemplateURL });
         setUpdateForm(curso);
       } catch (error) {
-        console.log(error);
         showBasicAlert(error ?? 'Ocurrió un problema! Inténtelo más tarde', 'error');
       }
     };

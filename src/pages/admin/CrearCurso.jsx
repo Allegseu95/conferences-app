@@ -7,15 +7,11 @@ import { useLoader } from '@/contexts/LoaderContext';
 import { useServer } from '@/contexts/ServerContext';
 import { useNavigate } from 'react-router-dom';
 
-// admin@conferencesapp.com
-// Admin9276#
 export const CrearCurso = ({ data = [] }) => {
   const [form, setForm] = useState(createCourse);
   const { showLoader, hideLoader } = useLoader();
   const server = useServer();
   const navigate = useNavigate();
-
-  
 
   const crearCurso = async () => {
     if (validarCurso(form)) {

@@ -24,7 +24,6 @@ export const Lista = () => {
       const data = await server.getCourses();
       setCourses(data);
     } catch (error) {
-      console.log(error);
       setCourses([]);
     }
   };
