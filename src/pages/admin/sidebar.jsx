@@ -41,6 +41,23 @@ export const Sidebar = () => {
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
             <li className='lisidebar'>
               <Link className='asidebar' to='/lista-asistencias'>
                 <GiConfirmed className='fs-6' />

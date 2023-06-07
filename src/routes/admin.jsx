@@ -7,7 +7,7 @@ import { registersfake } from '@/mock/registers';
 import { CreateCourse } from '@/pages/admin/CreateCourse';
 import { UpdateCourse } from '@/pages/admin/UpdateCourse';
 import { ListCourse } from '@/pages/admin/ListCourse';
-import { ListAsistent } from '@/pages/admin/ListaAsistent';
+import { ListAsistent } from '@/pages/admin/ListAsistent';
 
 const itemsPerPage = 6;
 export const AdminRoutes = () => (
