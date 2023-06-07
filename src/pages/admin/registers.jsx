@@ -217,7 +217,8 @@ export const Regitsers = ({ data, itemsPerPage }) => {
         <h1 className='mb-1'>
           Registros <FontAwesomeIcon icon={faFolder} />{' '}
         </h1>
-        <table className='table table-striped forceo'>
+        <div className='table_contenct'>
+        <table className='table forceo'>
           <thead className='header_dark'>
             <tr>
               <th className='paddin_table' scope='col'>
@@ -245,6 +246,7 @@ export const Regitsers = ({ data, itemsPerPage }) => {
           </thead>
           <tbody>{renderTableData()}</tbody>
         </table>
+        </div>
       </div>
       {renderPagination()}
     </div>

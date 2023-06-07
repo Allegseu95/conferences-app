@@ -16,8 +16,11 @@
 }
 
 .contentwithoutsidebar{
-    padding: 2% 0 0 20% !important;
-    width: 95% !important;
+    padding: 2% 0 0 19% !important;
+    width: 97% !important;
+}
+.table_contenct{
+  width: 100%;background-color: aliceblue;
 }
 .pagination-move {
   padding: 0 0 0 50% !important;
