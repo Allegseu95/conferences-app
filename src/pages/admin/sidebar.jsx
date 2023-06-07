@@ -47,6 +47,8 @@ export const Sidebar = () => {
               <Link className='asidebar' to='/lista-asistencias'>
                 <GiConfirmed className='fs-6' />
                 <span className='hoverbutton'>Asistencias</span>
+              </Link>
+            </li>
             <li className='lisidebar'>
               <Link className='asidebar' to='/lista-certificados'>
                 <BiTask className='fs-6' />
