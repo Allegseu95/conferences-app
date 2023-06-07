@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import momentjs from 'moment';
-
 import '@/static/base/base.css';
 import { faXmark, faEye, faCheck, faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,26 +10,48 @@ import { Sidebar } from '@/pages/admin/sidebar';
 import { useServer } from '@/contexts/ServerContext';
 
 export const Regitsers = ({ data, itemsPerPage }) => {
-  const server = useServer();
+  const useserverapi = useServer();
 
   const [regsters, setregisters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const getregisterapi = async () => {
-    const datos = await server.getRegisters();
+    const datos = await useserverapi.getRegisters();
     setregisters(datos);
   };
 
   const updateregister = async (status, registerid) => {
+    let sendstatus = '';
+    if (status === 'pending') {
+      sendstatus = 'paid';
+    }
+
     const datosupdate = Object.freeze({
-      status,
+      status: sendstatus,
       registerId: registerid,
     });
-    const datosregistro = await server.UpdateStatus(datosupdate);
+    const datosregistro = await useserverapi.UpdateStatus(datosupdate);
     if (datosregistro !== undefined) {
       confirmar('Registro actualizado con exito', 'registro actualizado');
     }
+    await getregisterapi();
+  };
+  const cancelregister = async (status, registerid) => {
+    let sendstatus = '';
+    if (status === 'paid') {
+      sendstatus = 'pending';
+    }
+
+    const datosupdate = Object.freeze({
+      status: sendstatus,
+      registerId: registerid,
+    });
+    const datosregistro = await useserverapi.UpdateStatus(datosupdate);
+    if (datosregistro !== undefined) {
+      confirmar('Registro Cancelado con exito', 'registro actualizado');
+    }
+    await getregisterapi();
   };
 
   useEffect(() => {
@@ -55,10 +76,10 @@ export const Regitsers = ({ data, itemsPerPage }) => {
     );
   };
 
-  const getInscriptions = (array) => {
+  const getInscriptionstitle = (array) => {
     const inscriptions = [];
     array.forEach((element) => {
-      let pushed = element.courseId === null ? '' : element.courseId.description;
+      let pushed = element.courseId === null ? '' : element.courseId.title;
       inscriptions.push(pushed);
     });
     return inscriptions.toString();
@@ -68,31 +89,47 @@ export const Regitsers = ({ data, itemsPerPage }) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const slicedRegsters = regsters.slice(startIndex, endIndex);
-
     return slicedRegsters.map((row, index) => {
       const { _id, typePayment, total, status, voucherURL, createdAt, inscriptions, userId } = row;
       return (
         <tr key={index}>
-          <td className='padding_td'>{typePayment}</td>
-          <td className='padding_td'>{momentjs(createdAt).format('YYYY-MM-DD')}</td>
-          <td className='padding_td'>{getInscriptions(inscriptions)}</td>
+          <td className='padding_td'>
+            {typePayment == 'transfer'
+              ? 'Transferencia'
+              : typePayment == 'efective'
+              ? 'Efectivo'
+              : ''}
+          </td>
+          <td className='padding_td'>{momentjs(createdAt).format('DD-MM-YYYY')}</td>
+          <td className='padding_td'>{getInscriptionstitle(inscriptions)}</td>
           <td className='padding_td'>
             {userId === null ? 'Sin usuario' : userId.name + ' ' + userId.lastname}
           </td>
-          <td className='padding_td'>{total}</td>
-          <td className='padding_td'>{status}</td>
+          <td className='padding_td'>{total + '$'}</td>
+          <td className='padding_td'>
+            {status == 'paid'
+              ? 'Pagado'
+              : status == 'pending'
+              ? 'Pendiente'
+              : status == 'rejected'
+              ? 'Rechazado'
+              : ''}
+          </td>
           <td className='padding_td options'>
-            {/* <button onClick={getregisterapi()} className='btn btn-success p-1'>
-          </button> */}
-            <button onClick={() => updateregister(status, _id)} className='btn btn-success p-1'>
+            <button
+              onClick={() => updateregister(status, _id)}
+              className='btn btn-success p-1 left'>
               <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
             </button>
-            <button onClick={eliminar} className='btn btn-danger p-1'>
+            <button onClick={() => cancelregister(status, _id)} className='btn btn-danger p-1 left'>
               <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
             </button>
             <button
+              disabled={voucherURL === null}
               onClick={() => ver(voucherURL)}
-              className='btn btn-primary p-1'
+              className={
+                voucherURL === null ? 'btn btn-secondary p-1 left' : 'btn btn-primary p-1 left'
+              }
               data-toggle='modal'
               data-target='exampleModal'>
               <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
@@ -151,41 +188,42 @@ export const Regitsers = ({ data, itemsPerPage }) => {
   return (
     <div className='content_base'>
       <Sidebar></Sidebar>
-      <div className='container contentwithoutsidebar'>
+      <div className=' contentwithoutsidebar'>
         <h1 className='mb-1'>
           Registros <FontAwesomeIcon icon={faFolder} />{' '}
         </h1>
-        <table className='table table-striped'>
-          <thead className='header_dark'>
-            <tr>
-              <th className='paddin_table' scope='col'>
-                Tipo Pago
-              </th>
-              <th className='paddin_table' scope='col'>
-                Fecha Registro
-              </th>
-              <th className='paddin_table' scope='col'>
-                Inscripciones
-              </th>
-              <th className='paddin_table' scope='col'>
-                Usuario
-              </th>
-              <th className='paddin_table' scope='col'>
-                Total
-              </th>
-              <th className='paddin_table' scope='col'>
-                Estado
-              </th>
-              <th className='paddin_table' scope='col'>
-                Opciones
-              </th>
-            </tr>
-          </thead>
-          <tbody>{renderTableData()}</tbody>
-        </table>
+        <div className='table_contenct'>
+          <table className='table forceo'>
+            <thead className='header_dark'>
+              <tr>
+                <th className='paddin_table' scope='col'>
+                  T. Pago
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Registro
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Inscripciones
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Usuario
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Total
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Estado
+                </th>
+                <th className='paddin_table' scope='col'>
+                  Opciones
+                </th>
+              </tr>
+            </thead>
+            <tbody>{renderTableData()}</tbody>
+          </table>
+        </div>
       </div>
       {renderPagination()}
-        
     </div>
   );
 };

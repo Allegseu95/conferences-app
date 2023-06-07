@@ -44,7 +44,7 @@ export const HomePage = () => {
             {courses.length > 0 && (
               <div className='w-100'>
                 {courses?.map((item, index) => (
-                  <CardImageHome  key={index} course={item ?? {}} />
+                  <CardImageHome key={index} course={item ?? {}} />
                 ))}
               </div>
             )}

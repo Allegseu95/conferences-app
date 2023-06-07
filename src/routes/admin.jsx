@@ -9,7 +9,7 @@ import { UpdateCourse } from '@/pages/admin/UpdateCourse';
 import { ListCourse } from '@/pages/admin/ListCourse';
 import { ListAsistent } from '@/pages/admin/ListAsistent';
 
-const itemsPerPage = 6;
+const itemsPerPage = 11;
 export const AdminRoutes = () => (
   <Routes>
     <Route
