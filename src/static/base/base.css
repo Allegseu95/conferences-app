@@ -58,3 +58,8 @@
 .scrollable-div::-webkit-scrollbar {
   display: none !important;
 }
+
+
+.selector-items  select {
+  padding-right: 20px !important;
+}

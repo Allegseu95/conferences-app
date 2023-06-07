@@ -2,6 +2,7 @@ import { faUser, faScrewdriver } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { GiConfirmed } from 'react-icons/gi';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
 import { useAuth } from '@/contexts/AuthContext';
@@ -42,6 +43,10 @@ export const Sidebar = () => {
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
+            <li className='lisidebar'>
+              <Link className='asidebar' to='/lista-asistencias'>
+                <GiConfirmed className='fs-6' />
+                <span className='hoverbutton'>Asistencias</span>
             <li className='lisidebar'>
               <Link className='asidebar' to='/lista-certificados'>
                 <BiTask className='fs-6' />

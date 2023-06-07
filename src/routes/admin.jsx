@@ -4,9 +4,10 @@ import { usersfake } from '@/mock/users';
 import { Regitsers } from '@/pages/admin/registers';
 import { Asistencias } from '@/pages/admin/asistencia';
 import { registersfake } from '@/mock/registers';
-import { CrearCurso } from '@/pages/admin/CrearCurso';
+import { CreateCourse } from '@/pages/admin/CreateCourse';
 import { UpdateCourse } from '@/pages/admin/UpdateCourse';
-import { Lista } from '@/pages/admin/Lista';
+import { ListCourse } from '@/pages/admin/ListCourse';
+import { ListAsistent } from '@/pages/admin/ListAsistent';
 
 const itemsPerPage = 11;
 export const AdminRoutes = () => (
@@ -17,9 +18,11 @@ export const AdminRoutes = () => (
     />
     <Route path='/usuarios' element={<Users data={usersfake} itemsPerPage={itemsPerPage} />} />
     <Route path='/asistencias' element={<Asistencias />} />
-    <Route path='/crear-curso' element={<CrearCurso />} />
+    <Route path='/crear-curso' element={<CreateCourse />} />
     <Route path='/editCourse/:curseId' element={<UpdateCourse />} />
-    <Route path='/lista-certificados' element={<Lista />} />
+    <Route path='/lista-certificados' element={<ListCourse />} />
+    <Route path='/lista-asistencias' element={<ListAsistent />} />
     <Route path='*' element={<Navigate to='/registros' />} />
-  </Routes>
+      
+  </Routes>
 );

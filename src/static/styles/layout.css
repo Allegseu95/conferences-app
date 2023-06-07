@@ -1,6 +1,6 @@
 .container-padre {
   display: grid;
-  grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
+  grid-template-columns:  300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
   background: linear-gradient(180deg, #525252, #262525);
 }
 

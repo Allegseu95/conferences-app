@@ -176,8 +176,11 @@ export const UpdateCourse = () => {
                   placeholder='Descripcion'
                 />
               </div>
-              <button type='submit' className='btn btn-success p-2 col-2 mt-4'>
+              <button type='submit' className='btn btn-success p-2 col-2 mt-4 m-2'>
                 Actualizar
+              </button>
+              <button type='submit' onClick={() => navigate('/lista-certificados')} className='btn btn-danger p-2 col-2 mt-4 m-2'>
+                Regresar
               </button>
             </form>
           </div>
