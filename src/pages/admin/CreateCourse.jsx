@@ -7,7 +7,7 @@ import { useLoader } from '@/contexts/LoaderContext';
 import { useServer } from '@/contexts/ServerContext';
 import { useNavigate } from 'react-router-dom';
 
-export const CrearCurso = () => {
+export const CreateCourse = () => {
   const [form, setForm] = useState(createCourse);
   const { showLoader, hideLoader } = useLoader();
   const server = useServer();
@@ -52,12 +52,12 @@ export const CrearCurso = () => {
     }
 
     if (!data?.startDate) {
-      showBasicAlert('Ubique un tipo', icon);
+      showBasicAlert('Seleccione una fecha de inicio', icon);
       return false;
     }
 
     if (!data?.endDate) {
-      showBasicAlert('Ubique un tipo', icon);
+      showBasicAlert('Seleccione una fecha de fin', icon);
       return false;
     }
 
@@ -97,7 +97,7 @@ export const CrearCurso = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Fecha Inicio</label>
+                <label className='form-label'>Fecha de inicio</label>
                 <input
                   type='date'
                   value={form.startDate}
@@ -109,7 +109,7 @@ export const CrearCurso = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Fecha fin</label>
+                <label className='form-label'>Fecha de fin</label>
                 <input
                   value={form.endDate}
                   onChange={(e) => {
@@ -133,7 +133,7 @@ export const CrearCurso = () => {
                 </select>
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Certificado</label>
+                <label className='form-label'>Imagen</label>
                 <InputFileForm
                   value={form.photoBase64}
                   acceptFile='image/*'
@@ -141,7 +141,7 @@ export const CrearCurso = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Certificado 2</label>
+                <label className='form-label'>Plantilla de Certificado</label>
                 <InputFileForm
                   value={form.certificateTemplateBase64}
                   acceptFile='image/*'
@@ -162,7 +162,7 @@ export const CrearCurso = () => {
                 />
               </div>
               <div className='col-12 mt-2 p-2'>
-                <label className='form-label'>Descripcion</label>
+                <label className='form-label'>Descripción </label>
                 <textarea
                   value={form.description}
                   onChange={(e) => {
@@ -177,9 +177,15 @@ export const CrearCurso = () => {
               <button
                 type='submit'
                 onClick={() => crearCurso()}
-                className='btn btn-success p-2 col-2 mt-4'>
+                className='btn btn-success p-2 col-2 mt-4 m-2'>
                 Crear
               </button>
+              <button
+                type='submit'
+                onClick={() => navigate('/lista-certificados')}
+                className='btn btn-danger p-2 col-2 mt-4 m-2'>
+                Regresar
+              </button> 
             </form>
           </div>
         </div>
