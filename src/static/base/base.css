@@ -44,14 +44,10 @@
 @media screen and (max-width: 767px) {
   .contenedorLista {
     margin-top: 100px !important;
-    
   }
   .contentwithoutsidebar3 {
-  padding: 2% 0% 0% 2% !important;
-  .items-movil {
-    margin-top: 110px!important;
+    padding: 2% 0% 0% 2% !important;
   }
-}
 }
 
 .scrollable-div {
