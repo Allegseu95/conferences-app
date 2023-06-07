@@ -8,7 +8,7 @@ import { CrearCurso } from '@/pages/admin/CrearCurso';
 import { UpdateCourse } from '@/pages/admin/UpdateCourse';
 import { Lista } from '@/pages/admin/Lista';
 
-const itemsPerPage = 6;
+const itemsPerPage = 11;
 export const AdminRoutes = () => (
   <Routes>
     <Route

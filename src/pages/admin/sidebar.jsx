@@ -5,8 +5,13 @@ import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
+import { useAuth } from '@/contexts/AuthContext';
+
+
+
 
 export const Sidebar = () => {
+  const { authLogout } = useAuth();
   return (
     <div>
       <div className='sidebar-admin'>
@@ -38,6 +43,12 @@ export const Sidebar = () => {
               <Link className='asidebar' to='/lista-certificados'>
                 <BiTask className='fs-6' />
                 <span className='hoverbutton'>Cursos</span>
+              </Link>
+            </li>
+            <li className='lisidebar'>
+              <Link className='asidebar' to='/lista-certificados'>
+                <BiTask className='fs-6' />
+                <span onClick={()=> authLogout()} className='hoverbutton'>Cerrar Sesion</span>
               </Link>
             </li>
           </ul>
