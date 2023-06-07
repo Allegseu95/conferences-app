@@ -17,7 +17,8 @@ const getToken = () => {
 
 class ServerApi {
   constructor() {
-    this.baseUrl = import.meta.env.VITE_API;
+    this.baseUrl = 'http://138.68.78.23:7000';
+    // this.baseUrl = process.env.API_URL;
   }
 
   getCourses = () => {
