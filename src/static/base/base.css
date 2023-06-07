@@ -7,25 +7,28 @@
   padding: 15px !important;
 }
 .padding_td {
-  padding: 10px !important;
+  padding: 5px !important;
 }
 
 .content_base{
     min-height: 100vh;
+    /* display:flex; */
 }
 
 .contentwithoutsidebar{
-    padding: 2% 0 0 25% !important;
+    padding: 2% 0 0 20% !important;
+    width: 95% !important;
 }
 .pagination-move {
   padding: 0 0 0 50% !important;
 }
 .options {
-  width: 105px !important;
-  display: flex;
-  justify-content: space-around;
+  width: 135px !important;
 }
 
+.left{
+  margin: 0 9px 0 0 !important;;
+}
 .contentwithoutsidebar2 {
   padding: 2% 0% 2% 16% !important;
   margin-right: 20px !important;
