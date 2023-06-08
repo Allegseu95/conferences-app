@@ -22,8 +22,8 @@ export const FormLogin = () => {
 
   const login = async () => {
     // bloqueado momentaneamente hasta que las demas vistas esten activas
-    // showBasicAlert('Funcionalidad en Desarrollo!', 'info');
-    // return;
+    showBasicAlert('Funcionalidad en Desarrollo!', 'info');
+    return;
     if (validateLoginForm(formValues)) {
       showLoader();
       try {

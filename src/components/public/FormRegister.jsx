@@ -12,13 +12,7 @@ import { Button } from '../Button';
 
 import { paymentOptions, initFormRegister } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
-import {
-  cleanText,  
-  validateCedula,
-  validateEmail,
-  validatePassword,
-  validatePhone,
-} from '@/helpers/utils';
+import { cleanText, validateEmail, validatePassword, validatePhone } from '@/helpers/utils';
 
 export const FormRegister = ({ data = [] }) => {
   const { showLoader, hideLoader } = useLoader();
@@ -73,11 +67,6 @@ export const FormRegister = ({ data = [] }) => {
 
     if (data?.cedula === '') {
       showBasicAlert('Llene su cédula', icon);
-      return false;
-    }
-
-    if (!validateCedula(data?.cedula)) {
-      showBasicAlert('Cédula invalida', icon);
       return false;
     }
 
@@ -214,7 +203,7 @@ export const FormRegister = ({ data = [] }) => {
             <div className='col-lg-6 col-md-6 col-sm-6 col-12 pe-lg-2 pe-md-1 pe-sm-1'>
               <InputForm
                 value={formValues.cedula}
-                placeholder='Cédula'
+                placeholder='Cédula/Pasaporte'
                 onChangeText={(text) => setFormValues({ ...formValues, cedula: text })}
               />
             </div>
