@@ -1,4 +1,4 @@
-import { faUser, faScrewdriver } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faScrewdriver, faArrowRightFromBracket, faFolder, faClipboardUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
@@ -27,13 +27,13 @@ export const Sidebar = () => {
             </li>
             <li className='lisidebar'>
               <Link to='/registros' className='asidebar'>
-                <FontAwesomeIcon icon={faScrewdriver} />
+                <FontAwesomeIcon icon={faFolder} />
                 <span className='hoverbutton hoverbutton2'>Registros</span>
               </Link>
             </li>
             <li className='lisidebar'>
               <Link to='/asistencias' className='asidebar'>
-                <FontAwesomeIcon icon={faScrewdriver} />
+                <FontAwesomeIcon icon={faClipboardUser} />
                 <span className='hoverbutton'>Asistencias</span>
               </Link>
             </li>
@@ -49,9 +49,9 @@ export const Sidebar = () => {
                 <span className='hoverbutton'>Asistencias</span>
               </Link>
             </li>
-            <li className='lisidebar'>
-              <Link className='asidebar' to='/lista-certificados'>
-                <BiTask className='fs-6' />
+            <li className='lisidebar2'>
+              <Link className='asidebar asidebar2' to='/lista-certificados'>
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />     
                 <span onClick={() => authLogout()} className='hoverbutton'>
                   Cerrar Sesion
                 </span>
