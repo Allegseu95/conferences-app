@@ -17,8 +17,7 @@ const getToken = () => {
 
 class ServerApi {
   constructor() {
-    this.baseUrl = 'htpp://congresotalleres.com';
-    // this.baseUrl = import.meta.env.VITE_API;
+    this.baseUrl = import.meta.env.VITE_API;
   }
 
   getCourses = () => {

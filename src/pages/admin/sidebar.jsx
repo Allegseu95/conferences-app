@@ -1,4 +1,9 @@
-import { faUser, faScrewdriver, faArrowRightFromBracket, faFolder, faClipboardUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faArrowRightFromBracket,
+  faFolder,
+  faClipboardUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
@@ -51,7 +56,7 @@ export const Sidebar = () => {
             </li>
             <li className='lisidebar2'>
               <Link className='asidebar asidebar2' to='/lista-certificados'>
-              <FontAwesomeIcon icon={faArrowRightFromBracket} />     
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 <span onClick={() => authLogout()} className='hoverbutton'>
                   Cerrar Sesion
                 </span>
@@ -61,7 +66,7 @@ export const Sidebar = () => {
         </nav>
 
         <div className='footersidebar'>
-          <span className='hoverbutton'>&copy; 2023 Conferencias App</span>
+          <span>&copy; 2023 Conferencias App</span>
         </div>
       </div>
     </div>
