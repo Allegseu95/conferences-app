@@ -38,15 +38,15 @@ export const Sidebar = () => {
               </Link>
             </li>
             <li className='lisidebar'>
-              <Link className='asidebar' to='/lista-certificados'>
-                <BiTask className='fs-6' />
+              <Link className='asidebar' to='/lista-cursos'>
+                <BiTask className='fs-6 text-danger' />
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
             <li className='lisidebar'>
-              <Link className='asidebar' to='/lista-asistencias'>
-                <GiConfirmed className='fs-6' />
-                <span className='hoverbutton'>Asistencias</span>
+              <Link className='asidebar' to='/lista-verificados'>
+                <GiConfirmed className='fs-6 text-success' />
+                <span className='hoverbutton'>Verificaciones</span>
               </Link>
             </li>
             <li className='lisidebar'>

@@ -41,11 +41,6 @@ export const CreateCourse = () => {
       return false;
     }
 
-    if (!data?.price) {
-      showBasicAlert('Ubique un precio', icon);
-      return false;
-    }
-
     if (!data?.type) {
       showBasicAlert('Ubique un tipo', icon);
       return false;
@@ -126,8 +121,8 @@ export const CreateCourse = () => {
                   className='p-2 form-select'
                   onChange={(e) => {
                     setForm({ ...form, type: e.target.value });
-                  }}
-                  value={form.type}>
+                  }}>
+                  <option value=''>Elige una opción</option>
                   <option value='congress'>Congreso</option>
                   <option value='workshop'>Taller</option>
                 </select>
@@ -153,16 +148,16 @@ export const CreateCourse = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Precio</label>
                 <input
-                  value={form.price}
                   onChange={(e) => {
                     setForm({ ...form, price: e.target.value });
                   }}
                   type='number'
                   className='form-control p-2'
+                  disabled={form.type === 'congress'}
                 />
               </div>
               <div className='col-12 mt-2 p-2'>
-                <label className='form-label'>Descripción </label>
+                <label className='form-label'>Descripción</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => {
@@ -182,10 +177,10 @@ export const CreateCourse = () => {
               </button>
               <button
                 type='submit'
-                onClick={() => navigate('/lista-certificados')}
+                onClick={() => navigate('/lista-cursos')}
                 className='btn btn-danger p-2 col-2 mt-4 m-2'>
-                Regresar
-              </button> 
+                Cancelar
+              </button>
             </form>
           </div>
         </div>

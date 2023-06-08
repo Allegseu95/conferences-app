@@ -7,13 +7,15 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useLoader } from '@/contexts/LoaderContext';
 import { updateCourse } from '@/helpers/constants';
+import { FiEdit } from 'react-icons/fi';
+
 
 export const UpdateCourse = () => {
   const [updateForm, setUpdateForm] = useState(updateCourse);
   const [currentData, setCurrentData] = useState({ photo: null, certificate: null });
 
   const server = useServer();
-  const { curseId } = useParams(); // Obtienes el ID del curso de los parámetros de la URL
+  const { curseId } = useParams();
   const navigate = useNavigate();
   const { showLoader, hideLoader } = useLoader();
 
@@ -76,6 +78,9 @@ export const UpdateCourse = () => {
       <Sidebar />
       <div className='contentwithoutsidebar2'>
         <div className='contenedorLista'>
+          <h1 className='mb-2 fs-4 text-center'>
+            Editar Curso <FiEdit className='text-success' />
+          </h1>
           <div className='mt-3'>
             <form onSubmit={handleSubmit} className='row g-3'>
               <div className='col-md-12 p-2'>
@@ -179,7 +184,10 @@ export const UpdateCourse = () => {
               <button type='submit' className='btn btn-success p-2 col-2 mt-4 m-2'>
                 Actualizar
               </button>
-              <button type='submit' onClick={() => navigate('/lista-certificados')} className='btn btn-danger p-2 col-2 mt-4 m-2'>
+              <button
+                type='submit'
+                onClick={() => navigate('/lista-cursos')}
+                className='btn btn-danger p-2 col-2 mt-4 m-2'>
                 Regresar
               </button>
             </form>
