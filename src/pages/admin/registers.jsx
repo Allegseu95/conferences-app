@@ -1,229 +1,290 @@
 import React, { useState, useEffect } from 'react';
 import momentjs from 'moment';
-import '@/static/base/base.css';
+import DataTable from 'react-data-table-component';
+import Swal from 'sweetalert2';
+
 import { faXmark, faEye, faCheck, faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { showBasicAlert, question, see } from '@/helpers/sweetAlert';
-
-import { Sidebar } from '@/pages/admin/sidebar';
+import { useLoader } from '@/contexts/LoaderContext';
 import { useServer } from '@/contexts/ServerContext';
 
-export const Regitsers = ({ data, itemsPerPage }) => {
+import { Sidebar } from '@/pages/admin/sidebar';
+
+import { showBasicAlert, see } from '@/helpers/sweetAlert';
+import { participantTypeOptions } from '@/helpers/constants';
+
+import '@/static/base/base.css';
+
+export const Regitsers = () => {
   const useserverapi = useServer();
 
+  const { showLoader, hideLoader } = useLoader();
   const [regsters, setregisters] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const [dnifilter, setdnfilter] = useState(regsters);
 
   const getregisterapi = async () => {
-    const datos = await useserverapi.getRegisters();
-    setregisters(datos);
+    showLoader();
+    try {
+      const datos = await useserverapi.getRegisters();
+      setregisters(datos);
+      setdnfilter(datos);
+    } catch (error) {
+      console.log(error);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+    }
   };
 
-  const updateregister = async (status, registerid) => {
-    let sendstatus = '';
-    if (status === 'pending') {
-      sendstatus = 'paid';
-    }
-
+  const confirmRegister = async (registerid) => {
     const datosupdate = Object.freeze({
-      status: sendstatus,
+      status: 'paid',
       registerId: registerid,
     });
-    const datosregistro = await useserverapi.UpdateStatus(datosupdate);
-    if (datosregistro !== undefined) {
-      confirmar('Registro actualizado con exito', 'registro actualizado');
+
+    showLoader();
+    try {
+      await useserverapi.UpdateStatus(datosupdate);
+      showBasicAlert('El Registro fue aceptado exitosamente!', 'success');
+    } catch (error) {
+      console.log(error);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+      getregisterapi();
     }
-    await getregisterapi();
   };
-  const cancelregister = async (status, registerid) => {
-    let sendstatus = '';
-    if (status === 'paid') {
-      sendstatus = 'pending';
-    }
 
+  const cancelRegister = async (registerid) => {
     const datosupdate = Object.freeze({
-      status: sendstatus,
+      status: 'reject',
       registerId: registerid,
     });
-    const datosregistro = await useserverapi.UpdateStatus(datosupdate);
-    if (datosregistro !== undefined) {
-      confirmar('Registro Cancelado con exito', 'registro actualizado');
-    }
-    await getregisterapi();
+
+    Swal.fire({
+      title: 'Esta seguro de rechazar el registro?',
+      text: 'Esta acción no puede ser revertida',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then(async (willDelete) => {
+      if (willDelete.isConfirmed) {
+        showLoader();
+        try {
+          await useserverapi.UpdateStatus(datosupdate);
+          showBasicAlert('El Registro fue rechazado exitosamente!', 'success');
+        } catch (error) {
+          console.log(error);
+          showBasicAlert(
+            error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+            'error'
+          );
+        } finally {
+          hideLoader();
+          getregisterapi();
+        }
+      } else {
+        showBasicAlert('Acción Cancelada!', 'info');
+      }
+    });
   };
 
   useEffect(() => {
     getregisterapi();
   }, []);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const confirmar = (titulo, accion) => {
-    showBasicAlert(titulo, 'success', accion);
-  };
-  const ver = (url) => {
-    see('Verificación de voucher', `${url}`, '200px', '200px');
-  };
-  const eliminar = () => {
-    question(
-      'Esta seguro de rechazar el registro',
-      'warning',
-      'esta acción no puede ser rebertida'
-    );
-  };
+  const ver = (url) => see('Verificación de voucher', url, '200px', '200px');
 
   const getInscriptionstitle = (array) => {
     const inscriptions = [];
     array.forEach((element) => {
       let pushed = element.courseId === null ? '' : element.courseId.title;
-      inscriptions.push(pushed);
+      inscriptions.push(` ${pushed}`);
     });
     return inscriptions.toString();
   };
 
-  const renderTableData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const slicedRegsters = regsters.slice(startIndex, endIndex);
-    return slicedRegsters.map((row, index) => {
-      const { _id, typePayment, total, status, voucherURL, createdAt, inscriptions, userId } = row;
-      return (
-        <tr key={index}>
-          <td className='padding_td'>
-            {typePayment == 'transfer'
-              ? 'Transferencia'
-              : typePayment == 'efective'
-              ? 'Efectivo'
-              : ''}
-          </td>
-          <td className='padding_td'>{momentjs(createdAt).format('DD-MM-YYYY')}</td>
-          <td className='padding_td'>{getInscriptionstitle(inscriptions)}</td>
-          <td className='padding_td'>
-            {userId === null ? 'Sin usuario' : userId.name + ' ' + userId.lastname}
-          </td>
-          <td className='padding_td'>{total + '$'}</td>
-          <td className='padding_td'>
-            {status == 'paid'
-              ? 'Pagado'
-              : status == 'pending'
-              ? 'Pendiente'
-              : status == 'rejected'
-              ? 'Rechazado'
-              : ''}
-          </td>
-          <td className='padding_td options'>
-            <button
-              onClick={() => updateregister(status, _id)}
-              className='btn btn-success p-1 left'>
-              <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
-            </button>
-            <button onClick={() => cancelregister(status, _id)} className='btn btn-danger p-1 left'>
-              <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
-            </button>
-            <button
-              disabled={voucherURL === null}
-              onClick={() => ver(voucherURL)}
-              className={
-                voucherURL === null ? 'btn btn-secondary p-1 left' : 'btn btn-primary p-1 left'
-              }
-              data-toggle='modal'
-              data-target='exampleModal'>
-              <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
-            </button>
-          </td>
-        </tr>
-      );
+  const getTypeParticipant = (type) => {
+    const _participantType = participantTypeOptions.find((item) => item?._id === type).name;
+    return _participantType;
+  };
+
+  const searchByDni = (event) => {
+    const dnifilter = regsters.filter((dni) => {
+      if (dni.userId !== null && dni.userId !== undefined) {
+        return dni.userId.cedula.startsWith(event.target.value);
+      }
     });
+    setdnfilter(dnifilter);
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const columns = [
+    {
+      name: 'Cédula/Pasaporte',
+      selector: (row) => (row.userId === null ? '' : row.userId.cedula),
+      sortable: true,
+      width: '140px',
+    },
+    {
+      name: 'Usuario',
+      selector: (row) => (row.userId === null ? '' : row.userId.name + ' ' + row.userId.lastname),
+      sortable: true,
+      width: '130px',
+    },
+    {
+      name: 'T. Participante',
+      selector: (row) =>
+        row.userId === null ? '' : getTypeParticipant(row.userId.participantType),
+      sortable: true,
+      width: '210px',
+    },
+    {
+      name: 'F. Registro',
+      selector: (row) => momentjs(row.createdAt).format('DD-MM-YYYY'),
+      sortable: true,
+      width: '100px',
+    },
+    {
+      name: 'T. Pago',
+      selector: (row) =>
+        row.typePayment == 'transfer'
+          ? 'Transferencia'
+          : row.typePayment == 'efective'
+          ? 'Efectivo'
+          : '',
+      sortable: true,
+      width: '100px',
+    },
+    {
+      name: 'Inscripciones',
+      selector: (row) => getInscriptionstitle(row.inscriptions),
+      sortable: true,
+      width: '170px',
+    },
+    {
+      name: 'Total',
+      selector: (row) => `$ ${row.total}`,
+      sortable: true,
+      width: '60px',
+    },
+
+    {
+      name: 'Estado',
+      selector: (row) =>
+        row.status == 'paid'
+          ? 'Pagado'
+          : row.status == 'pending'
+          ? 'Pendiente'
+          : row.status == 'reject'
+          ? 'Rechazado'
+          : '',
+      sortable: true,
+      width: '70px',
+    },
+
+    {
+      name: 'Acciones',
+      cell: (register) => (
+        <td className='padding_td options'>
+          <button
+            onClick={() => confirmRegister(register._id)}
+            className='btn btn-success p-1 left'>
+            <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
+          </button>
+          <button onClick={() => cancelRegister(register._id)} className='btn btn-danger p-1 left'>
+            <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
+          </button>
+          <button
+            disabled={register.voucherURL === null}
+            onClick={() => ver(register.voucherURL)}
+            className={
+              register.voucherURL === null
+                ? 'btn btn-secondary p-1 left'
+                : 'btn btn-primary p-1 left'
+            }
+            data-toggle='modal'
+            data-target='exampleModal'>
+            <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
+          </button>
+        </td>
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+      width: '150px',
+    },
+  ];
+
+  const customStyles = {
+    headRow: {
+      style: {
+        color: 'white',
+        backgroundColor: 'black',
+        fontSize: '15px',
+      },
+    },
+    pagination: {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto auto',
+        gap: '10px',
+        alignItems: 'center',
+        marginTop: '10px',
+      },
+    },
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const renderPagination = () => {
-    const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <li
-          key={i}
-          className={currentPage === i ? 'active' : ''}
-          onClick={() => handlePageChange(i)}>
-          {i}
-        </li>
-      );
-    }
-    return (
-      <div className='pagination pagination-move mt-1'>
-        <button
-          className='btn btn-primary p-2'
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}>
-          <span className='p-1'>{'<'} anterior</span>
-        </button>
-        <ul className='m-3'>
-          <li className='current-page'>{currentPage}</li>
-        </ul>
-        <button
-          className='btn btn-success p-1'
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}>
-          <span className='p-1'>siguiente {'>'}</span>
-        </button>
-      </div>
-    );
+  const paginationComponentOptions = {
+    rowsPerPageText: 'Filas por página',
+    rangeSeparatorText: 'de',
+    selectAllRowsItem: true,
+    selectAllRowsItemText: 'Todos',
   };
 
   return (
     <div className='content_base'>
-      <Sidebar></Sidebar>
+      <Sidebar />
       <div className=' contentwithoutsidebar'>
         <h1 className='mb-1'>
-          Registros <FontAwesomeIcon icon={faFolder} />{' '}
+          Registros <FontAwesomeIcon icon={faFolder} />
         </h1>
-        <div className='table_contenct'>
-          <table className='table forceo'>
-            <thead className='header_dark'>
-              <tr>
-                <th className='paddin_table' scope='col'>
-                  T. Pago
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Registro
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Inscripciones
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Usuario
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Total
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Estado
-                </th>
-                <th className='paddin_table' scope='col'>
-                  Opciones
-                </th>
-              </tr>
-            </thead>
-            <tbody>{renderTableData()}</tbody>
-          </table>
+        <div className='mt-2 mb-2 col-sm-4'>
+          <input
+            onChange={searchByDni}
+            type='text'
+            className='form-control p-2'
+            placeholder='Buscar por Cedula/Pasaporte'
+          />
         </div>
+
+        {dnifilter.length > 0 ? (
+          <DataTable
+            columns={columns}
+            striped
+            highlightOnHover
+            selectableRowsComponent={() => <div></div>}
+            fixedHeader
+            data={dnifilter}
+            customStyles={customStyles}
+            selectableRows
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+          />
+        ) : (
+          <div className='bg-light text-dark d-flex justify-content-center py-2'>
+            Registros vacios
+          </div>
+        )}
       </div>
-      {renderPagination()}
     </div>
   );
 };

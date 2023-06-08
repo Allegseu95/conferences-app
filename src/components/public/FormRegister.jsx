@@ -10,15 +10,9 @@ import { InputFileForm } from '../InputFileForm';
 import { CheckBox } from '../CheckBox';
 import { Button } from '../Button';
 
-import { paymentOptions, initFormRegister } from '@/helpers/constants';
+import { paymentOptions, initFormRegister, participantTypeOptions } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
-import {
-  cleanText,  
-  validateCedula,
-  validateEmail,
-  validatePassword,
-  validatePhone,
-} from '@/helpers/utils';
+import { cleanText, validateEmail, validatePassword, validatePhone } from '@/helpers/utils';
 
 export const FormRegister = ({ data = [] }) => {
   const { showLoader, hideLoader } = useLoader();
@@ -72,12 +66,7 @@ export const FormRegister = ({ data = [] }) => {
     }
 
     if (data?.cedula === '') {
-      showBasicAlert('Llene su cédula', icon);
-      return false;
-    }
-
-    if (!validateCedula(data?.cedula)) {
-      showBasicAlert('Cédula invalida', icon);
+      showBasicAlert('Llene su cédula/pasaporte', icon);
       return false;
     }
 
@@ -125,13 +114,18 @@ export const FormRegister = ({ data = [] }) => {
       return false;
     }
 
-    if (data?.inscriptions?.length <= 0) {
-      showBasicAlert('Debe inscribirse en algun taller o en el congreso', icon);
+    if (data?.participantType === '') {
+      showBasicAlert('Seleccione un Tipo de Participante', icon);
       return false;
     }
 
     if (data?.typePayment === '') {
       showBasicAlert('Seleccione un método de pago', icon);
+      return false;
+    }
+
+    if (data?.inscriptions?.length <= 0) {
+      showBasicAlert('Debe inscribirse en algun taller o en el congreso', icon);
       return false;
     }
 
@@ -179,6 +173,18 @@ export const FormRegister = ({ data = [] }) => {
     setTotal(total);
   }, [courses]);
 
+  useEffect(() => {
+    if (formValues?.participantType !== '') {
+      const _courses = courses.map((item) => {
+        if (item?.type === 'congress') {
+          item.price = item?.congressPrice[formValues?.participantType];
+        }
+        return item;
+      });
+      setCourses(_courses);
+    }
+  }, [formValues?.participantType]);
+
   return (
     <div className='w-100  mb-5'>
       <div className='position-sticky top-0'>
@@ -214,7 +220,7 @@ export const FormRegister = ({ data = [] }) => {
             <div className='col-lg-6 col-md-6 col-sm-6 col-12 pe-lg-2 pe-md-1 pe-sm-1'>
               <InputForm
                 value={formValues.cedula}
-                placeholder='Cédula'
+                placeholder='Cédula/Pasaporte'
                 onChangeText={(text) => setFormValues({ ...formValues, cedula: text })}
               />
             </div>
@@ -261,6 +267,26 @@ export const FormRegister = ({ data = [] }) => {
             onChangeText={(text) => setFormValues({ ...formValues, company: text })}
           />
 
+          <div className='row'>
+            <div className='col-lg-6 col-md-6 col-sm-6 col-12 pe-lg-2 pe-md-1 pe-sm-1'>
+              <SelectForm
+                options={participantTypeOptions}
+                value={formValues.participantType}
+                onChangeValue={(text) => setFormValues({ ...formValues, participantType: text })}
+                disableFirstOption
+              />
+            </div>
+
+            <div className='col-lg-6 col-md-6 col-sm-6 col-12 ps-lg-2 ps-md-1 ps-sm-1'>
+              <SelectForm
+                options={paymentOptions}
+                value={formValues.typePayment}
+                onChangeValue={(text) => setFormValues({ ...formValues, typePayment: text })}
+                disableFirstOption
+              />
+            </div>
+          </div>
+
           {courses.length > 0 && (
             <div className='px-2'>
               {courses?.map((item, index) => (
@@ -278,13 +304,6 @@ export const FormRegister = ({ data = [] }) => {
           <div className='w-100 my-2 text-light px-3'>
             <span>Total: {total} $</span>
           </div>
-
-          <SelectForm
-            options={paymentOptions}
-            value={formValues.typePayment}
-            onChangeValue={(text) => setFormValues({ ...formValues, typePayment: text })}
-            disableFirstOption
-          />
 
           {formValues.typePayment === 'transfer' && (
             <InputFileForm

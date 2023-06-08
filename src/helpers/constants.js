@@ -12,6 +12,36 @@ export const paymentOptions = [
     name: 'Efectivo',
   },
 ];
+export const participantTypeOptions = [
+  {
+    _id: '',
+    name: 'Tipo de Participante',
+  },
+  {
+    _id: 'medico_especialista',
+    name: 'Médico Especialista',
+  },
+  {
+    _id: 'medico_general',
+    name: 'Médico General',
+  },
+  {
+    _id: 'medico_rural',
+    name: 'Médico Rural',
+  },
+  {
+    _id: 'profesional_salud',
+    name: 'Profesional de la Salud',
+  },
+  {
+    _id: 'estudiante',
+    name: 'Estudiante',
+  },
+  {
+    _id: 'ponencia_congreso_memorias',
+    name: 'Ponencia + Congreso + Memorias',
+  },
+];
 
 export const initFormRegister = {
   name: '',
@@ -25,6 +55,7 @@ export const initFormRegister = {
   inscriptions: [],
   typePayment: '',
   voucherBase64: '',
+  participantType: '',
 };
 
 export const initFormLogin = {
@@ -47,7 +78,6 @@ export const auth_token = 'auth_token';
 export const auth_user = 'auth_user';
 export const auth_role = 'auth_role';
 
-
 export const updateCourse = {
   title: '',
   description: '',
@@ -58,7 +88,6 @@ export const updateCourse = {
   endDate: new Date().toISOString().split('T')[0],
   certificateTemplateURL: '',
 };
-
 
 export const createVerified = {
   name: '',

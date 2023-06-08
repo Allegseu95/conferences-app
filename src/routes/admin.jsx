@@ -3,7 +3,6 @@ import { Users } from '@/pages/admin/users';
 import { usersfake } from '@/mock/users';
 import { Regitsers } from '@/pages/admin/registers';
 import { Asistencias } from '@/pages/admin/asistencia';
-import { registersfake } from '@/mock/registers';
 import { CreateCourse } from '@/pages/admin/CreateCourse';
 import { UpdateCourse } from '@/pages/admin/UpdateCourse';
 import { ListCourse } from '@/pages/admin/ListCourse';
@@ -14,10 +13,7 @@ import { UpdateVerified } from '@/pages/admin/UpdateVerified';
 const itemsPerPage = 11;
 export const AdminRoutes = () => (
   <Routes>
-    <Route
-      path='/registros'
-      element={<Regitsers data={registersfake} itemsPerPage={itemsPerPage} />}
-    />
+    <Route path='/registros' element={<Regitsers />} />
     <Route path='/usuarios' element={<Users data={usersfake} itemsPerPage={itemsPerPage} />} />
     <Route path='/asistencias' element={<Asistencias />} />
     <Route path='/crear-curso' element={<CreateCourse />} />
