@@ -85,7 +85,7 @@ export const Users = ({ data, itemsPerPage }) => {
         <h1 className='mb-2'>
           Usuarios Registrados <FontAwesomeIcon icon={faUsers} />
         </h1>
-        <table className='table table-striped'>
+        {/* <table className='table table-striped'>
           <thead className='header_dark'>
             <tr>
               <th className='paddin_table' scope='col'>
@@ -112,9 +112,9 @@ export const Users = ({ data, itemsPerPage }) => {
             </tr>
           </thead>
           <tbody>{renderTableData()}</tbody>
-        </table>
+        </table> */}
       </div>
-      {renderPagination()}
+      {/* {renderPagination()} */}
     </div>
   );
 };

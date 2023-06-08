@@ -23,6 +23,10 @@
     background-color: aliceblue;
     border-radius: 10px !important;  
 }
+.lisidebar2:hover{
+    background-color: rgb(245, 30, 30) !important;
+    border-radius: 10px !important;  
+}
 .lisidebar:hover a{
     color: black !important;
 }
