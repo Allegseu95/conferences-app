@@ -6,7 +6,9 @@ import { Asistencias } from '@/pages/admin/asistencia';
 import { CreateCourse } from '@/pages/admin/CreateCourse';
 import { UpdateCourse } from '@/pages/admin/UpdateCourse';
 import { ListCourse } from '@/pages/admin/ListCourse';
-import { ListAsistent } from '@/pages/admin/ListAsistent';
+import { ListVerified } from '@/pages/admin/ListVerified';
+import { CreateVerified } from '@/pages/admin/CreateVerified';
+import { UpdateVerified } from '@/pages/admin/UpdateVerified';
 
 const itemsPerPage = 11;
 export const AdminRoutes = () => (
@@ -16,8 +18,10 @@ export const AdminRoutes = () => (
     <Route path='/asistencias' element={<Asistencias />} />
     <Route path='/crear-curso' element={<CreateCourse />} />
     <Route path='/editCourse/:curseId' element={<UpdateCourse />} />
-    <Route path='/lista-certificados' element={<ListCourse />} />
-    <Route path='/lista-asistencias' element={<ListAsistent />} />
+    <Route path='/lista-cursos' element={<ListCourse />} />
+    <Route path='/lista-verificados' element={<ListVerified />} />
+    <Route path='/crear-verificador' element={<CreateVerified />} />
+    <Route path='/editVerified/:idVerified' element={<UpdateVerified />} />
     <Route path='*' element={<Navigate to='/registros' />} />
   </Routes>
 );

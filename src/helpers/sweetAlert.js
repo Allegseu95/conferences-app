@@ -35,3 +35,31 @@ export const showBasicAlert = (title, icon, text = '') =>
       imageHeight: height,
       imageAlt: 'Custom image',
     });
+
+export const showPasswordInput = (onPasswordEntered) => {
+  Swal.fire({
+    title: 'Estas seguro de modificar la contraseña?',
+    showCancelButton: true,
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Restablecer Contraseña',
+        input: 'password',
+        inputLabel: 'Nueva Contraseña',
+        inputPlaceholder: 'Ingrese su contraseña',
+        inputAttributes: {
+          maxlength: 10,
+          autocapitalize: 'off',
+          autocorrect: 'off',
+        },
+      }).then((result) => {
+        if (result.value) {
+          const password = result.value;
+          onPasswordEntered(password);
+        }
+      });
+    }
+  });
+};

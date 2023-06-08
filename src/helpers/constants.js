@@ -88,3 +88,13 @@ export const updateCourse = {
   endDate: new Date().toISOString().split('T')[0],
   certificateTemplateURL: '',
 };
+
+export const createVerified = {
+  name: '',
+  lastname: '',
+  email: '',
+  phone: '',
+  address: '',
+  identification: '',
+  password: ''
+};

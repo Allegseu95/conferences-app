@@ -1,4 +1,3 @@
-import React from 'react';
 import DataTable from 'react-data-table-component';
 import { useServer } from '@/contexts/ServerContext';
 import { useState, useEffect } from 'react';
@@ -94,7 +93,7 @@ export const ListCourse = () => {
             onClick={() =>
               curso?.certificateTemplateURL ? seeCertificado(curso?.certificateTemplateURL) : {}
             }
-            className={`fs-4 m-2 btn ${
+            className={`fs-4 m-2 btn ${ 
               curso?.certificateTemplateURL ? 'btn-info' : 'btn-secondary'
             }`}
           />
@@ -150,7 +149,7 @@ export const ListCourse = () => {
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
           <h1 className='mb-2 fs-4 text-center'>
-            Cursos Disponibles <BsFillPinFill />
+            Cursos Disponibles <BsFillPinFill className='text-danger' />
           </h1>
           <Link to='/crear-curso' className='btn btn-success p-3'>
             <MdAddToPhotos className='fs-4' /> Crear Curso
