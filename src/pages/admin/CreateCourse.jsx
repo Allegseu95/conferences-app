@@ -56,12 +56,17 @@ export const CreateCourse = () => {
       return false;
     }
 
-    if (data?.endDate < data?.startDate){
+    if (data?.endDate < data?.startDate) {
       showBasicAlert('La fecha de fin no puede ser menor a la de inicio', icon);
-      return false
+      return false;
     }
 
     if (!data?.photoBase64) {
+      showBasicAlert('Seleccione una imagen', icon);
+      return false;
+    }
+
+    if (!data?.certificateTemplateBase64) {
       showBasicAlert('Seleccione una imagen', icon);
       return false;
     }
