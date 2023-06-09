@@ -18,12 +18,23 @@ export const ListCourse = () => {
   const [courses, setCourses] = useState([]);
   const [titleFilter, setTitleFilter] = useState(courses);
 
+  const sumOneDay = (fecha) => {
+    const fechaModificada = new Date(fecha);
+    fechaModificada.setDate(fechaModificada.getDate() + 1);
+    return fechaModificada;
+  };
+
   const getCourses = async () => {
     showLoader();
     try {
       const data = await server.getCourses();
-      setCourses(data);
-      setTitleFilter(data);
+      const modifiedData = data.map((course) => {
+        const startDate = sumOneDay(course.startDate);
+        const endDate = sumOneDay(course.endDate);
+        return { ...course, startDate, endDate };
+      });
+      setCourses(modifiedData);
+      setTitleFilter(modifiedData);
     } catch (error) {
       setCourses([]);
     } finally {
@@ -36,19 +47,19 @@ export const ListCourse = () => {
   }, []);
 
   const seePhoto = (photo) => {
-    see('Imagen Curso', photo, '90%', '400px', '700px');
+    see('Imagen de Curso', photo, '90%', '400px', '700px');
   };
 
   const seeCertificado = (certificate) => {
-    see('Imagen Certificado', certificate, '90%', '400px', '700px');
+    see('Imagen de Certificado', certificate, '90%', '400px', '700px');
   };
 
   const columns = [
     {
       name: 'Título',
-      selector: (row) => row.title,
+      selector: (row) => row?.title,
       sortable: true,
-      width: 'auto',
+      width: '300px',
     },
     {
       name: 'Tipo',
@@ -59,14 +70,15 @@ export const ListCourse = () => {
     },
     {
       name: 'Precio',
-      selector: (row) => `$ ${row.price.toLocaleString()}`,
+      selector: (row) => `$ ${row?.price?.toLocaleString()}`,
       sortable: true,
       width: '100px',
     },
     {
       name: 'Descripción',
-      selector: (row) => row.description,
+      selector: (row) => row?.description,
       sortable: true,
+      width: '400px',
     },
     {
       name: 'Fecha Inicio',
@@ -86,14 +98,14 @@ export const ListCourse = () => {
       cell: (curso) => (
         <div>
           <AiFillSafetyCertificate
-            onClick={() => (curso?.photoURL ? seePhoto(curso?.photoURL) : {})}
+            onClick={() => (curso?.photoURL ? seeCertificado(curso?.photoURL) : {})}
             className={`fs-4 btn m-1 ${curso?.photoURL ? 'btn-warning' : 'btn-secondary'}`}
           />
           <AiFillEye
             onClick={() =>
-              curso?.certificateTemplateURL ? seeCertificado(curso?.certificateTemplateURL) : {}
+              curso?.certificateTemplateURL ? seePhoto(curso?.certificateTemplateURL) : {}
             }
-            className={`fs-4 m-2 btn ${ 
+            className={`fs-4 m-2 btn ${
               curso?.certificateTemplateURL ? 'btn-info' : 'btn-secondary'
             }`}
           />
@@ -148,8 +160,8 @@ export const ListCourse = () => {
       <Sidebar />
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
-          <h1 className='mb-2 fs-4 text-center'>
-            Cursos Disponibles <BsFillPinFill className='text-danger' />
+          <h1 style={{ fontWeight: '500', fontSize: '2rem', color: '#212529' }}>
+            Cursos Disponibles <BsFillPinFill />
           </h1>
           <Link to='/crear-curso' className='btn btn-success p-3'>
             <MdAddToPhotos className='fs-4' /> Crear Curso

@@ -20,7 +20,7 @@ export const CreateCourse = () => {
         await server.createCourse(form);
         showBasicAlert('Registro Exitoso!', 'success');
         setForm(createCourse);
-        navigate('/lista-certificados');
+        navigate('/lista-cursos');
       } catch (error) {
         console.log(error?.response?.data?.mensaje);
         showBasicAlert(
@@ -42,7 +42,7 @@ export const CreateCourse = () => {
     }
 
     if (!data?.type) {
-      showBasicAlert('Ubique un tipo', icon);
+      showBasicAlert('Seleccione un tipo', icon);
       return false;
     }
 
@@ -56,13 +56,18 @@ export const CreateCourse = () => {
       return false;
     }
 
-    if (!data?.certificateTemplateBase64) {
-      showBasicAlert('Suba una imagen', icon);
-      return false;
+    if (data?.endDate < data?.startDate){
+      showBasicAlert('La fecha de fin no puede ser menor a la de inicio', icon);
+      return false
     }
 
     if (!data?.photoBase64) {
-      showBasicAlert('Suba una imagen', icon);
+      showBasicAlert('Seleccione una imagen', icon);
+      return false;
+    }
+
+    if (data.type === 'workshop' && !data?.price) {
+      showBasicAlert('Ingrese el precio del taller', icon);
       return false;
     }
     return true;
@@ -95,7 +100,6 @@ export const CreateCourse = () => {
                 <label className='form-label'>Fecha de inicio</label>
                 <input
                   type='date'
-                  value={form.startDate}
                   onChange={(e) => {
                     setForm({ ...form, startDate: e.target.value });
                   }}
@@ -106,7 +110,6 @@ export const CreateCourse = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Fecha de fin</label>
                 <input
-                  value={form.endDate}
                   onChange={(e) => {
                     setForm({ ...form, endDate: e.target.value });
                   }}
