@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useLoader } from '@/contexts/LoaderContext';
@@ -13,6 +13,8 @@ import { Button } from '../Button';
 import { paymentOptions, initFormRegister, participantTypeOptions } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
 import { cleanText, validateEmail, validatePassword, validatePhone } from '@/helpers/utils';
+
+import BankImage from '@/assets/images/bank_accounts.png';
 
 export const FormRegister = ({ data = [] }) => {
   const { showLoader, hideLoader } = useLoader();
@@ -176,7 +178,7 @@ export const FormRegister = ({ data = [] }) => {
   useEffect(() => {
     if (formValues?.participantType !== '') {
       const _courses = courses.map((item) => {
-        if (item?.type === 'congress') {
+        if (item?.type === 'congress' && item?.congressPrice) {
           item.price = item?.congressPrice[formValues?.participantType];
         }
         return item;
@@ -306,10 +308,22 @@ export const FormRegister = ({ data = [] }) => {
           </div>
 
           {formValues.typePayment === 'transfer' && (
-            <InputFileForm
-              acceptFile='image/*'
-              onChangeText={(text) => setFormValues({ ...formValues, voucherBase64: text })}
-            />
+            <Fragment>
+              <div style={{ width: '100%', height: '350px' }} className='mb-3'>
+                <img
+                  src={BankImage}
+                  alt='Cuentas bancarias'
+                  height={'100%'}
+                  width={'100%'}
+                  className='rounded rounded-3'
+                />
+              </div>
+
+              <InputFileForm
+                acceptFile='image/*'
+                onChangeText={(text) => setFormValues({ ...formValues, voucherBase64: text })}
+              />
+            </Fragment>
           )}
 
           <Button onClick={() => register()} title='Registrarse' />

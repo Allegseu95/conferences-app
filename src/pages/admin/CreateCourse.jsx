@@ -17,6 +17,7 @@ export const CreateCourse = () => {
     if (validarCurso(form)) {
       showLoader();
       try {
+        form.price = parseFloat(parseFloat(form.price).toFixed(2));
         await server.createCourse(form);
         showBasicAlert('Registro Exitoso!', 'success');
         setForm(createCourse);
@@ -62,12 +63,12 @@ export const CreateCourse = () => {
     }
 
     if (!data?.photoBase64) {
-      showBasicAlert('Seleccione una imagen', icon);
+      showBasicAlert('Suba la imagen que se mostrara en la web', icon);
       return false;
     }
 
     if (!data?.certificateTemplateBase64) {
-      showBasicAlert('Seleccione una imagen', icon);
+      showBasicAlert('Suba la plantilla del certificado', icon);
       return false;
     }
 
@@ -160,6 +161,7 @@ export const CreateCourse = () => {
                     setForm({ ...form, price: e.target.value });
                   }}
                   type='number'
+                  step='0.01'
                   className='form-control p-2'
                   disabled={form.type === 'congress'}
                 />

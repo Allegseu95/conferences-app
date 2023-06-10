@@ -23,7 +23,7 @@ export const ListVerified = () => {
 
   const columns = [
     {
-      name: 'Cedula/Pasaporte',
+      name: 'Cédula/Pasaporte',
       selector: (row) => row.identification,
       sortable: true,
       width: '150px',
@@ -53,14 +53,14 @@ export const ListVerified = () => {
       width: '100px',
     },
     {
-      name: 'Direccion',
+      name: 'Dirección',
       selector: (row) => row.address,
       sortable: true,
       width: '200px',
     },
     {
       name: 'Solicitud',
-      selector: (row) => (row.solPassword === true ? 'Si' : row.solPassword === false ? 'No' : ''),
+      selector: (row) => (row?.solPassword ? 'Si' : ''),
       sortable: true,
       width: '100px',
     },
@@ -127,7 +127,7 @@ export const ListVerified = () => {
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
           <h1 style={{ fontWeight: '500', fontSize: '2rem', color: '#212529' }}>
-            Lista de Verificadores <GoVerified className='text-dark fs-1' />
+            Verificadores <GoVerified className='text-dark fs-1' />
           </h1>
           <div className='selector-items'>
             <Link to='/crear-verificador' className='btn btn-success p-3'>

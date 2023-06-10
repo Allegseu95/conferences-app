@@ -9,8 +9,8 @@ import { see } from '@/helpers/sweetAlert';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { MdAddToPhotos } from 'react-icons/md';
-import { BsFillPinFill } from 'react-icons/bs';
 import { useLoader } from '@/contexts/LoaderContext';
+import { BiTask } from 'react-icons/bi';
 
 export const ListCourse = () => {
   const server = useServer();
@@ -47,7 +47,7 @@ export const ListCourse = () => {
   }, []);
 
   const seePhoto = (photo) => {
-    see('Imagen de Curso', photo, '90%', '400px', '700px');
+    see('Imagen que se muestra en la web', photo, '90%', '400px', '700px');
   };
 
   const seeCertificado = (certificate) => {
@@ -78,7 +78,7 @@ export const ListCourse = () => {
       name: 'Descripción',
       selector: (row) => row?.description,
       sortable: true,
-      width: '400px',
+      width: '350px',
     },
     {
       name: 'Fecha Inicio',
@@ -97,16 +97,16 @@ export const ListCourse = () => {
       name: 'Acciones',
       cell: (curso) => (
         <div>
-          <AiFillSafetyCertificate
-            onClick={() => (curso?.photoURL ? seeCertificado(curso?.photoURL) : {})}
-            className={`fs-4 btn m-1 ${curso?.photoURL ? 'btn-warning' : 'btn-secondary'}`}
-          />
           <AiFillEye
+            onClick={() => (curso?.photoURL ? seePhoto(curso?.photoURL) : {})}
+            className={`fs-4 btn m-1 ${curso?.photoURL ? 'btn-info' : 'btn-secondary'}`}
+          />
+          <AiFillSafetyCertificate
             onClick={() =>
-              curso?.certificateTemplateURL ? seePhoto(curso?.certificateTemplateURL) : {}
+              curso?.certificateTemplateURL ? seeCertificado(curso?.certificateTemplateURL) : {}
             }
             className={`fs-4 m-2 btn ${
-              curso?.certificateTemplateURL ? 'btn-info' : 'btn-secondary'
+              curso?.certificateTemplateURL ? 'btn-warning' : 'btn-secondary'
             }`}
           />
           <Link to={`/editCourse/${curso?._id}`}>
@@ -161,8 +161,9 @@ export const ListCourse = () => {
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
           <h1 style={{ fontWeight: '500', fontSize: '2rem', color: '#212529' }}>
-            Cursos Disponibles <BsFillPinFill />
+            Cursos <BiTask className='text-dark fs-1' />
           </h1>
+
           <Link to='/crear-curso' className='btn btn-success p-3'>
             <MdAddToPhotos className='fs-4' /> Crear Curso
           </Link>

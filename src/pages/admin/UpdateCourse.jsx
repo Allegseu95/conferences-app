@@ -25,11 +25,12 @@ export const UpdateCourse = () => {
         const data = {
           title: updateForm.title,
           description: updateForm.description,
-          price: updateForm.price,
+          price: parseFloat(parseFloat(updateForm.price).toFixed(2)),
           type: updateForm.type,
           startDate: updateForm.startDate,
           endDate: updateForm.endDate,
         };
+
         if (updateForm.photoURL !== currentData.photo) {
           data.photoBase64 = updateForm.photoURL;
         }
@@ -38,12 +39,9 @@ export const UpdateCourse = () => {
           data.certificateTemplateBase64 = updateForm.certificateTemplateURL;
         }
 
-        console.log(data);
-
-        const result = await server.updateCourse(curseId, data);
-        console.log(result);
+        await server.updateCourse(curseId, data);
         showBasicAlert('Actializacion Exitosa!', 'success');
-        navigate('/lista-certificados');
+        navigate('/lista-cursos');
       } catch (error) {
         showBasicAlert(
           error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
@@ -57,6 +55,26 @@ export const UpdateCourse = () => {
 
   const validarCurso = (data) => {
     const icon = 'warning';
+
+    if (!data?.title) {
+      showBasicAlert('Llene el titulo', icon);
+      return false;
+    }
+
+    if (!data?.type) {
+      showBasicAlert('Seleccione un tipo', icon);
+      return false;
+    }
+
+    if (!data?.startDate) {
+      showBasicAlert('Seleccione una fecha de inicio', icon);
+      return false;
+    }
+
+    if (!data?.endDate) {
+      showBasicAlert('Seleccione una fecha de fin', icon);
+      return false;
+    }
 
     if (data.endDate < data.startDate) {
       showBasicAlert('La fecha de fin no puede ser menor a la de inicio', icon);
@@ -73,7 +91,7 @@ export const UpdateCourse = () => {
   useEffect(() => {
     const fetchCourseById = async () => {
       try {
-        const curso = await server.getCourseById(curseId); // Obtén el curso por su ID
+        const curso = await server.getCourseById(curseId);
         setCurrentData({ photo: curso.photoURL, certificate: curso.certificateTemplateURL });
         setUpdateForm(curso);
       } catch (error) {
@@ -194,7 +212,10 @@ export const UpdateCourse = () => {
                   placeholder='Descripcion'
                 />
               </div>
-              <button onClick={() => updateCurse()} type='submit' className='btn btn-success p-2 col-2 mt-4 m-2'>
+              <button
+                onClick={() => updateCurse()}
+                type='submit'
+                className='btn btn-success p-2 col-2 mt-4 m-2'>
                 Actualizar
               </button>
               <button

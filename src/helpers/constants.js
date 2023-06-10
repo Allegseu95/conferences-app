@@ -5,7 +5,7 @@ export const paymentOptions = [
   },
   {
     _id: 'transfer',
-    name: 'Transferencia',
+    name: 'Transferencia/Deposito',
   },
   {
     _id: 'efective',
@@ -69,8 +69,8 @@ export const createCourse = {
   photoBase64: '',
   price: '',
   type: '',
-  startDate: new Date().toISOString().split('T')[0],
-  endDate: new Date().toISOString().split('T')[0],
+  startDate: '',
+  endDate: '',
   certificateTemplateBase64: '',
 };
 
@@ -96,5 +96,5 @@ export const createVerified = {
   phone: '',
   address: '',
   identification: '',
-  password: ''
+  password: '',
 };

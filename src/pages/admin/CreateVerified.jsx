@@ -13,22 +13,22 @@ export const CreateVerified = () => {
     const icon = 'warning';
 
     if (data?.name === '') {
-      showBasicAlert('Llene su nombre', icon);
+      showBasicAlert('Llene el nombre', icon);
       return false;
     }
 
     if (data?.lastname === '') {
-      showBasicAlert('Llene su apellido', icon);
+      showBasicAlert('Llene el apellido', icon);
       return false;
     }
 
     if (data?.phone === '') {
-      showBasicAlert('Llene su telefono', icon);
+      showBasicAlert('Llene el telefóno', icon);
       return false;
     }
 
     if (data?.identification === '') {
-      showBasicAlert('Llene su identificacion', icon);
+      showBasicAlert('Llene la identificacion', icon);
       return false;
     }
 
@@ -37,12 +37,13 @@ export const CreateVerified = () => {
       return false;
     }
 
-    if (data?.password === '') {
-      showBasicAlert('Llene una contraseña', icon);
+    if (!validateEmail(data?.email)) {
+      showBasicAlert('El email que ingreso no es un email válido', icon);
       return false;
     }
-    if (!validateEmail(data?.email)) {
-      showBasicAlert('Llene un email valido', icon);
+
+    if (data?.password === '') {
+      showBasicAlert('Llene una contraseña', icon);
       return false;
     }
 
@@ -56,11 +57,15 @@ export const CreateVerified = () => {
     }
     return true;
   };
+
+  const registerVerified = () => {
+    validateVerified(form);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    validateVerified(form);
-    console.log(form);
   };
+
   return (
     <div style={{ height: '100vh' }}>
       <Sidebar />
@@ -72,7 +77,7 @@ export const CreateVerified = () => {
                 <label className='form-label'>Nombre</label>
                 <input
                   type='text'
-                  placeholder='Escriba un titulo'
+                  placeholder='Escriba el nombre'
                   className='form-control p-2'
                   onChange={(e) => {
                     setForm({ ...form, name: e.target.value });
@@ -83,7 +88,7 @@ export const CreateVerified = () => {
                 <label className='form-label'>Apellido</label>
                 <input
                   type='text'
-                  placeholder='Escriba sus apellidos'
+                  placeholder='Escriba los apellidos'
                   onChange={(e) => {
                     setForm({ ...form, lastname: e.target.value });
                   }}
@@ -91,9 +96,9 @@ export const CreateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Telefono</label>
+                <label className='form-label'>Teléfono</label>
                 <input
-                  placeholder='Escriba su telefono movil'
+                  placeholder='Escriba el teléfono'
                   onChange={(e) => {
                     setForm({ ...form, phone: e.target.value });
                   }}
@@ -104,7 +109,7 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Email</label>
                 <input
-                  placeholder='Escriba un correo'
+                  placeholder='Escriba un email'
                   onChange={(e) => {
                     setForm({ ...form, email: e.target.value });
                   }}
@@ -113,9 +118,9 @@ export const CreateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Direccion</label>
+                <label className='form-label'>Dirección</label>
                 <input
-                  placeholder='Direccion'
+                  placeholder='Dirección'
                   onChange={(e) => {
                     setForm({ ...form, address: e.target.value });
                   }}
@@ -124,9 +129,9 @@ export const CreateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Cedula/Pasaporte</label>
+                <label className='form-label'>Cédula/Pasaporte</label>
                 <input
-                  placeholder='cedula o pasaporte'
+                  placeholder='Cédula o pasaporte'
                   onChange={(e) => {
                     setForm({ ...form, identification: e.target.value });
                   }}
@@ -146,13 +151,13 @@ export const CreateVerified = () => {
               </div>
               <div>
                 <button
-                  type='submit'
-                  //onClick={() => crearCurso()}
+                  type='button'
+                  onClick={() => registerVerified()}
                   className='btn btn-success p-2 col-2 mt-4 m-2'>
                   Crear
                 </button>
                 <button
-                  type='submit'
+                  type='button'
                   onClick={() => navigate('/lista-verificados')}
                   className='btn btn-danger p-2 col-2 mt-4 m-2'>
                   Cancelar
