@@ -16,14 +16,14 @@ import { data } from '@/mock/verified';
 export const ListVerified = () => {
   const [identificationFilter, setIdentificationFilter] = useState(data);
 
-  
   const handlePasswordEntered = (password) => {
     // Realiza alguna acción con la contraseña ingresada
     console.log(`Entered password: ${password}`);
   };
+
   const columns = [
     {
-      name: 'Cedula',
+      name: 'Cedula/Pasaporte',
       selector: (row) => row.identification,
       sortable: true,
       width: '150px',
@@ -59,10 +59,10 @@ export const ListVerified = () => {
       width: '200px',
     },
     {
-      name: 'Solicitud para recuperar contraseña',
-      selector: (row) => row.solPassword,
+      name: 'Solicitud',
+      selector: (row) => (row.solPassword === true ? 'Si' : row.solPassword === false ? 'No' : ''),
       sortable: true,
-      width: '200px',
+      width: '100px',
     },
 
     {
@@ -126,8 +126,8 @@ export const ListVerified = () => {
       <Sidebar />
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
-          <h1 className='mb-2 fs-4 text-center'>
-            Lista de Verificadores <GoVerified className='text-success' />
+          <h1 style={{ fontWeight: '500', fontSize: '2rem', color: '#212529' }}>
+            Lista de Verificadores <GoVerified className='text-dark fs-1' />
           </h1>
           <div className='selector-items'>
             <Link to='/crear-verificador' className='btn btn-success p-3'>
@@ -138,7 +138,7 @@ export const ListVerified = () => {
                 onChange={searchByIdentification}
                 type='text'
                 className='form-control p-2'
-                placeholder='Buscar por cedula'
+                placeholder='Buscar por cedula/pasaporte'
               />
             </div>
             {identificationFilter.length > 0 ? (

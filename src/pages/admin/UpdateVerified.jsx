@@ -9,16 +9,13 @@ export const UpdateVerified = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
   return (
     <div style={{ height: '100vh' }}>
       <Sidebar />
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
-          <h1 className='mb-2 fs-4 text-center'>
-            Crear Verificador <GoVerified className='text-success' />
-          </h1>
           <div className='mt-3'>
             <form className='row g-3' onSubmit={handleSubmit}>
               <div className='col-md-4 p-2'>
@@ -82,7 +79,7 @@ export const UpdateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Cedula</label>
+                <label className='form-label'>Cedula/Pasaporte</label>
                 <input
                   placeholder='Escriba su cedula'
                   value={updateVerified.identification}

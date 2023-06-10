@@ -9,7 +9,6 @@ import { useLoader } from '@/contexts/LoaderContext';
 import { updateCourse } from '@/helpers/constants';
 import { FiEdit } from 'react-icons/fi';
 
-
 export const UpdateCourse = () => {
   const [updateForm, setUpdateForm] = useState(updateCourse);
   const [currentData, setCurrentData] = useState({ photo: null, certificate: null });
@@ -20,38 +19,55 @@ export const UpdateCourse = () => {
   const { showLoader, hideLoader } = useLoader();
 
   const updateCurse = async () => {
-    showLoader();
-    try {
-      const data = {
-        title: updateForm.title,
-        description: updateForm.description,
-        price: updateForm.price,
-        type: updateForm.type,
-        startDate: updateForm.startDate,
-        endDate: updateForm.endDate,
-      };
-      if (updateForm.photoURL !== currentData.photo) {
-        data.photoBase64 = updateForm.photoURL;
+    if (validarCurso(updateForm)) {
+      showLoader();
+      try {
+        const data = {
+          title: updateForm.title,
+          description: updateForm.description,
+          price: updateForm.price,
+          type: updateForm.type,
+          startDate: updateForm.startDate,
+          endDate: updateForm.endDate,
+        };
+        if (updateForm.photoURL !== currentData.photo) {
+          data.photoBase64 = updateForm.photoURL;
+        }
+
+        if (updateForm.certificateTemplateURL !== currentData.certificate) {
+          data.certificateTemplateBase64 = updateForm.certificateTemplateURL;
+        }
+
+        console.log(data);
+
+        const result = await server.updateCourse(curseId, data);
+        console.log(result);
+        showBasicAlert('Actializacion Exitosa!', 'success');
+        navigate('/lista-certificados');
+      } catch (error) {
+        showBasicAlert(
+          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+          'error'
+        );
+      } finally {
+        hideLoader();
       }
-
-      if (updateForm.certificateTemplateURL !== currentData.certificate) {
-        data.certificateTemplateBase64 = updateForm.certificateTemplateURL;
-      }
-
-      console.log(data);
-
-      const result = await server.updateCourse(curseId, data);
-      console.log(result);
-      showBasicAlert('Actializacion Exitosa!', 'success');
-      navigate('/lista-certificados');
-    } catch (error) {
-      showBasicAlert(
-        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
-        'error'
-      );
-    } finally {
-      hideLoader();
     }
+  };
+
+  const validarCurso = (data) => {
+    const icon = 'warning';
+
+    if (data.endDate < data.startDate) {
+      showBasicAlert('La fecha de fin no puede ser menor a la de inicio', icon);
+      return false;
+    }
+
+    if (data.type === 'workshop' && !data?.price) {
+      showBasicAlert('Ingrese el precio del taller', icon);
+      return false;
+    }
+    return true;
   };
 
   useEffect(() => {
@@ -70,7 +86,6 @@ export const UpdateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    updateCurse();
   };
 
   return (
@@ -78,9 +93,6 @@ export const UpdateCourse = () => {
       <Sidebar />
       <div className='contentwithoutsidebar2'>
         <div className='contenedorLista'>
-          <h1 className='mb-2 fs-4 text-center'>
-            Editar Curso <FiEdit className='text-success' />
-          </h1>
           <div className='mt-3'>
             <form onSubmit={handleSubmit} className='row g-3'>
               <div className='col-md-12 p-2'>
@@ -166,6 +178,7 @@ export const UpdateCourse = () => {
                   }}
                   type='number'
                   className='form-control p-2'
+                  disabled={updateForm.type === 'congress'}
                 />
               </div>
               <div className='col-12 mt-2 p-2'>
@@ -181,7 +194,7 @@ export const UpdateCourse = () => {
                   placeholder='Descripcion'
                 />
               </div>
-              <button type='submit' className='btn btn-success p-2 col-2 mt-4 m-2'>
+              <button onClick={() => updateCurse()} type='submit' className='btn btn-success p-2 col-2 mt-4 m-2'>
                 Actualizar
               </button>
               <button

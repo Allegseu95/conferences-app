@@ -7,7 +7,8 @@ export const data = [
     email: 'johndoe@example.com',
     phone: '1234567890',
     address: '123 Calle Principal',
-    solPassword: 'mypassword1',
+    password: 'rommelpalma',
+    solPassword: false,
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ export const data = [
     email: 'janesmith@example.com',
     phone: '0987654321',
     address: '456 Calle Secundaria',
-    solPassword: 'mypassword2',
+    password: 'rommelpalma',
+    solPassword: false,
   },
   {
     id: 3,
@@ -27,7 +29,8 @@ export const data = [
     email: 'alexjohnson@example.com',
     phone: '5555555555',
     address: '789 Calle Terciaria',
-    solPassword: 'mypassword3',
+    password: 'rommelpalma',
+    solPassword: false,
   },
   {
     id: 4,
@@ -37,7 +40,8 @@ export const data = [
     email: 'sarahdavis@example.com',
     phone: '9999999999',
     address: '321 Calle Cuarta',
-    solPassword: 'mypassword4',
+    password: 'rommelpalma',
+    solPassword: true,
   },
   {
     id: 5,
@@ -47,7 +51,8 @@ export const data = [
     email: 'michaelbrown@example.com',
     phone: '1111111111',
     address: '654 Calle Quinta',
-    solPassword: 'mypassword5',
+    password: 'rommelpalma',
+    solPassword: false,
   },
   {
     id: 6,
@@ -57,7 +62,8 @@ export const data = [
     email: 'emilytaylor@example.com',
     phone: '2222222222',
     address: '987 Calle Sexta',
-    solPassword: 'mypassword6',
+    password: 'rommelpalma',
+    solPassword: true,
   },
 ];
 
@@ -71,5 +77,5 @@ export const updateVeri = {
   email: 'sarahdavis@example.com',
   phone: '9999999999',
   address: '321 Calle Cuarta',
-  solPassword: 'mypassword4',
+  solPassword: true,
 };
