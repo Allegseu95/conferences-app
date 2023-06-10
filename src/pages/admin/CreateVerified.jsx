@@ -1,25 +1,71 @@
-import { GoVerified } from 'react-icons/go';
 import { Sidebar } from './sidebar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createVerified } from '@/helpers/constants';
-
+import { showBasicAlert } from '@/helpers/sweetAlert';
+import { validateEmail, validatePassword } from '@/helpers/utils';
+import { InputForm } from '@/components/InputForm';
 export const CreateVerified = () => {
   const [form, setForm] = useState(createVerified);
   const navigate = useNavigate();
 
+  const validateVerified = (data) => {
+    const icon = 'warning';
 
+    if (data?.name === '') {
+      showBasicAlert('Llene su nombre', icon);
+      return false;
+    }
+
+    if (data?.lastname === '') {
+      showBasicAlert('Llene su apellido', icon);
+      return false;
+    }
+
+    if (data?.phone === '') {
+      showBasicAlert('Llene su telefono', icon);
+      return false;
+    }
+
+    if (data?.identification === '') {
+      showBasicAlert('Llene su identificacion', icon);
+      return false;
+    }
+
+    if (data?.email === '') {
+      showBasicAlert('Llene el email', icon);
+      return false;
+    }
+
+    if (data?.password === '') {
+      showBasicAlert('Llene una contraseña', icon);
+      return false;
+    }
+    if (!validateEmail(data?.email)) {
+      showBasicAlert('Llene un email valido', icon);
+      return false;
+    }
+
+    if (!validatePassword(data?.password)) {
+      showBasicAlert(
+        'Ingrese una contraseña segura',
+        icon,
+        'La contraseña debe tener al menos 8 caracteres, una letra minúscula, una letra mayúscula, un número y un carácter especial'
+      );
+      return false;
+    }
+    return true;
+  };
   const handleSubmit = (event) => {
-    e.preventDefault()
-  }
+    event.preventDefault();
+    validateVerified(form);
+    console.log(form);
+  };
   return (
     <div style={{ height: '100vh' }}>
       <Sidebar />
       <div className='contentwithoutsidebar3'>
         <div className='items-movil'>
-          <h1 className='mb-2 fs-4 text-center'>
-            Crear Verificador <GoVerified className='text-success' />
-          </h1>
           <div className='mt-3'>
             <form className='row g-3' onSubmit={handleSubmit}>
               <div className='col-md-4 p-2'>
@@ -51,7 +97,7 @@ export const CreateVerified = () => {
                   onChange={(e) => {
                     setForm({ ...form, phone: e.target.value });
                   }}
-                  type='text'
+                  type='number'
                   className='form-control p-2'
                 />
               </div>
@@ -69,7 +115,7 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Direccion</label>
                 <input
-                placeholder='Direccion'
+                  placeholder='Direccion'
                   onChange={(e) => {
                     setForm({ ...form, address: e.target.value });
                   }}
@@ -78,25 +124,24 @@ export const CreateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Cedula</label>
+                <label className='form-label'>Cedula/Pasaporte</label>
                 <input
-                  placeholder='Escriba su cedula'
+                  placeholder='cedula o pasaporte'
                   onChange={(e) => {
                     setForm({ ...form, identification: e.target.value });
                   }}
-                  type='email'
+                  type='number'
                   className='form-control p-2'
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Contraseña</label>
-                <input
+                <InputForm
                   placeholder='Contraseña'
-                  onChange={(e) => {
-                    setForm({ ...form, password: e.target.value });
-                  }}
+                  value={form.password}
                   type='password'
-                  className='form-control p-2'
+                  onChangeText={(text) => setForm({ ...form, password: text })}
+                  secure
                 />
               </div>
               <div>

@@ -7,11 +7,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-import { GiConfirmed } from 'react-icons/gi';
 import '@/static/styles/sidebar.css';
 import '@/static/base/base.css';
 import { useAuth } from '@/contexts/AuthContext';
 import icon from '@/assets/icons/icon.png';
+import { GoVerified } from 'react-icons/go';
+
 
 export const Sidebar = () => {
   const { authLogout } = useAuth();
@@ -44,14 +45,14 @@ export const Sidebar = () => {
             </li>
             <li className='lisidebar'>
               <Link className='asidebar' to='/lista-cursos'>
-                <BiTask className='fs-6 text-danger' />
+                <BiTask className='fs-6' />
                 <span className='hoverbutton'>Cursos</span>
               </Link>
             </li>
             <li className='lisidebar'>
               <Link className='asidebar' to='/lista-verificados'>
-                <GiConfirmed className='fs-6 text-success' />
-                <span className='hoverbutton'>Verificaciones</span>
+                <GoVerified className='fs-6' />
+                <span className='hoverbutton'>Verificadores</span>
               </Link>
             </li>
             <li className='lisidebar2'>
