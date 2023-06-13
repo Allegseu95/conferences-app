@@ -82,7 +82,7 @@ export const FormLogin = () => {
 
   return (
     <div className='row d-flex justify-content-center pt-5 animate__animated animate__fadeInUp animate__slow'>
-      <div className='col-lg-4 col-md-5 col-sm-8 col-8'>
+      <div className='col-lg-3 col-md-4 col-sm-6 col-9'>
         <form
           style={{
             boxShadow: '0px 5px 30px rgba(0, 0, 0, 0.9)',

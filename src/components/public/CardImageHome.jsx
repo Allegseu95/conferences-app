@@ -8,7 +8,7 @@ export const CardImageHome = ({ course = null }) => {
         boxShadow: '0px 5px 30px rgba(0, 0, 0, 0.9)',
       }}>
       <div className='p-2 d-flex justify-content-center'>
-        <h4 className='card-title'>{course?.title ?? ''}</h4>
+        <h4 className='card-title text-center'>{course?.title ?? ''}</h4>
       </div>
       <div style={{ width: '100%', height: '600px' }}>
         <img

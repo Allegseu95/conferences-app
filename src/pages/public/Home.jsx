@@ -39,8 +39,8 @@ export const HomePage = () => {
       <Header />
 
       <div className='container m-auto w-100'>
-        <div className='row'>
-          <div className='col-sm-6 d-flex justify-content-center px-3'>
+        <div className='row  d-flex justify-content-center '>
+          <div className='col-lg-5 col-md-8 col-sm-10 col-12 d-flex justify-content-center px-3'>
             {courses.length > 0 && (
               <div className='w-100'>
                 {courses?.map((item, index) => (
@@ -50,7 +50,7 @@ export const HomePage = () => {
             )}
           </div>
 
-          <div className='col-sm-6 d-flex justify-content-center px-4'>
+          <div className='col-lg-5 col-md-8 col-sm-10 col-12 d-flex justify-content-center px-4'>
             {courses.length > 0 && <FormRegister data={courses} />}
           </div>
         </div>
