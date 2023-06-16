@@ -7,11 +7,12 @@ import { Link, Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import { ButtomMobil } from '@/components/user/ButtomMobil';
 import { useAuth } from '@/contexts/AuthContext';
+import { upperFirstWord } from '@/helpers/utils';
 
 export const SideBar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const { authLogout } = useAuth();
+  const { authLogout, user } = useAuth();
 
   const handleItemClick = (index) => {
     setSelectedItem(index);
@@ -32,8 +33,8 @@ export const SideBar = () => {
         <div className={`bg-dark ${sidebarVisible ? 'active' : ''}`} id='side_nav'>
           <div className='bg-dark px-2 pt-3 pb-4'>
             <h1 className='fs-4 text-center'>
-              <span className='bg-dark text-white text-dark rounded shadow px-5 py-2 me-2'>
-                Usuario
+              <span className='bg-dark text-white text-dark rounded shadow px-5 py-2 me-2 fs-5'>
+                Usuario: {upperFirstWord(user?.name)}
               </span>
             </h1>
             <button
@@ -91,7 +92,8 @@ export const SideBar = () => {
               <Link
                 className='d-flex text-dark align-items-center m-2'
                 onClick={() => {
-                  hideSidebar(); authLogout();
+                  hideSidebar();
+                  authLogout();
                 }}>
                 <BiExit className='fs-4 m-2' /> Cerrar Sesion
               </Link>

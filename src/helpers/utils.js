@@ -8,7 +8,7 @@ export const orderCoursesByType = (courses = []) => {
       return -1;
     } else if (b.type === 'congress') {
       return 1;
-    } else {
+    } else {  
       return 0;
     }
   });
@@ -37,3 +37,11 @@ export const validatePassword = (password) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
   return regex.test(password);
 };
+
+export const  upperFirstWord = (word) => {
+  if (typeof word !== 'string' || word.length === 0) {
+    return word;
+  }
+
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}

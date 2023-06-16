@@ -83,6 +83,22 @@ class ServerApi {
         .catch((err) => reject(err));
     });
   };
+
+  GetAllRegisterByUser = () => {
+    return new Promise((resolve, reject) => {
+      getAxios(`${this.baseUrl}/api/user/get-all-registers-by-participant`, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
+  updatedUser = (data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/user/update-user`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
 }
 
 export const ServerProvider = ({ children }) => (
