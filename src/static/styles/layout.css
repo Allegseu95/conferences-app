@@ -1,6 +1,6 @@
 .container-padre {
   display: grid;
-  grid-template-columns:  300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
+  grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
   background: linear-gradient(180deg, #525252, #262525);
 }
 
@@ -13,12 +13,28 @@
     position: fixed;
     z-index: 1;
     top: 0;
-    left: -500px;
+    left: -1000px;
     width: 100%;
     min-height: 100vh;
     background-color: #343a40;
     transition: left 0.3s ease;
     height: 100%;
+  }
+
+  .page-proflie {
+    margin-left: -26px !important;
+  }
+
+  .conteiner-register {
+    margin-left: -23px !important;  
+    width: fit-content !important;
+  }
+  .scrollable-div {
+    overflow-y: auto !important;
+  }
+
+  .scrollable-div::-webkit-scrollbar {
+    display: none !important;
   }
 
   .justificar-contenedor-certificado {
@@ -42,8 +58,8 @@
   }
 
   .container-padre {
-    display: flex;
-    grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
+    display: grid;
+    grid-template-columns: 20px 1fr;
   }
 
   .navegacion-sidebar {
@@ -56,10 +72,81 @@
 }
 
 .scrollable-div {
-  max-height: 700px;
-  overflow-y: scroll;
+  overflow-y: scroll !important;
+  max-height: 1000px !important ;
 }
 
 .scrollable-div::-webkit-scrollbar {
   display: none;
 }
+
+.conteiner-register {  
+    width: auto !important;
+  }
+/* .container-padre {
+  display: grid;
+  grid-template-columns: 300px 1fr;  Define dos columnas: el ancho del sidebar y el espacio restante 
+  background: linear-gradient(180deg, #525252, #262525);
+}
+
+.content {
+  background: linear-gradient(180deg, #525252, #262525);
+    height: auto;
+}
+
+@media screen and (max-width: 767px) {
+  #side_nav {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: -500px;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #343a40;
+    transition: left 0.3s ease;
+    height: 100%;
+  }
+  .scrollable-div {
+    overflow-y: unset !important;
+  }
+  .conteiner-register {
+    margin-left: -24px !important;
+  }
+  .justificar-contenedor-certificado {
+    margin-left: -25px !important;
+  }
+
+  .alerta {
+    margin-left: -25px !important;
+  }
+
+  .list-group {
+    text-align: justify;
+  }
+
+  .centrar-qr {
+    text-align: center;
+  }
+
+  #side_nav.active {
+    left: 0;
+  }
+
+  .container-padre {
+    display: flex;
+    grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante 
+  }
+
+  .navegacion-sidebar {
+    display: flex;
+  }
+
+  .content-sidebar {
+    margin-top: 20px;
+  }
+}
+
+.scrollable-div {
+  overflow-y: scroll;
+}
+*/

@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useLoader } from '@/contexts/LoaderContext';
 import { updateCourse } from '@/helpers/constants';
-import { FiEdit } from 'react-icons/fi';
 
 export const UpdateCourse = () => {
   const [updateForm, setUpdateForm] = useState(updateCourse);
@@ -100,7 +99,7 @@ export const UpdateCourse = () => {
     };
 
     fetchCourseById();
-  }, [curseId]);
+  }, [curseId]);  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
