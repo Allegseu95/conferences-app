@@ -1,42 +1,63 @@
-import { see } from '@/helpers/sweetAlert';
-import { useServer } from '@/contexts/ServerContext';
 import { useState, useEffect } from 'react';
-import moment from 'moment';
+
+import { useServer } from '@/contexts/ServerContext';
 import { useLoader } from '@/contexts/LoaderContext';
 
+import { see, showBasicAlert } from '@/helpers/sweetAlert';
+
 export const Certificate = () => {
-  const [allCertificates, setAllCertificates] = useState([]);
   const server = useServer();
   const { showLoader, hideLoader } = useLoader();
 
-  const mostrarCertificado = (photo) => {
-    see('', photo, '90%', '500px', '900px');
+  const [certificates, setCertificates] = useState([]);
+
+  const mostrarCertificado = (photoURL) => {
+    if (photoURL === null || photoURL === undefined) {
+      showBasicAlert('Certificado aun no disponible!', 'error');
+      return;
+    }
+
+    see('', photoURL, '90%', '500px', '900px');
   };
 
-  const downloadCertificate = (photoURL) => {
-    fetch(photoURL)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'certificado.png');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch((error) => {
-        console.log('Error al descargar el certificado:', error);
-      });
+  const downloadCertificate = async (photoURL) => {
+    try {
+      if (photoURL === null || photoURL === undefined) {
+        throw new Error('Certificado aun no disponible!');
+      }
+      const response = await fetch(photoURL);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'certificado.png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showBasicAlert('Certificado Descargado!', 'success');
+    } catch (error) {
+      showBasicAlert(error?.message ?? 'Error al descargar el certificado', 'error');
+      console.log(error);
+    }
   };
 
   const getAllCertificatesByUer = async () => {
     showLoader();
     try {
-      const register = await server.GetAllRegisterByUser();
-      setAllCertificates(register);
+      const data = await server.GetAllRegisterByUser();
+
+      const _inscriptions = [];
+
+      data.forEach((item) => {
+        item.inscriptions.forEach((element) => {
+          if (element?.attendanceDate?.length > 0) {
+            _inscriptions.push(element);
+          }
+        });
+      });
+
+      setCertificates(_inscriptions);
     } catch (error) {
-      setAllRegisters([]);
       console.log(error);
     } finally {
       hideLoader();
@@ -48,83 +69,46 @@ export const Certificate = () => {
   }, []);
 
   return (
-    <div className='justificar-contenedor-certificado mt-4'>
-      <h4 className='text-center mt-2 text-white'>
+    <div className='justificar-contenedor-certificado'>
+      <h4 className='text-center mt-4 text-white'>
         <b>Certificados</b>
       </h4>
 
-      <div className='row row-cols-1 row-cols-md-3 m-4'>
-        {allCertificates
-          ?.filter((certificado) =>
-            certificado.inscriptions.some((inscripcion) => inscripcion.attendanceDate !== null)
-          )
-          .map((certificado) => {
-            return (
-              <div key={certificado._id} className='col'>
-                <div className='card bg-light m-2'>
-                  <div className='card-body'>
-                    {certificado?.inscriptions.map((certificado) => {
-                      return (
-                        <div key={certificado._id} className='d-block'>
-                          <h5 className='card-title m-2 text-dark'>
-                            <b className='fs-6'>Titulo:</b>
-                            <span className='fs-6'> {certificado?.courseId?.title}</span>
-                          </h5>
-                          <h5 className='card-title m-2 text-dark'>
-                            <b className='fs-6'>Asistencia:</b>{' '}
-                            <span className='fs-6'>
-                              {certificado?.attendanceDate
-                                ? moment(certificado?.attendanceDate).format('DD/MM/YYYY')
-                                : ''}
-                            </span>
-                          </h5>
-                        </div>
-                      );
-                    })}
-                    {certificado?.inscriptions.map((imagen) => {
-                      return (
-                        <div key={imagen._id} className='d-block m-1'>
-                          {imagen?.courseId.certificateTemplateURL ? (
-                            <button
-                              onClick={() =>
-                                mostrarCertificado(imagen?.courseId?.certificateTemplateURL)
-                              }
-                              className='btn btn-info m-1 p-1'>
-                              Ver Certificado
-                            </button>
-                          ) : (
-                            <div className='btn btn-secondary m-1 p-1'>No hay imagen</div>
-                          )}
-
-                          {imagen?.courseId?.certificateTemplateURL ? (
-                            <button
-                              className='btn btn-success m-1 p-1'
-                              onClick={() =>
-                                downloadCertificate(imagen?.courseId?.certificateTemplateURL)
-                              }>
-                              Descargar Certificado
-                            </button>
-                          ) : (
-                            <div className={'btn btn-secondary m-1 p-1'}>No hay imagen</div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+      <div className='row px-xl-5 px-lg-5 px-3 py-4'>
+        {certificates?.map((item, index) => (
+          <div key={index} className='p-2 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12'>
+            <div className='card p-3 d-flex justify-content-between align-items-center flex-column h-100'>
+              <h5 className='card-title text-center mb-1'>{item?.courseId?.title}</h5>
+              <div
+                className='w-100 d-flex justify-content-between align-items-center row'
+                style={{ gap: 10 }}>
+                <div className='col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <button
+                    type='button'
+                    onClick={() => mostrarCertificado(item?.certificateURL)}
+                    className='btn btn-info rounded rounded-3 p-1 w-100'>
+                    Ver Certificado
+                  </button>
+                </div>
+                <div className='col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <button
+                    type='button'
+                    className='btn btn-success rounded rounded-3 p-1 w-100'
+                    onClick={() => downloadCertificate(item?.certificateURL)}>
+                    Descargar Certificado
+                  </button>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
+        ))}
+
+        {certificates?.length <= 0 && (
+          <div className='m-3 alert alert-info p-2' role='alert'>
+            <h3 className='text-center text-dark'>Sin Certificados!</h3>
+          </div>
+        )}
       </div>
-      {allCertificates?.inscriptions?.filter((inscripcionLlena) => {
-        const filtrar = inscripcionLlena?.courseId?.attendanceDate !== null;
-      }).length === 0 && (
-        <div
-          className='card text-center bg-info'
-          style={{ height: '50px', marginLeft: '20px', marginRight: '20px' }}>
-          <h2> No hay certificados por que no tiene una asistencia</h2>
-        </div>
-      )}
     </div>
   );
 };

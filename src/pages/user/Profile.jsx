@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { CgProfile, CgOrganisation } from 'react-icons/cg';
 import { MdLocationPin } from 'react-icons/md';
 import { BsPhoneFill } from 'react-icons/bs';
@@ -6,24 +8,27 @@ import { RiProfileLine } from 'react-icons/ri';
 import { FiEdit } from 'react-icons/fi';
 import { MdSave } from 'react-icons/md';
 import { MdEmail } from 'react-icons/md';
-import { InfoProfile } from '@/components/user/InfoProfile';
-import '@/static/styles/layout.css';
+
 import { useAuth } from '@/contexts/AuthContext';
 import { useServer } from '@/contexts/ServerContext';
-import { useEffect, useState } from 'react';
 import { useLoader } from '@/contexts/LoaderContext';
+
+import { InfoProfile } from '@/components/user/InfoProfile';
+
 import { showBasicAlert } from '@/helpers/sweetAlert';
 import { upperFirstWord } from '@/helpers/utils';
-import { updateProfileUser } from '@/helpers/constants';
+
+import '@/static/styles/layout.css';
 
 export const Profile = () => {
   const { user } = useAuth();
-  const [editMode, setEditMode] = useState(true);
-  const [editedUser, setEditedUser] = useState(user);
   const { showLoader, hideLoader } = useLoader();
   const server = useServer();
 
-  const getUserRegister = async () => {
+  const [editMode, setEditMode] = useState(false);
+  const [editedUser, setEditedUser] = useState(user);
+
+  const updateProfile = async () => {
     showLoader();
     try {
       const data = {
@@ -35,10 +40,8 @@ export const Profile = () => {
         cedula: editedUser.cedula,
       };
 
-      console.log(data);
-      const updateProfile = await server.updatedUser(data);
+      await server.updatedUser(data);
       showBasicAlert('Actializacion Exitosa!', 'success');
-      console.log(updateProfile);
     } catch (error) {
       console.log(error);
       showBasicAlert(
@@ -47,15 +50,8 @@ export const Profile = () => {
       );
     } finally {
       hideLoader();
+      setEditMode(false);
     }
-  };
-
-  const handleEditClick = () => {
-    setEditMode(false);
-  };
-  const handleSaveClick = (e) => {
-    e.preventDefault();
-    setEditMode(true);
   };
 
   return (
@@ -64,8 +60,8 @@ export const Profile = () => {
       <div className='row mt-2 justify-content-center'>
         <div className='col-sm-6'>
           <div className='alerta card m-3 mt-4'>
-            <div className='card-header m-1'>Informacion Personal</div>
-            <form>
+            <div className='card-header m-1 p-2'>Informacion Personal</div>
+            <form onSubmit={(e) => e.preventDefault()}>
               <div className='card-body'>
                 <div className='d-flex m-2'>
                   <CgProfile className='fs-1 text-center text-info m-1 ' />
@@ -76,7 +72,7 @@ export const Profile = () => {
                       value={upperFirstWord(editedUser?.name)}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -89,7 +85,7 @@ export const Profile = () => {
                       value={editedUser?.lastname}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -102,7 +98,7 @@ export const Profile = () => {
                       value={editedUser?.address}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -115,7 +111,7 @@ export const Profile = () => {
                       value={editedUser?.company}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -128,7 +124,7 @@ export const Profile = () => {
                       value={editedUser?.phone}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -141,7 +137,7 @@ export const Profile = () => {
                       value={editedUser?.cedula}
                       className='form-control p-1 fs-5'
                       type='text'
-                      disabled={editMode}
+                      disabled={!editMode}
                     />
                   </div>
                 </div>
@@ -149,16 +145,18 @@ export const Profile = () => {
             </form>
             <div className='d-flex justify-content-around'>
               {editMode ? (
-                <button className='mt-4 mb-2 btn btn-info p-2' onClick={() => handleEditClick()}>
-                  <FiEdit className='fs-5' /> Editar
+                <button
+                  type='button'
+                  className='mt-4 mb-2 btn btn-success p-2'
+                  onClick={async () => await updateProfile()}>
+                  <MdSave className='fs-5' /> Guardar
                 </button>
               ) : (
                 <button
-                  className='mt-4 mb-2 btn btn-success p-2'
-                  onClick={() => {
-                    handleSaveClick(), getUserRegister();
-                  }}>
-                  <MdSave className='fs-5' /> Guardar
+                  type='button'
+                  className='mt-4 mb-2 btn btn-info p-2'
+                  onClick={() => setEditMode(true)}>
+                  <FiEdit className='fs-5' /> Editar
                 </button>
               )}
             </div>

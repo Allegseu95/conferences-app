@@ -59,7 +59,7 @@ export const ListCourse = () => {
       name: 'Título',
       selector: (row) => row?.title,
       sortable: true,
-      width: '300px',
+      width: '500px',
     },
     {
       name: 'Tipo',
@@ -78,7 +78,7 @@ export const ListCourse = () => {
       name: 'Descripción',
       selector: (row) => row?.description,
       sortable: true,
-      width: '350px',
+      width: '150px',
     },
     {
       name: 'Fecha Inicio',

@@ -22,7 +22,7 @@ export const RouterManager = () => {
       {routeRole === 'administrator' ? (
         <AdminRoutes />
       ) : routeRole === 'participant' ? (
-        // <UserRoutes />
+        // <PublicRoutes />
         <UserRoutes />
       ) : routeRole === 'verifier' ? (
         <VerifierRoutes />

@@ -11,7 +11,7 @@ import { upperFirstWord } from '@/helpers/utils';
 
 export const SideBar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(0);
   const { authLogout, user } = useAuth();
 
   const handleItemClick = (index) => {
@@ -34,7 +34,7 @@ export const SideBar = () => {
           <div className='bg-dark px-2 pt-3 pb-4'>
             <h1 className='fs-4 text-center'>
               <span className='bg-dark text-white text-dark rounded shadow px-5 py-2 me-2 fs-5'>
-                Usuario: {upperFirstWord(user?.name)}
+                {upperFirstWord(user?.name)}
               </span>
             </h1>
             <button
@@ -51,10 +51,23 @@ export const SideBar = () => {
               <Link
                 to='/'
                 className='d-flex text-dark align-items-center m-2'
+                onClick={() => hideSidebar()}>
+                <CgProfile className='fs-4 m-2' /> Perfil
+              </Link>
+            </li>
+
+            <li
+              onClick={() => handleItemClick(2)}
+              style={{ backgroundColor: selectedItem === 2 ? '#00fa32' : '#fff' }}
+              className='text-decoration-none rounded mt-3'>
+              <Link
+                className='d-flex text-dark align-items-center m-2'
+                to='/registros'
+                style={{ color: selectedItem === 2 ? '#00fa32' : '#090909', height: '40px' }}
                 onClick={() => {
                   hideSidebar();
                 }}>
-                <CgProfile className='fs-4 m-2' /> Perfil
+                <FaRegCheckSquare className='fs-4 m-2' /> Registros
               </Link>
             </li>
             <li
@@ -71,20 +84,7 @@ export const SideBar = () => {
                 <TbCertificate className='fs-4 m-2' /> Certificados
               </Link>
             </li>
-            <li
-              onClick={() => handleItemClick(2)}
-              style={{ backgroundColor: selectedItem === 2 ? '#00fa32' : '#fff' }}
-              className='text-decoration-none rounded mt-3'>
-              <Link
-                className='d-flex text-dark align-items-center m-2'
-                to='/registros'
-                style={{ color: selectedItem === 2 ? '#00fa32' : '#090909', height: '40px' }}
-                onClick={() => {
-                  hideSidebar();
-                }}>
-                <FaRegCheckSquare className='fs-4 m-2' /> Registros
-              </Link>
-            </li>
+
             <li
               onClick={() => handleItemClick(3)}
               style={{ backgroundColor: selectedItem === 3 ? '#e11111' : '#fff' }}

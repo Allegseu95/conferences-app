@@ -98,12 +98,3 @@ export const createVerified = {
   identification: '',
   password: '',
 };
-
-export const updateProfileUser = {
-  name: '',
-  lastname: '',
-  address: '',
-  company: '',
-  phone: '',
-  cedula: '',
-};

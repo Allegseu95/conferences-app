@@ -9,8 +9,8 @@ import { Certificate } from './Certificate';
 export const Layout = () => {
   return (
     <div className='container-padre'>
-        <SideBar />
-      <div className='content' style={{height: '100vh'}}>
+      <SideBar />
+      <div className='content' style={{ height: '100vh' }}>
         <Routes>
           <Route path='/' element={<Profile />} />
           <Route path='/certificados' element={<Certificate />} />

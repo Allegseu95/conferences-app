@@ -104,15 +104,6 @@ export const Regitsers = () => {
 
   const ver = (url) => see('Verificación de voucher', url, '200px', '200px');
 
-  const getInscriptionstitle = (array) => {
-    const inscriptions = [];
-    array.forEach((element) => {
-      let pushed = element.courseId === null ? '' : element.courseId.title;
-      inscriptions.push(` ${pushed}`);
-    });
-    return inscriptions.toString();
-  };
-
   const getTypeParticipant = (type) => {
     const _participantType = participantTypeOptions.find((item) => item?._id === type).name;
     return _participantType;
@@ -166,7 +157,7 @@ export const Regitsers = () => {
     },
     {
       name: 'Inscripciones',
-      selector: (row) => getInscriptionstitle(row.inscriptions),
+      selector: (row) => row.inscriptions.length,
       sortable: true,
       width: '170px',
     },
