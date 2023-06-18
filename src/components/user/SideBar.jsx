@@ -30,7 +30,9 @@ export const SideBar = () => {
     <div>
       <ButtomMobil showSidebar={showSidebar} />
       <div className='d-grid' style={{ height: '100vh' }}>
-        <div className={`bg-dark ${sidebarVisible ? 'active' : ''}`} id='side_nav'>
+        <div
+          className={`fijar-sidebar bg-dark ${sidebarVisible ? 'active' : ''}`}
+          id='side_nav'>
           <div className='bg-dark px-2 pt-3 pb-4'>
             <h1 className='fs-4 text-center'>
               <span className='bg-dark text-white text-dark rounded shadow px-5 py-2 me-2 fs-5'>
