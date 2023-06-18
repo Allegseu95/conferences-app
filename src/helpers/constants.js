@@ -77,6 +77,7 @@ export const createCourse = {
 export const auth_token = 'auth_token';
 export const auth_user = 'auth_user';
 export const auth_role = 'auth_role';
+export const app_title = 'app_title';
 
 export const updateCourse = {
   title: '',

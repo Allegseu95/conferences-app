@@ -3,6 +3,7 @@ import {
   faArrowRightFromBracket,
   faFolder,
   faClipboardUser,
+  faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BiTask } from 'react-icons/bi';
@@ -12,7 +13,6 @@ import '@/static/base/base.css';
 import { useAuth } from '@/contexts/AuthContext';
 import icon from '@/assets/icons/icon.png';
 import { GoVerified } from 'react-icons/go';
-
 
 export const Sidebar = () => {
   const { authLogout } = useAuth();
@@ -25,6 +25,12 @@ export const Sidebar = () => {
 
         <nav className='listsidebar'>
           <ul className='ulsidebar'>
+            <li className='lisidebar'>
+              <Link to='/configuracion' className='asidebar'>
+                <FontAwesomeIcon icon={faGear} />
+                <span className='hoverbutton'>Configuración</span>
+              </Link>
+            </li>
             <li className='lisidebar'>
               <Link to='/usuarios' className='asidebar'>
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
