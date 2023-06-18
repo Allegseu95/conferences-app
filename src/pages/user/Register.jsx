@@ -163,7 +163,7 @@ export const Register = () => {
                           <span>
                             {upperFirstWord(registro?.userId?.name) +
                               ' ' +
-                              registro?.userId?.lastname}
+                              upperFirstWord(registro?.userId?.lastname)}
                           </span>
                         </h4>
                       </div>
