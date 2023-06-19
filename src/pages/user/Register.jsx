@@ -21,7 +21,6 @@ export const Register = () => {
     try {
       const data = await server.GetAllRegisterByUser();
       setRegisters(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
       setRegisters([]);
@@ -49,12 +48,12 @@ export const Register = () => {
   }, []);
 
   return (
-    <div className='conteiner-register'>
+    <div className='contenedor-registro'>
       <h4 className='text-center mt-4 text-white'>
         <b>Registros</b>
       </h4>
 
-      <div className='row px-5 py-4'>
+      <div className='row py-4 estilo-movil'>
         {registers?.length > 0 ? (
           registers.map((registro, index) => (
             <div key={index} className='px-4 py-2 col-lg-6 col-md-12 col-sm-12 col-12'>
