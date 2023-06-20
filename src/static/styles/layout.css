@@ -35,6 +35,11 @@
     width: 100% !important;
   }
 
+  .imagen-registro {
+    width: 80px !important;
+    height: 50px !important;
+  }
+
   .justificar-contenedor-certificado {
     margin-left: -45px !important;
     margin-right: 5px !important;
