@@ -50,7 +50,7 @@ export const Register = () => {
   }, []);
 
   return (
-    <div className='contenedor-registro'>
+    <div className='contenedor-registro '>
       <h4 className='text-center mt-4 text-white'>
         <b>Registros</b>
       </h4>
