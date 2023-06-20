@@ -8,7 +8,9 @@ import { useLoader } from '@/contexts/LoaderContext';
 
 import { upperFirstWord } from '@/helpers/utils';
 
-import estampa from '@/assets/images/react.png';
+import congreso from '@/assets/images/congreso.png';
+import uleam from '@/assets/images/uleam.png';
+import zulia from '@/assets/images/zulia.png';
 
 export const Register = () => {
   const server = useServer();
@@ -65,25 +67,37 @@ export const Register = () => {
                 <div className='row'>
                   <div className='col-4 d-flex justify-content-center'>
                     <img
-                      src={estampa}
+                      className='imagen-registro'
+                      src={congreso}
                       alt='estampa'
-                      style={{ height: '70px', width: '70px', borderRadius: '50%' }}
+                      style={{
+                        height: '80px',
+                        width: '100px',
+                      }}
                     />
                   </div>
 
                   <div className='col-4 d-flex justify-content-center'>
                     <img
-                      src={estampa}
+                      className='imagen-registro'
+                      src={uleam}
                       alt='estampa'
-                      style={{ height: '70px', width: '70px', borderRadius: '50%' }}
+                      style={{
+                        height: '80px',
+                        width: '100px',
+                      }}
                     />
                   </div>
 
                   <div className='col-4 d-flex justify-content-center'>
                     <img
-                      src={estampa}
+                      className='imagen-registro'
+                      src={zulia}
                       alt='estampa'
-                      style={{ height: '70px', width: '70px', borderRadius: '50%' }}
+                      style={{
+                        height: '80px',
+                        width: '100px',
+                      }}
                     />
                   </div>
                 </div>

@@ -8,8 +8,8 @@ export const ButtomMobil = ({ showSidebar }) => {
   };
   return (
     <div className='d-md-none'>
-      <button className='btn px-1 open-btn text-white' onClick={handleClick}>
-        <GiHamburgerMenu />
+      <button className='btn fs-1 px-1 open-btn text-white' style={{width: '50px'}} onClick={handleClick}>
+        <GiHamburgerMenu className='' style={{position: 'relative'}} />
       </button>
     </div>
   );
