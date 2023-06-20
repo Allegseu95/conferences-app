@@ -38,7 +38,7 @@ export const SideBar = () => {
               </span>
             </h1>
             <button
-              className='btn d-md-none d-block bg-dark close-btn px-1 py-0 text-white'
+              className='btn d-md-none d-block bg-dark close-btn px-1 py-0 text-white fs-1'
               onClick={hideSidebar}>
               <GiHamburgerMenu />
             </button>
@@ -47,7 +47,7 @@ export const SideBar = () => {
             <li
               onClick={() => handleItemClick(0)}
               style={{ backgroundColor: selectedItem === 0 ? '#00fa32' : '#fff' }}
-              className='text-decoration-none rounded'>
+              className='text-decoration-none rounded item-registro'>
               <Link
                 to='/'
                 className='d-flex text-dark align-items-center m-2'
@@ -59,7 +59,7 @@ export const SideBar = () => {
             <li
               onClick={() => handleItemClick(2)}
               style={{ backgroundColor: selectedItem === 2 ? '#00fa32' : '#fff' }}
-              className='text-decoration-none rounded mt-3'>
+              className='text-decoration-none rounded mt-3 item-registro'>
               <Link
                 className='d-flex text-dark align-items-center m-2'
                 to='/registros'
@@ -73,7 +73,7 @@ export const SideBar = () => {
             <li
               onClick={() => handleItemClick(1)}
               style={{ backgroundColor: selectedItem === 1 ? '#00fa32' : '#fff' }}
-              className='text-decoration-none rounded mt-3'>
+              className='text-decoration-none rounded mt-3 item-registro'>
               <Link
                 className='d-flex text-dark align-items-center m-2'
                 to='/certificados'
@@ -88,7 +88,7 @@ export const SideBar = () => {
             <li
               onClick={() => handleItemClick(3)}
               style={{ backgroundColor: selectedItem === 3 ? '#e11111' : '#fff' }}
-              className='text-decoration-none rounded mt-3'>
+              className='text-decoration-none rounded mt-3 item-seccion'>
               <Link
                 className='d-flex text-dark align-items-center m-2'
                 onClick={() => {
