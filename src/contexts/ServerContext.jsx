@@ -68,6 +68,14 @@ class ServerApi {
     });
   };
 
+  getRegisterById = (id) => {
+    return new Promise((resolve, reject) => {
+      getAxios(`${this.baseUrl}/api/user/get-register-by-id/${id}`, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
   getRegisters = () => {
     return new Promise((resolve, reject) => {
       getAxios(`${this.baseUrl}/api/user/get-all-registers`, getToken())

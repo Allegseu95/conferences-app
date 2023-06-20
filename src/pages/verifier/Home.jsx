@@ -2,16 +2,18 @@ import React, { Fragment, useState, useRef, useEffect } from 'react';
 import QrReader from 'react-qr-reader';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
 
 import { Footer } from '@/components/Footer';
 
 import { showBasicAlert } from '@/helpers/sweetAlert';
 
-import { registerQRFake } from '@/mock/registerQR';
-
 export const HomePage = ({}) => {
   // const videoRef = useRef(null);
   const { user, authLogout } = useAuth();
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
 
   const [widthScan, setWidthScan] = useState('w-50');
   const [viewMode, setViewMode] = useState('home');
@@ -22,11 +24,18 @@ export const HomePage = ({}) => {
     console.log('Error de escaner!', error);
   };
 
-  const handleScan = (data) => {
+  const handleScan = async (data) => {
     if (data) {
-      console.log('data', data);
-      setViewMode('data');
-      setData(registerQRFake);
+      showLoader();
+      try {
+        const _register = await server.getRegisterById(data);
+        setData(_register);
+        setViewMode('data');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        hideLoader();
+      }
     }
   };
 
@@ -55,7 +64,7 @@ export const HomePage = ({}) => {
 
   const registerAsistence = (inscriptionId) => {
     console.log('data to register', { registerId: data?._id, inscriptionId });
-    showBasicAlert('Asistencia Confirmada!', 'success');
+    showBasicAlert('Asistencia Confirmada!' + inscriptionId, 'success');
     homeView();
     setData(null);
   };
@@ -110,42 +119,49 @@ export const HomePage = ({}) => {
         )}
 
         {viewMode === 'data' && (
-          <div className='card'>
-            <div className='card-header p-2 text-center bg-dark text-light'>
-              {data?.userId?.name} {data?.userId?.lastname}
-            </div>
+          <Fragment>
+            <div className='card'>
+              <div className='card-header p-2 text-center bg-dark text-light'>
+                {data?.userId?.name} {data?.userId?.lastname}
+              </div>
 
-            <ul className='list-group list-group-flush'>
-              {data?.inscriptions.map((item, index) => (
-                <li
-                  key={index}
-                  className='list-group-item p-2'
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => registerAsistence(item?._id)}>
-                  {item?.courseId?.title}
-                </li>
-              ))}
-            </ul>
+              <ul className='list-group list-group-flush'>
+                {data?.inscriptions.map((item, index) => (
+                  <li
+                    key={index}
+                    className='list-group-item p-2'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => registerAsistence(item?._id)}>
+                    {item?.courseId?.title}
+                  </li>
+                ))}
+              </ul>
 
-            <div
-              class={`card-footer text-center p-1 fw-bold ${
-                data?.status === 'reject'
-                  ? 'text-danger'
-                  : data?.status === 'paid'
-                  ? 'text-success'
+              <div
+                className={`card-footer text-center p-1 fw-bold ${
+                  data?.status === 'reject'
+                    ? 'text-danger'
+                    : data?.status === 'paid'
+                    ? 'text-success'
+                    : data?.status === 'pending'
+                    ? 'text-warning'
+                    : ''
+                }`}>
+                {data?.status === 'paid'
+                  ? 'Pagado'
+                  : data?.status === 'reject'
+                  ? 'Pago Rechazado'
                   : data?.status === 'pending'
-                  ? 'text-warning'
-                  : ''
-              }`}>
-              {data?.status === 'paid'
-                ? 'Pagado'
-                : data?.status === 'reject'
-                ? 'Pago Rechazado'
-                : data?.status === 'pending'
-                ? 'Pago Pendiente'
-                : ''}
+                  ? 'Pago Pendiente'
+                  : ''}
+              </div>
             </div>
-          </div>
+            <button
+              className='btn btn-danger mt-3 py-2 px-3 rounded-pill'
+              onClick={() => homeView()}>
+              Cancelar
+            </button>
+          </Fragment>
         )}
       </div>
 
