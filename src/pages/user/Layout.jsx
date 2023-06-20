@@ -10,7 +10,7 @@ export const Layout = () => {
   return (
     <div className='container-padre'>
       <SideBar />
-      <div className='content' style={{ height: '100vh' }}>
+      <div className='content' style={{ height: '100%', width: '100%' }}>
         <Routes>
           <Route path='/' element={<Profile />} />
           <Route path='/certificados' element={<Certificate />} />

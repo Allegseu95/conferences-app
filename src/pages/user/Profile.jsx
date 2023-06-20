@@ -58,19 +58,19 @@ export const Profile = () => {
     <div className='page-proflie'>
       <InfoProfile name={upperFirstWord(user?.name)} />
       <div className='row mt-2 justify-content-center'>
-        <div className='col-sm-6'>
+        <div className='col-sm-10'>
           <div className='alerta card m-3 mt-4'>
             <div className='card-header m-1 p-2'>Informacion Personal</div>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className='card-body'>
                 <div className='d-flex m-2'>
                   <CgProfile className='fs-1 text-center text-info m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Nombre</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-2'>Nombre</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
                       value={upperFirstWord(editedUser?.name)}
-                      className='form-control p-1 fs-5'
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
@@ -78,12 +78,12 @@ export const Profile = () => {
                 </div>
                 <div className='d-flex m-2'>
                   <RiProfileLine className='fs-1 text-center text-info m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Apellido</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-2'>Apellido</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, lastname: e.target.value })}
-                      value={editedUser?.lastname}
-                      className='form-control p-1 fs-5'
+                      value={upperFirstWord(editedUser?.lastname)}
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
@@ -91,12 +91,12 @@ export const Profile = () => {
                 </div>
                 <div className='d-flex m-2'>
                   <MdLocationPin className='fs-1 text-center text-success m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Direccion</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-2'>Direccion</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, address: e.target.value })}
-                      value={editedUser?.address}
-                      className='form-control p-1 fs-5'
+                      value={upperFirstWord(editedUser?.address)}
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
@@ -104,12 +104,12 @@ export const Profile = () => {
                 </div>
                 <div className='d-flex m-2'>
                   <CgOrganisation className='fs-1 text-center text-secondary m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Empresa/Institucion</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-3'>Empresa/Institucion</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, company: e.target.value })}
                       value={editedUser?.company}
-                      className='form-control p-1 fs-5'
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
@@ -117,12 +117,12 @@ export const Profile = () => {
                 </div>
                 <div className='d-flex m-2'>
                   <BsPhoneFill className='fs-1 text-center text-warning m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Telefono</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-2'>Telefono</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, phone: e.target.value })}
                       value={editedUser?.phone}
-                      className='form-control p-1 fs-5'
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
@@ -130,12 +130,12 @@ export const Profile = () => {
                 </div>
                 <div className='d-flex m-2'>
                   <HiOutlineIdentification className='fs-1 text-center text-primary m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Cedula</b>
+                  <div className='input-group input-group-sm row row-cols-1 row-cols-md-2'>
+                    <b className='input-group-text p-2 fs-5 col-md-2'>Cedula</b>
                     <input
                       onChange={(e) => setEditedUser({ ...editedUser, cedula: e.target.value })}
                       value={editedUser?.cedula}
-                      className='form-control p-1 fs-5'
+                      className='form-control p-1 fs-5 col'
                       type='text'
                       disabled={!editMode}
                     />
