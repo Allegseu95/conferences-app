@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import QRCode from 'qrcode.react';
 import moment from 'moment';
 import html2canvas from 'html2canvas';
+import '@/static/styles/layout.css';
 
 import { useServer } from '@/contexts/ServerContext';
 import { useLoader } from '@/contexts/LoaderContext';
@@ -50,13 +51,12 @@ export const Register = () => {
   }, []);
 
   return (
-    <div className='contenedor-registro '>
+    <div className='contenedor-registro'>
       <h4 className='text-center mt-4 text-white'>
         <b>Registros</b>
       </h4>
-
       <div className='row py-4 estilo-movil'>
-        {registers?.length > 0 ? (
+        {registers?.length > 0 &&
           registers.map((registro, index) => (
             <div key={index} className='px-4 py-2 col-lg-6 col-md-12 col-sm-12 col-12'>
               <div className='bg-light  p-3 pb-lg-3 pb-md-3 pb-sm-3 pb-0 rounded-top' id='card'>
@@ -202,13 +202,15 @@ export const Register = () => {
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <div className='m-3 alert alert-info p-2' role='alert'>
-            <h3 className='text-center text-dark'>Sin Registros!</h3>
-          </div>
-        )}
+          ))}
       </div>
+      {registers?.length <= 0 && (
+        <div className='m-3 alert alert-info p-2 ' role='alert'>
+          <h3 className='text-center text-dark' style={{ marginRight: '50px' }}>
+            Sin Registros!
+          </h3>
+        </div>
+      )}
     </div>
   );
 };

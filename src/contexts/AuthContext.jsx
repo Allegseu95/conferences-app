@@ -22,6 +22,12 @@ export const AuthProvider = ({ children }) => {
     setRole(user?.role ?? '');
   };
 
+  const updateInformationUser = (dataUpdate) => {
+    const updatedUser = { ...user, ...dataUpdate };
+    storage.set(auth_user, updatedUser, 'object');
+    setUser(updatedUser);
+  };
+
   const authLogout = () => {
     setUser(null);
     setToken(null);
@@ -54,6 +60,7 @@ export const AuthProvider = ({ children }) => {
         user,
         role,
         token,
+        updateInformationUser,
       }}>
       {children}
     </AuthContext.Provider>

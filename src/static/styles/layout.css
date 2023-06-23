@@ -1,6 +1,6 @@
 .container-padre {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1fr; /* Define dos columnas: el ancho del sidebar y el espacio restante */
   background: linear-gradient(180deg, #525252, #262525);
 }
 
@@ -36,22 +36,20 @@
   }
 
   .imagen-registro {
-    width: 50px !important;
-    height: 30px !important;
+    width: 55px !important;
+    height: 45px !important;
   }
 
   .contenedor-registro {
     width: 100% !important;
   }
 
-
   .page-proflie {
-    margin-left: -26px !important;
+    margin-left: -20px !important;
   }
 
   .justificar-contenedor-certificado {
-    margin-left: -45px !important;
-    margin-right: 8px !important;
+    margin-left: -15px !important;
   }
 
   .alerta {
