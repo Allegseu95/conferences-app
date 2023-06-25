@@ -76,6 +76,14 @@ class ServerApi {
     });
   };
 
+  registerAsistance = (data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/user/check-attendance`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
   getRegisters = () => {
     return new Promise((resolve, reject) => {
       getAxios(`${this.baseUrl}/api/user/get-all-registers`, getToken())

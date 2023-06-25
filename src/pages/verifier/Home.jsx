@@ -62,11 +62,27 @@ export const HomePage = ({}) => {
 
   const homeView = () => setViewMode('home');
 
-  const registerAsistence = (inscriptionId) => {
-    console.log('data to register', { registerId: data?._id, inscriptionId });
-    showBasicAlert('Asistencia Confirmada!' + inscriptionId, 'success');
-    homeView();
-    setData(null);
+  const registerAsistence = async (inscriptionId) => {
+    showLoader();
+    try {
+      let _data = {
+        registerId: data?._id,
+        inscriptionId,
+      };
+
+      await server.registerAsistance(_data);
+      showBasicAlert('Asistencia Confirmada!', 'success');
+      homeView();
+      setData(null);
+    } catch (error) {
+      console.log(error?.response?.data?.mensaje);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+    }
   };
 
   useEffect(() => {
