@@ -36,13 +36,8 @@
   }
 
   .imagen-registro {
-    width: 80px !important;
-    height: 50px !important;
-  }
-
-  .justificar-contenedor-certificado {
-    margin-left: -45px !important;
-    margin-right: 5px !important;
+    width: 55px !important;
+    height: 45px !important;
   }
 
   .contenedor-registro {
@@ -50,17 +45,11 @@
   }
 
   .page-proflie {
-    margin-left: -26px !important;
+    margin-left: -20px !important;
   }
-
-  .conteiner-register {
-    margin-left: -23px !important;
-    width: fit-content !important;
-  }
-  
 
   .justificar-contenedor-certificado {
-    margin-left: -25px !important;
+    margin-left: -15px !important;
   }
 
   .alerta {
