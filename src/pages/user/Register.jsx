@@ -12,6 +12,7 @@ import { upperFirstWord } from '@/helpers/utils';
 import congreso from '@/assets/images/congreso.png';
 import uleam from '@/assets/images/uleam.png';
 import zulia from '@/assets/images/zulia.png';
+import qrBlank from '@/assets/images/qr_blank.png';
 
 export const Register = () => {
   const server = useServer();
@@ -65,38 +66,38 @@ export const Register = () => {
                 </div>
 
                 <div className='row'>
-                  <div className='col-4 d-flex justify-content-center'>
+                  <div className='col-4 d-flex justify-content-center align-items-center'>
                     <img
                       className='imagen-registro'
                       src={congreso}
-                      alt='estampa'
+                      alt='logo'
                       style={{
                         height: '80px',
-                        width: '100px',
+                        width: '80px',
                       }}
                     />
                   </div>
 
-                  <div className='col-4 d-flex justify-content-center'>
+                  <div className='col-4 d-flex justify-content-center align-items-center'>
                     <img
                       className='imagen-registro'
                       src={uleam}
-                      alt='estampa'
+                      alt='logo-uleam'
                       style={{
                         height: '80px',
-                        width: '100px',
+                        width: '120px',
                       }}
                     />
                   </div>
 
-                  <div className='col-4 d-flex justify-content-center'>
+                  <div className='col-4 d-flex justify-content-center align-items-center'>
                     <img
                       className='imagen-registro'
                       src={zulia}
-                      alt='estampa'
+                      alt='logo-zulia'
                       style={{
-                        height: '80px',
-                        width: '100px',
+                        height: '60px',
+                        width: '120px',
                       }}
                     />
                   </div>
@@ -104,7 +105,28 @@ export const Register = () => {
 
                 <div className='row py-3'>
                   <div className='col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 d-flex justify-content-center'>
-                    <QRCode value={registro?._id} size={200} fgColor='#000000' bgColor='#FFFFFF' />
+                    {registro?.status === 'paid' && (
+                      <QRCode
+                        value={registro?._id}
+                        size={200}
+                        fgColor='#000000'
+                        bgColor='#FFFFFF'
+                      />
+                    )}
+
+                    {registro?.status !== 'paid' && (
+                      <div>
+                        <img
+                          className='imagen-registro'
+                          src={qrBlank}
+                          alt='qr'
+                          style={{
+                            height: '200px',
+                            width: '200px',
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className='col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 d-flex justify-content-center flex-column'>

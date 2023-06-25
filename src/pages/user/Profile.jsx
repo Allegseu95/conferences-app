@@ -5,8 +5,6 @@ import { MdLocationPin } from 'react-icons/md';
 import { BsPhoneFill } from 'react-icons/bs';
 import { HiOutlineIdentification } from 'react-icons/hi';
 import { RiProfileLine } from 'react-icons/ri';
-import { auth_user } from '@/helpers/constants';
-import { storage } from '@/helpers/storage';
 
 import { FiEdit } from 'react-icons/fi';
 import { MdSave } from 'react-icons/md';
@@ -44,10 +42,7 @@ export const Profile = () => {
         email: editedUser.email,
       };
       const updateUser = await server.updatedUser(data);
-      storage.set(auth_user, updateUser, 'object');
-
-      const updateProfile = storage.get(auth_user, 'object');
-      updateInformationUser(updateProfile);
+      updateInformationUser(updateUser);
       showBasicAlert('Actializacion Exitosa!', 'success');
     } catch (error) {
       console.log(error);
@@ -65,7 +60,7 @@ export const Profile = () => {
     <div className='page-proflie'>
       <InfoProfile name={upperFirstWord(user?.name)} />
       <div className='row mt-2 justify-content-center'>
-        <div className='col-sm-12'>
+        <div className='col-sm-12 px-lg-5'>
           <div className='alerta card m-3 mt-4'>
             <div className='card-header m-1 p-2'>Informacion Personal</div>
             <form onSubmit={(e) => e.preventDefault()}>
