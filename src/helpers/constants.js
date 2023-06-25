@@ -12,6 +12,7 @@ export const paymentOptions = [
     name: 'Efectivo',
   },
 ];
+
 export const participantTypeOptions = [
   {
     _id: '',
@@ -98,4 +99,10 @@ export const createVerified = {
   address: '',
   identification: '',
   password: '',
+};
+
+export const initFormRecoveryPassword = {
+  email: '',
+  codeChangePassword: '',
+  newPassword: '',
 };

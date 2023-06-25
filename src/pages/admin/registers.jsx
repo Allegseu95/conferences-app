@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import momentjs from 'moment';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2';
@@ -120,16 +120,16 @@ export const Regitsers = () => {
 
   const columns = [
     {
-      name: 'Cédula/Pasaporte',
+      name: 'Cédula/P.',
       selector: (row) => (row.userId === null ? '' : row.userId.cedula),
       sortable: true,
-      width: '140px',
+      width: '100px',
     },
     {
       name: 'Usuario',
       selector: (row) => (row.userId === null ? '' : row.userId.name + ' ' + row.userId.lastname),
       sortable: true,
-      width: '130px',
+      width: 'auto',
     },
     {
       name: 'T. Participante',
@@ -156,16 +156,16 @@ export const Regitsers = () => {
       width: '100px',
     },
     {
-      name: 'Inscripciones',
+      name: 'N. Inscri.',
       selector: (row) => row.inscriptions.length,
       sortable: true,
-      width: '170px',
+      width: '80px',
     },
     {
       name: 'Total',
       selector: (row) => `$ ${row.total}`,
       sortable: true,
-      width: '60px',
+      width: '70px',
     },
 
     {
@@ -258,18 +258,21 @@ export const Regitsers = () => {
         </div>
 
         {dnifilter.length > 0 ? (
-          <DataTable
-            columns={columns}
-            striped
-            highlightOnHover
-            selectableRowsComponent={() => <div></div>}
-            fixedHeader
-            data={dnifilter}
-            customStyles={customStyles}
-            selectableRows
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-          />
+          <Fragment>
+            <DataTable
+              columns={columns}
+              striped
+              highlightOnHover
+              selectableRowsComponent={() => <div></div>}
+              fixedHeader
+              data={dnifilter}
+              customStyles={customStyles}
+              selectableRows
+              pagination
+              paginationComponentOptions={paginationComponentOptions}
+            />
+            <div className='p-3'></div>
+          </Fragment>
         ) : (
           <div className='bg-light text-dark d-flex justify-content-center py-2'>
             Registros vacios

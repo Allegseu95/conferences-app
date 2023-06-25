@@ -107,6 +107,22 @@ class ServerApi {
         .catch((err) => reject(err));
     });
   };
+
+  recoveryPasswordSendCode = (data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/user/send-code-change-password`, data)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
+  recoveryPassword = (data) => {
+    return new Promise((resolve, reject) => {
+      putAxios(`${this.baseUrl}/api/user/change-password`, data)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
 }
 
 export const ServerProvider = ({ children }) => (

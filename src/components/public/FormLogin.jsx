@@ -21,9 +21,6 @@ export const FormLogin = () => {
   const [formValues, setFormValues] = useState(initFormLogin);
 
   const login = async () => {
-    // bloqueado momentaneamente hasta que las demas vistas esten activas
-    // showBasicAlert('Funcionalidad en Desarrollo!', 'info');
-    // return;
     if (validateLoginForm(formValues)) {
       showLoader();
       try {
@@ -109,6 +106,12 @@ export const FormLogin = () => {
           />
 
           <Button onClick={() => login()} title='Iniciar Sesión' mt={'mt-3'} />
+
+          <div className='mt-2 w-100 p-1 d-flex justify-content-center'>
+            <Link to='/recovery-password' className='text-info text-center'>
+              ¿Has olvidado tu contraseña?
+            </Link>
+          </div>
 
           <div className='mt-2 w-100 p-1 d-flex justify-content-center'>
             <Link to='/' className='text-info'>
