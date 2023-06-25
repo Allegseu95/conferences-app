@@ -5,6 +5,8 @@ import { MdLocationPin } from 'react-icons/md';
 import { BsPhoneFill } from 'react-icons/bs';
 import { HiOutlineIdentification } from 'react-icons/hi';
 import { RiProfileLine } from 'react-icons/ri';
+import { auth_user } from '@/helpers/constants';
+import { storage } from '@/helpers/storage';
 
 import { FiEdit } from 'react-icons/fi';
 import { MdSave } from 'react-icons/md';
@@ -22,7 +24,7 @@ import { upperFirstWord } from '@/helpers/utils';
 import '@/static/styles/layout.css';
 
 export const Profile = () => {
-  const { user } = useAuth();
+  const { user, updateInformationUser } = useAuth();
   const { showLoader, hideLoader } = useLoader();
   const server = useServer();
 
@@ -39,9 +41,13 @@ export const Profile = () => {
         company: editedUser.company,
         phone: editedUser.phone,
         cedula: editedUser.cedula,
+        email: editedUser.email,
       };
+      const updateUser = await server.updatedUser(data);
+      storage.set(auth_user, updateUser, 'object');
 
-      await server.updatedUser(data);
+      const updateProfile = storage.get(auth_user, 'object');
+      updateInformationUser(updateProfile);
       showBasicAlert('Actializacion Exitosa!', 'success');
     } catch (error) {
       console.log(error);
@@ -181,6 +187,26 @@ export const Profile = () => {
                     />
                   </div>
                 </div>
+
+                <div className='row row-cols-1 row-cols-md-2'>
+                  <div className='col-lg-4 col-xl-2 col-md-4 col-12 p-1'>
+                    <b className='input-group-text p-1 fs-5'>
+                      <div>
+                        <MdEmail className='fs-4 text-primary m-1' />
+                      </div>
+                      Email
+                    </b>
+                  </div>
+                  <div className='col-lg-8 col-xl-10 col-md-8 col-12 p-1'>
+                    <input
+                      onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
+                      value={editedUser?.email}
+                      className='form-control p-1 fs-5'
+                      type='text'
+                      disabled={!editMode}
+                    />
+                  </div>
+                </div>
               </div>
             </form>
             <div className='d-flex justify-content-around'>
@@ -206,19 +232,3 @@ export const Profile = () => {
     </div>
   );
 };
-
-/*
-<div className='d-flex m-2'>
-                  <MdEmail className='fs-1 text-center text-danger m-1 ' />
-                  <div className='input-group input-group-sm'>
-                    <b className='input-group-text p-2 fs-5'>Email</b>
-                    <input
-                      onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
-                      value={editedUser?.email}
-                      className='form-control p-1 fs-5'
-                      type='text'
-                      disabled={editMode}
-                    />
-                  </div>
-                </div>
-*/
