@@ -97,8 +97,8 @@ export const createVerified = {
   email: '',
   phone: '',
   address: '',
-  identification: '',
-  password: '',
+  cedula: '',
+  company: '',
 };
 
 export const initFormRecoveryPassword = {

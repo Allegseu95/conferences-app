@@ -36,6 +36,14 @@ class ServerApi {
     });
   };
 
+  registerVerifier = (data) => {
+    return new Promise((resolve, reject) => {
+      postAxios(`${this.baseUrl}/api/user/register-verifier`, data, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
   login = (data) => {
     return new Promise((resolve, reject) => {
       postAxios(`${this.baseUrl}/api/user/login`, data)

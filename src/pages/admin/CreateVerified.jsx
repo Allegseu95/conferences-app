@@ -1,16 +1,30 @@
-import { Sidebar } from './sidebar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { useLoader } from '@/contexts/LoaderContext';
+import { useServer } from '@/contexts/ServerContext';
+
+import { Sidebar } from './sidebar';
+
 import { createVerified } from '@/helpers/constants';
 import { showBasicAlert } from '@/helpers/sweetAlert';
-import { validateEmail, validatePassword } from '@/helpers/utils';
-import { InputForm } from '@/components/InputForm';
+import { validateEmail, cleanText } from '@/helpers/utils';
+
 export const CreateVerified = () => {
-  const [form, setForm] = useState(createVerified);
   const navigate = useNavigate();
+  const { showLoader, hideLoader } = useLoader();
+  const server = useServer();
+
+  const [form, setForm] = useState(createVerified);
 
   const validateVerified = (data) => {
     const icon = 'warning';
+
+    for (let key in data) {
+      if (data.hasOwnProperty(key)) {
+        data[key] = cleanText(data[key]);
+      }
+    }
 
     if (data?.name === '') {
       showBasicAlert('Llene el nombre', icon);
@@ -18,17 +32,12 @@ export const CreateVerified = () => {
     }
 
     if (data?.lastname === '') {
-      showBasicAlert('Llene el apellido', icon);
+      showBasicAlert('Llene los apellidos', icon);
       return false;
     }
 
     if (data?.phone === '') {
       showBasicAlert('Llene el telefóno', icon);
-      return false;
-    }
-
-    if (data?.identification === '') {
-      showBasicAlert('Llene la identificacion', icon);
       return false;
     }
 
@@ -42,24 +51,41 @@ export const CreateVerified = () => {
       return false;
     }
 
-    if (data?.password === '') {
-      showBasicAlert('Llene una contraseña', icon);
+    if (data?.address === '') {
+      showBasicAlert('Llene su dirección', icon);
       return false;
     }
 
-    if (!validatePassword(data?.password)) {
-      showBasicAlert(
-        'Ingrese una contraseña segura',
-        icon,
-        'La contraseña debe tener al menos 8 caracteres, una letra minúscula, una letra mayúscula, un número y un carácter especial'
-      );
+    if (data?.cedula === '') {
+      showBasicAlert('Llene la cédula/pasaporte', icon);
       return false;
     }
+
+    if (data?.company === '') {
+      showBasicAlert('Llene la Institución', icon);
+      return false;
+    }
+
     return true;
   };
 
-  const registerVerified = () => {
-    validateVerified(form);
+  const registerVerified = async () => {
+    if (validateVerified(form)) {
+      showLoader();
+      try {
+        await server.registerVerifier(form);
+        showBasicAlert('Registro Exitoso!', 'success');
+        setForm(createVerified);
+      } catch (error) {
+        console.log(error?.response?.data?.mensaje);
+        showBasicAlert(
+          error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+          'error'
+        );
+      } finally {
+        hideLoader();
+      }
+    }
   };
 
   const handleSubmit = (event) => {
@@ -74,8 +100,9 @@ export const CreateVerified = () => {
           <div className='mt-3'>
             <form className='row g-3' onSubmit={handleSubmit}>
               <div className='col-md-4 p-2'>
-                <label className='form-label'>Nombre</label>
+                <label className='form-label'>Nombres</label>
                 <input
+                  value={form.name}
                   type='text'
                   placeholder='Escriba el nombre'
                   className='form-control p-2'
@@ -85,8 +112,9 @@ export const CreateVerified = () => {
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Apellido</label>
+                <label className='form-label'>Apellidos</label>
                 <input
+                  value={form.lastname}
                   type='text'
                   placeholder='Escriba los apellidos'
                   onChange={(e) => {
@@ -98,6 +126,7 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Teléfono</label>
                 <input
+                  value={form.phone}
                   placeholder='Escriba el teléfono'
                   onChange={(e) => {
                     setForm({ ...form, phone: e.target.value });
@@ -109,6 +138,7 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Email</label>
                 <input
+                  value={form.email}
                   placeholder='Escriba un email'
                   onChange={(e) => {
                     setForm({ ...form, email: e.target.value });
@@ -120,7 +150,8 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Dirección</label>
                 <input
-                  placeholder='Dirección'
+                  value={form.address}
+                  placeholder='Escriba la Dirección'
                   onChange={(e) => {
                     setForm({ ...form, address: e.target.value });
                   }}
@@ -131,22 +162,23 @@ export const CreateVerified = () => {
               <div className='col-md-4 mt-2 p-2'>
                 <label className='form-label'>Cédula/Pasaporte</label>
                 <input
-                  placeholder='Cédula o pasaporte'
+                  value={form.cedula}
+                  placeholder='Escriba la Cédula o pasaporte'
                   onChange={(e) => {
-                    setForm({ ...form, identification: e.target.value });
+                    setForm({ ...form, cedula: e.target.value });
                   }}
-                  type='number'
+                  type='text'
                   className='form-control p-2'
                 />
               </div>
               <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Contraseña</label>
-                <InputForm
-                  placeholder='Contraseña'
-                  value={form.password}
-                  type='password'
-                  onChangeText={(text) => setForm({ ...form, password: text })}
-                  secure
+                <label className='form-label'>Institución</label>
+                <input
+                  className='form-control p-2'
+                  value={form.company}
+                  placeholder='Escriba la institución'
+                  type='text'
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
                 />
               </div>
               <div>
