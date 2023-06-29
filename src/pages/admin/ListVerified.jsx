@@ -1,87 +1,90 @@
 import DataTable from 'react-data-table-component';
 import { useServer } from '@/contexts/ServerContext';
 import { useState, useEffect } from 'react';
-import { showPasswordInput } from '@/helpers/sweetAlert';
 import { Link } from 'react-router-dom';
 import { useLoader } from '@/contexts/LoaderContext';
 import { Sidebar } from './sidebar';
-import { BiEdit } from 'react-icons/bi';
 import { GoVerified } from 'react-icons/go';
 import { MdAddToPhotos } from 'react-icons/md';
-import { MdPassword } from 'react-icons/md';
 
 import '@/static/base/base.css';
-import { data } from '@/mock/verified';
 
 export const ListVerified = () => {
-  const [identificationFilter, setIdentificationFilter] = useState(data);
+  const useserverapi = useServer();
 
-  const handlePasswordEntered = (password) => {
-    // Realiza alguna acción con la contraseña ingresada
-    console.log(`Entered password: ${password}`);
+  const { showLoader, hideLoader } = useLoader();
+  const [regsters, setregisters] = useState([]);
+  const [dnifilter, setdnfilter] = useState(regsters);
+
+  const getData = async () => {
+    showLoader();
+    try {
+      const datos = await useserverapi.getAllUser();
+      const usuarios = datos?.filter((user) => user?.role === 'verifier');
+      setregisters(usuarios);
+      setdnfilter(usuarios);
+    } catch (error) {
+      console.log(error);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+    }
   };
+
+  const searchByDni = (event) => {
+    const dnifilter = regsters.filter((dni) => {
+      if (dni.cedula !== null && dni.cedula !== undefined) {
+        return dni.cedula.startsWith(event.target.value);
+      }
+    });
+    setdnfilter(dnifilter);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const columns = [
     {
       name: 'Cédula/Pasaporte',
-      selector: (row) => row.identification,
+      selector: (row) => row?.cedula ?? '',
       sortable: true,
-      width: '150px',
+      width: '120px',
     },
     {
       name: 'Nombre',
-      selector: (row) => row.name,
+      selector: (row) => `${row?.name ?? ''} ${row?.userId?.lastname ?? ''}`,
       sortable: true,
-      width: '100px',
-    },
-    {
-      name: 'Apellido',
-      selector: (row) => row.lastname,
-      sortable: true,
-      width: '100px',
-    },
-    {
-      name: 'Email',
-      selector: (row) => row.email,
-      sortable: true,
-      width: '300px',
-    },
-    {
-      name: 'Celular',
-      selector: (row) => row.phone,
-      sortable: true,
-      width: '100px',
-    },
-    {
-      name: 'Dirección',
-      selector: (row) => row.address,
-      sortable: true,
-      width: '200px',
-    },
-    {
-      name: 'Solicitud',
-      selector: (row) => (row?.solPassword ? 'Si' : ''),
-      sortable: true,
-      width: '100px',
+      width: '240px',
     },
 
     {
-      name: 'Acciones',
-      cell: (row) => (
-        <div>
-          <MdPassword
-            className='fs-4 btn btn-warning mx-2'
-            onClick={() => showPasswordInput(handlePasswordEntered)}
-          />
-          <Link to={`/editVerified/${row?.id}`}>
-            <BiEdit className='fs-4 btn btn-success' />
-          </Link>
-        </div>
-      ),
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
-      width: '150px',
+      name: 'Correo',
+      selector: (row) => row?.email ?? '',
+      sortable: true,
+      width: '240px',
+    },
+    {
+      name: 'Telefono',
+      selector: (row) => row?.phone ?? '',
+      sortable: true,
+      width: '140px',
+    },
+    {
+      name: 'Dirección',
+      selector: (row) => row?.address ?? '',
+      sortable: true,
+      width: '300px',
+    },
+
+    {
+      name: 'Empresa o Institución',
+      selector: (row) => row?.company,
+      sortable: true,
+      width: '200px',
     },
   ];
 
@@ -111,16 +114,6 @@ export const ListVerified = () => {
     selectAllRowsItemText: 'Todos',
   };
 
-  const searchByIdentification = (event) => {
-    const searchTerm = event.target.value;
-    const filterIdentification = data.filter((row) => {
-      const tenDigits = row.identification.slice(0, 10);
-      return tenDigits.includes(searchTerm);
-    });
-
-    setIdentificationFilter(filterIdentification);
-  };
-
   return (
     <div style={{ height: '100vh' }}>
       <Sidebar />
@@ -135,20 +128,20 @@ export const ListVerified = () => {
             </Link>
             <div className='mt-2 mb-2 col-sm-4 d-flex'>
               <input
-                onChange={searchByIdentification}
+                onChange={searchByDni}
                 type='text'
                 className='form-control p-2'
-                placeholder='Buscar por cedula/pasaporte'
+                placeholder='Buscar por Cedula/Pasaporte'
               />
             </div>
-            {identificationFilter.length > 0 ? (
+            {dnifilter.length > 0 ? (
               <DataTable
                 columns={columns}
                 striped
                 highlightOnHover
                 selectableRowsComponent={() => <div></div>}
                 fixedHeader
-                data={identificationFilter}
+                data={dnifilter}
                 customStyles={customStyles}
                 selectableRows
                 pagination
