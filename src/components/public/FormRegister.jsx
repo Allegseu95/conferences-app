@@ -179,7 +179,7 @@ export const FormRegister = ({ data = [] }) => {
     if (formValues?.participantType !== '') {
       const _courses = courses.map((item) => {
         if (item?.type === 'congress' && item?.congressPrice) {
-          item.price = item?.congressPrice[formValues?.participantType];
+          item.price = item?.congressPrice[formValues?.participantType] ?? 0;
         }
         return item;
       });
