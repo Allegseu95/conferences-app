@@ -1,120 +1,166 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '@/static/base/base.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-  import { Sidebar } from '@/pages/admin/sidebar';
+import { Sidebar } from '@/pages/admin/sidebar';
+import { useServer } from '@/contexts/ServerContext';
+import { useLoader } from '@/contexts/LoaderContext';
+import { participantTypeOptions } from '@/helpers/constants';
+import DataTable from 'react-data-table-component';
+import { showBasicAlert } from '@/helpers/sweetAlert';
 
-export const Users = ({ data, itemsPerPage }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+export const Users = () => {
+  const useserverapi = useServer();
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const { showLoader, hideLoader } = useLoader();
+  const [regsters, setregisters] = useState([]);
+  const [dnifilter, setdnfilter] = useState(regsters);
+
+  const getregisterapi = async () => {
+    showLoader();
+    try {
+      const datos = await useserverapi.getAllUser();
+      const usuarios = datos?.filter((user) => user?.role === 'participant');
+      setregisters(usuarios);
+      setdnfilter(usuarios);
+    } catch (error) {
+      console.log(error);
+      showBasicAlert(
+        error?.response?.data?.mensaje ?? 'Ocurrio un problema! Intentelo más tarde',
+        'error'
+      );
+    } finally {
+      hideLoader();
+    }
   };
 
-  const renderTableData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentData = data.slice(startIndex, endIndex);
-
-    return currentData.map((row, index) => {
-      const { nombre, apellido, cedula, email, telefono, direccion, empresa } = row;
-      return (
-        <tr key={index}>
-          <td className='padding_td'>{nombre}</td>
-          <td className='padding_td'>{apellido}</td>
-          <td className='padding_td'>{email}</td>
-          <td className='padding_td'>{telefono}</td>
-          <td className='padding_td'>{cedula}</td>
-          <td className='padding_td'>{direccion}</td>
-          <td className='padding_td'>{empresa}</td>
-        </tr>
-      );
+  const searchByDni = (event) => {
+    const dnifilter = regsters.filter((dni) => {
+      if (dni.cedula !== null && dni.cedula !== undefined) {
+        return dni.cedula.startsWith(event.target.value);
+      }
     });
+    setdnfilter(dnifilter);
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  useEffect(() => {
+    getregisterapi();
+  }, []);
+
+  const getTypeParticipant = (type) => {
+    const _participantType = participantTypeOptions.find((item) => item?._id === type).name;
+    return _participantType;
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+  const columns = [
+    {
+      name: 'Cédula/P.',
+      selector: (row) => row?.cedula ?? '',
+      sortable: true,
+      width: '100px ',
+    },
+    {
+      name: 'Nombre',
+      selector: (row) => row?.name ?? '' + ' ' + row?.lastname ?? '',
+      sortable: true,
+      width: '180px',
+    },
+    {
+      name: 'Correo',
+      selector: (row) => row.email ?? '',
+      sortable: true,
+      width: '200px',
+    },
+    {
+      name: 'Telefono',
+      selector: (row) => row.phone ?? '',
+      sortable: true,
+      width: '160px',
+    },
+    {
+      name: 'Dirección',
+      selector: (row) => row.address ?? '',
+      sortable: true,
+      width: '200px',
+    },
+    {
+      name: 'T. Participante',
+      selector: (row) => getTypeParticipant(row?.participantType),
+      sortable: true,
+      width: '240px',
+    },
+    {
+      name: 'Empresa o Institución',
+      selector: (row) => row?.company,
+      sortable: true,
+      width: '200px',
+    },
+  ];
+
+  const customStyles = {
+    headRow: {
+      style: {
+        color: 'white',
+        backgroundColor: 'black',
+        fontSize: '15px',
+      },
+    },
+    pagination: {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto auto',
+        gap: '10px',
+        alignItems: 'center',
+        marginTop: '10px',
+      },
+    },
   };
 
-  const renderPagination = () => {
-    const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <li
-          key={i}
-          className={currentPage === i ? 'active' : ''}
-          onClick={() => handlePageChange(i)}>
-          {i}
-        </li>
-      );
-    }
-    return (
-      <div className='pagination pagination-move mt-1'>
-        <button
-          className='btn btn-primary p-2'
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}>
-          <span className='p-1'>{'<'} anterior</span>
-        </button>
-        <ul className='m-3'>
-          <li className='current-page'>{currentPage}</li>
-        </ul>
-        <button
-          className='btn btn-success p-1'
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}>
-          <span className='p-1'>siguiente {'>'}</span>
-        </button>
-      </div>
-    );
+  const paginationComponentOptions = {
+    rowsPerPageText: 'Filas por página',
+    rangeSeparatorText: 'de',
+    selectAllRowsItem: true,
+    selectAllRowsItemText: 'Todos',
   };
 
   return (
     <div className='content_base'>
       <Sidebar></Sidebar>
-      <div className='container contentwithoutsidebar'>
+      <div className=' contentwithoutsidebar'>
         <h1 className='mb-2'>
           Usuarios Registrados <FontAwesomeIcon icon={faUsers} />
         </h1>
-        {/* <table className='table table-striped'>
-          <thead className='header_dark'>
-            <tr>
-              <th className='paddin_table' scope='col'>
-                Nombre
-              </th>
-              <th className='paddin_table' scope='col'>
-                Apellido
-              </th>
-              <th className='paddin_table' scope='col'>
-                Correo
-              </th>
-              <th className='paddin_table' scope='col'>
-                Teléfono
-              </th>
-              <th className='paddin_table' scope='col'>
-                Cédula
-              </th>
-              <th className='paddin_table' scope='col'>
-                Direccion
-              </th>
-              <th className='paddin_table' scope='col'>
-                Empresa
-              </th>
-            </tr>
-          </thead>
-          <tbody>{renderTableData()}</tbody>
-        </table> */}
+        <div className='mt-2 mb-2 col-sm-4'>
+          <input
+            onChange={searchByDni}
+            type='text'
+            className='form-control p-2'
+            placeholder='Buscar por Cedula/Pasaporte'
+          />
+        </div>
+
+        {dnifilter.length > 0 ? (
+          <>
+            <DataTable
+              columns={columns}
+              striped
+              highlightOnHover
+              selectableRowsComponent={() => <div></div>}
+              fixedHeader
+              data={dnifilter}
+              customStyles={customStyles}
+              selectableRows
+              pagination
+              paginationComponentOptions={paginationComponentOptions}
+            />
+            <div className='p-3'></div>
+          </>
+        ) : (
+          <div className='bg-light text-dark d-flex justify-content-center py-2'>
+            Registros vacios
+          </div>
+        )}
       </div>
-      {/* {renderPagination()} */}
     </div>
   );
 };

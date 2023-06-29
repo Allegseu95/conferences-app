@@ -116,6 +116,14 @@ class ServerApi {
     });
   };
 
+  getAllUser = () => {
+    return new Promise((resolve, reject) => {
+      getAxios(`${this.baseUrl}/api/user/get-all-users`, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    });
+  };
+
   updatedUser = (data) => {
     return new Promise((resolve, reject) => {
       putAxios(`${this.baseUrl}/api/user/update-user`, data, getToken())
