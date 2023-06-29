@@ -42,6 +42,10 @@ export const participantTypeOptions = [
     _id: 'ponencia_congreso_memorias',
     name: 'Ponencia + Congreso + Memorias',
   },
+  {
+    _id: 'laboratorio',
+    name: 'Laboratorios',
+  },
 ];
 
 export const initFormRegister = {

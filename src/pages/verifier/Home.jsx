@@ -138,7 +138,10 @@ export const HomePage = ({}) => {
           <Fragment>
             <div className='card'>
               <div className='card-header p-2 text-center bg-dark text-light'>
-                {data?.userId?.name} {data?.userId?.lastname}
+                <p>
+                  {data?.userId?.name} {data?.userId?.lastname}
+                </p>
+                <b>{data?.userId?.cedula}</b>
               </div>
 
               <ul className='list-group list-group-flush'>

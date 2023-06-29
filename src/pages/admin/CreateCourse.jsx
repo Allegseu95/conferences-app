@@ -154,18 +154,20 @@ export const CreateCourse = () => {
                   }
                 />
               </div>
-              <div className='col-md-4 mt-2 p-2'>
-                <label className='form-label'>Precio</label>
-                <input
-                  onChange={(e) => {
-                    setForm({ ...form, price: e.target.value });
-                  }}
-                  type='number'
-                  step='0.01'
-                  className='form-control p-2'
-                  disabled={form.type === 'congress'}
-                />
-              </div>
+              {form.type === 'workshop' && (
+                <div className='col-md-4 mt-2 p-2'>
+                  <label className='form-label'>Precio</label>
+                  <input
+                    onChange={(e) => {
+                      setForm({ ...form, price: e.target.value });
+                    }}
+                    type='number'
+                    step='0.01'
+                    className='form-control p-2'
+                    disabled={form.type === 'congress'}
+                  />
+                </div>
+              )}
               <div className='col-12 mt-2 p-2'>
                 <label className='form-label'>Descripción</label>
                 <textarea
