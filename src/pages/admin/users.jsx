@@ -61,9 +61,9 @@ export const Users = () => {
     },
     {
       name: 'Nombre',
-      selector: (row) => row?.name ?? '' + ' ' + row?.lastname ?? '',
+      selector: (row) => row?.name + ' ' + row?.lastname ?? '',
       sortable: true,
-      width: '180px',
+      width: 'auto',
     },
     {
       name: 'Correo',
@@ -72,28 +72,28 @@ export const Users = () => {
       width: '200px',
     },
     {
-      name: 'Telefono',
+      name: 'Teléfono',
       selector: (row) => row.phone ?? '',
       sortable: true,
-      width: '160px',
+      width: '100px',
     },
     {
       name: 'Dirección',
       selector: (row) => row.address ?? '',
       sortable: true,
-      width: '200px',
+      width: '160px',
     },
     {
       name: 'T. Participante',
       selector: (row) => getTypeParticipant(row?.participantType),
       sortable: true,
-      width: '240px',
+      width: '210px',
     },
     {
-      name: 'Empresa o Institución',
+      name: 'Empresa/Institución',
       selector: (row) => row?.company,
       sortable: true,
-      width: '200px',
+      width: '180px',
     },
   ];
 
@@ -109,7 +109,7 @@ export const Users = () => {
       style: {
         display: 'grid',
         gridTemplateColumns: 'auto auto auto auto',
-        gap: '10px',
+        gap: '20px',
         alignItems: 'center',
         marginTop: '10px',
       },
@@ -135,7 +135,7 @@ export const Users = () => {
             onChange={searchByDni}
             type='text'
             className='form-control p-2'
-            placeholder='Buscar por Cedula/Pasaporte'
+            placeholder='Buscar por Cédula/Pasaporte'
           />
         </div>
 

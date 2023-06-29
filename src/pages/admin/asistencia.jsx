@@ -38,6 +38,9 @@ export const Asistencias = () => {
       );
     } finally {
       hideLoader();
+      //quitar esto para que funcione
+      setregisters([]);
+      setdnfilter([]);
     }
   };
 
