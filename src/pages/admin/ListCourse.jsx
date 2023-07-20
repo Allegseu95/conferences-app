@@ -11,6 +11,8 @@ import moment from 'moment';
 import { MdAddToPhotos } from 'react-icons/md';
 import { useLoader } from '@/contexts/LoaderContext';
 import { BiTask } from 'react-icons/bi';
+import { MdDelete } from 'react-icons/md';
+import { showBasicAlert } from '@/helpers/sweetAlert';
 
 export const ListCourse = () => {
   const server = useServer();
@@ -37,6 +39,22 @@ export const ListCourse = () => {
       setTitleFilter(modifiedData);
     } catch (error) {
       setCourses([]);
+    } finally {
+      hideLoader();
+    }
+  };
+
+  const eliminarBiId = async (id) => {
+    showLoader();
+    try {
+      await server.deleleCourse(id);
+      showBasicAlert('Eliminado Correctamente!', 'success');
+      const updatedCourses = courses.filter((course) => course._id !== id);
+      setCourses(updatedCourses);
+      setTitleFilter(updatedCourses);
+    } catch (err) {
+      showBasicAlert('Error, El curso tiene un registro', 'error');
+      console.log(err);
     } finally {
       hideLoader();
     }
@@ -112,6 +130,10 @@ export const ListCourse = () => {
           <Link to={`/editCourse/${curso?._id}`}>
             <BiEdit className='fs-4 btn btn-success' />
           </Link>
+          <MdDelete
+            onClick={() => (curso?._id ? eliminarBiId(curso?._id) : {})}
+            className={`fs-4 m-2 btn ${curso?._id ? 'btn-danger' : 'btn-secondary'}`}
+          />
         </div>
       ),
       ignoreRowClick: true,

@@ -131,6 +131,14 @@ class ServerApi {
         .catch((err) => reject(err));
     });
   };
+
+  deleleCourse = (id) => {
+    return new Promise((resolve, reject) => {
+      deleteAxios(`${this.baseUrl}/api/course/delete-course/${id}`, getToken())
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+    })
+  }
 }
 
 export const ServerProvider = ({ children }) => (
